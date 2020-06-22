@@ -1,6 +1,10 @@
-﻿@{
+﻿@model SFC.Models.FoodList
+@{
     ViewBag.Title = "Home Page";
 }
+
+<script src="~/assets/myJS/myJS.js"></script>
+
 <section class="engine">simple site templates</a></section>
 <section class="cid-qTkA127IK8 mbr-fullscreen mbr-parallax-background" id="header2-1">
 
@@ -48,145 +52,38 @@
                     3000
                 </h3>
             </div>
-            <!--Card-1-->
-            <div class="card col-12 col-md-6 p-3 col-lg-3">
-                <div class="card-wrapper">
-                    <div class="card-img">
-                        <img src="~/assets/images/slider-2-696x464.jpeg" alt="Mobirise" title="">
-                    </div>
-                    <div class="card-box">
-                        <h4 class="card-title mbr-fonts-style display-5">
-                            Salad
-                        </h4>
-                        <p class="mbr-text mbr-fonts-style display-7">
-                            Make with fresh vegetables<br>Remaining:
-                            34<br>25.000 VND
-                        </p>
-                        <!--Btn-->
-                        <br>
-                        <div class="input-group">
-                            <input id="TextBox1" type="text" size="10" value="0" runat="server" />
-                            <div class="input-group-append" id="button-addon4">
-                                <button type="button" id="down1" class="btn-Down" onclick="downClick('TextBox1')" runat="server">
-                                    Down
-                                </button>
-                                <button type="button" id="up1" class="btn-Up" onclick="upClick('TextBox1')" runat="server">
-                                    Up
-                                </button>
-                            </div>
+
+            @foreach (var item in Model.getListFood())
+            {
+                <div class="card col-12 col-md-6 p-3 col-lg-3">
+                    <div class="card-wrapper">
+                        <div class="card-img">
+                            <img src="@item.src" alt="Mobirise" title="">
                         </div>
-                        <div class="mbr-section-btn align-center">
-                            <a href="index.html"
-                               class="btn btn-primary-outline display-4">
-                                <span class="mbri-cart-add mbr-iconfont mbr-iconfont-btn"></span>
-                            </a>
+                        <div class="card-box">
+                            <h4 class="card-title mbr-fonts-style display-5">
+                                @item.name
+                            </h4>
+                            <p class="mbr-text mbr-fonts-style display-7">
+                                Make with fresh vegetables<br>Remaining:
+                                34<br>$@item.price
+                            </p>
+                            <!--Btn-->
+                            <br>
+                            <div class="input-group">
+                                <input style="text-align:center;" type="number" value=@item.quantity size="14" min="0" />
+                                <div class="mbr-section-btn align-center" onClick="showAddCart()">
+                                    <a class="btn btn-primary-outline display-4">
+                                        <span class="mbri-cart-add mbr-iconfont mbr-iconfont-btn"></span>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!--Card-2-->
-            <div class="card col-12 col-md-6 p-3 col-lg-3">
-                <div class="card-wrapper">
-                    <div class="card-img">
-                        <img src="~/assets/images/slider-3-696x464.jpg" alt="Mobirise" title="">
-                    </div>
-                    <div class="card-box">
-                        <h4 class="card-title mbr-fonts-style display-5">
-                            Beefsteek
-                        </h4>
-                        <p class="mbr-text mbr-fonts-style display-7">
-                            Mlem<br>Remaining: 34<br>30.000 VND
-                        </p>
-                        <!--Btn-->
-                        <br>
-                        <div class="input-group">
-                            <input id="TextBox2" type="text" size="10" value="0" runat="server" />
-                            <div class="input-group-append" id="button-addon4">
-                                <button type="button" id="down2" class="btn-Down" onclick="downClick('TextBox2')" runat="server">
-                                    Down
-                                </button>
-                                <button type="button" id="up2" class="btn-Up" onclick="upClick('TextBox2')" runat="server">
-                                    Up
-                                </button>
-                            </div>
-                        </div>
-                        <div class="mbr-section-btn align-center">
-                            <a href="index.html"
-                               class="btn btn-primary-outline display-4">
-                                <span class="mbri-cart-add mbr-iconfont mbr-iconfont-btn"></span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--Card-3-->
-            <div class="card col-12 col-md-6 p-3 col-lg-3">
-                <div class="card-wrapper">
-                    <div class="card-img">
-                        <img src="~/assets/images/gallery-img-4-696x464.jpg" alt="Mobirise" title="">
-                    </div>
-                    <div class="card-box">
-                        <h4 class="card-title mbr-fonts-style display-5">Fried rice</h4>
-                        <p class="mbr-text mbr-fonts-style display-7">
-                            Mlem<br>Remaining: 34<br>35.000 VND
-                        </p>
-                        <!--Btn-->
-                        <br>
-                        <div class="input-group">
-                            <input id="TextBox3" type="text" size="10" value="0" runat="server" />
-                            <div class="input-group-append" id="button-addon4">
-                                <button type="button" id="down3" class="btn-Down" onclick="downClick('TextBox3')" runat="server">
-                                    Down
-                                </button>
-                                <button type="button" id="up3" class="btn-Up" onclick="upClick('TextBox3')" runat="server">
-                                    Up
-                                </button>
-                            </div>
-                        </div>
-                        <div class="mbr-section-btn align-center">
-                            <a href="index.html"
-                               class="btn btn-primary-outline display-4">
-                                <span class="mbri-cart-add mbr-iconfont mbr-iconfont-btn"></span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--Card-4-->
-            <div class="card col-12 col-md-6 p-3 col-lg-3 last-child">
-                <div class="card-wrapper">
-                    <div class="card-img">
-                        <img src="~/assets/images/gallery-img-2-506x337.jpg" alt="Mobirise" title="">
-                    </div>
-                    <div class="card-box">
-                        <h4 class="card-title mbr-fonts-style display-5">
-                            Cake
-                        </h4>
-                        <p class="mbr-text mbr-fonts-style display-7">
-                            Mlem<br>Remaining: 34<br>40.000 VND
-                        </p>
-                        <!--Btn-->
-                        <br>
-                        <div class="input-group">
-                            <input id="TextBox4" type="text" size="10" value="0" runat="server" />
-                            <div class="input-group-append" id="button-addon4">
-                                <button type="button" id="down4" class="btn-Down" onclick="downClick('TextBox4')" runat="server">
-                                    Down
-                                </button>
-                                <button type="button" id="up4" class="btn-Up" onclick="upClick('TextBox4')" runat="server">
-                                    Up
-                                </button>
-                            </div>
-                        </div>
-                        <div class="mbr-section-btn align-center">
-                            <a href="index.html"
-                               class="btn btn-primary-outline display-4">
-                                <span class="mbri-cart-add mbr-iconfont mbr-iconfont-btn"></span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+            }
+
         </div>
     </div>
 </section>

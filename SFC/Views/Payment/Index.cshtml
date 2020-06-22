@@ -1,13 +1,11 @@
-﻿@{
+﻿@model SFC.Models.FoodList
+@{
     ViewBag.Title = "Pay Order";
 }
-<section class="engine"><a href="https://mobirise.info/s">free bootstrap themes</a></section>
+<link rel="stylesheet" href="~/assets/socicon/css/payStyles.css">
+<script src="~/assets/myJS/myJS.js" async></script>
+
 <section class="mbr-section content5 cid-s2gNlDMF3j" id="content5-r">
-
-
-
-
-
     <div class="container">
         <div class="media-container-row">
             <div class="title col-12 col-md-8">
@@ -20,100 +18,39 @@
     </div>
 </section>
 
-<section class="services5 cid-s2gLdt44TY" id="services5-j">
-    <!---->
-    <!---->
-    <!--Overlay-->
-    <!--Container-->
-    <div class="container">
-        <div class="row">
-            <!--Titles-->
-            <div class="title pb-5 col-12">
-                <h2 class="align-left mbr-fonts-style m-0 display-1">Order list</h2>
-
-            </div>
-            <!--Card-1-->
-            <div class="card px-3 col-12">
-                <div class="card-wrapper media-container-row media-container-row">
-                    <div class="card-box">
-                        <div class="top-line pb-3">
-                            <h4 class="card-title mbr-fonts-style display-5">
-                                Food 1
-                            </h4>
-                            <p class="mbr-text cost mbr-fonts-style m-0 display-5">60.000 VND</p>
-                        </div>
-                        <div class="bottom-line">
-                            <p class="mbr-text mbr-fonts-style m-0 b-descr display-7">
-                                x1
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--Card-2-->
-            <div class="card px-3 col-12">
-                <div class="card-wrapper media-container-row media-container-row">
-                    <div class="card-box">
-                        <div class="top-line pb-3">
-                            <h4 class="card-title mbr-fonts-style display-5">
-                                Food 2
-                            </h4>
-                            <p class="mbr-text cost mbr-fonts-style m-0 display-5">
-                                40.000 VND
-                            </p>
-                        </div>
-                        <div class="bottom-line">
-                            <p class="mbr-text mbr-fonts-style m-0 b-descr display-7">x2</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--Card-3-->
-            <div class="card px-3 col-12">
-                <div class="card-wrapper media-container-row media-container-row">
-                    <div class="card-box">
-                        <div class="top-line pb-3">
-                            <h4 class="card-title mbr-fonts-style display-5">
-                                Food 3
-                            </h4>
-                            <p class="mbr-text cost mbr-fonts-style m-0 display-5">
-                                80.000 VND
-                            </p>
-                        </div>
-                        <div class="bottom-line">
-                            <p class="mbr-text mbr-fonts-style m-0 b-descr display-7">
-                                x4
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--Card-4-->
-            <!--Card-5-->
-            <!--Card-6-->
-            <!--Card-7-->
-            <!--Card-8-->
-            <!--Card-9-->
-            <!--Card-10-->
-            <!--Card-11-->
-            <!--Card-12-->
-
-        </div>
+<section class="container container-fluid">
+    <div class="cart-row">
+        <span class="cart-item cart-header cart-column">ITEM</span>
+        <span class="cart-price cart-header cart-column">PRICE</span>
+        <span class="cart-quantity cart-header cart-column">QUANTITY</span>
     </div>
+
+    <div class="cart-items">
+        @foreach (var item in Model.getCartItems())
+        {
+            <div class="cart-row">
+                <div class="cart-item cart-column">
+                    <img class="cart-item-image" src="@item.src" height="100">
+                    <span class="cart-item-title">@item.name</span>
+                </div>
+                <span class="cart-price cart-column">$@item.price.ToString()</span>
+                <div class="cart-quantity cart-column">
+                    <input class="cart-quantity-input" type="number" value="1" min="0" >
+                    <button class="btn btn-danger" type="button">REMOVE</button>
+                </div>
+            </div>
+        }
+    </div>
+
 </section>
 
-<section class="mbr-section content8 cid-s2gMfRE15Z" id="content8-m">
+<div class="cart-total">
+    <strong class="cart-total-title">Total</strong>
+    <span class="cart-total-price">$@Model.getTotalCost()</span>
+</div>
 
+<div class="align-center">
+    <button class="btn btn-primary btn-purchase" type="button">PURCHASE</button>
+</div>
 
-
-    <div class="container">
-        <div class="media-container-row title">
-            <div class="col-12 col-md-8">
-                <div class="mbr-section-btn align-center">
-                    <a class="btn btn-secondary-outline display-4" href="page2.html">Cancel</a>
-                    <a class="btn btn-primary-outline display-4" href="page2.html">Pay</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+<section class="mbr-section content8 cid-s2gMfRE15Z" id="content8-m"></section>

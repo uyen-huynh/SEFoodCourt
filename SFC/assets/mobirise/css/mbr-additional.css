@@ -104,13 +104,13 @@ body {
   background-color: #879a9f !important;
 }
 .bg-danger {
-  background-color: #b1a374 !important;
+  background-color: #b1a374;
 }
 .btn-primary,
 .btn-primary:active {
-  background-color: #149dcc !important;
-  border-color: #149dcc !important;
-  color: #ffffff !important;
+  background-color: #149dcc important;
+  border-color: #149dcc important;
+  color: #ffffff important;
 }
 .btn-primary:hover,
 .btn-primary:focus,
