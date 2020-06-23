@@ -1,0 +1,46 @@
+﻿@model SFC.Models.food
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_LayoutManager.cshtml";
+}
+
+<div class="btn-wrapper">
+    <h2 id="add-item">Add food</h2>
+</div>
+
+<div class="form-item">
+    @using (@Html.BeginForm("Form", "Manager", FormMethod.Post))
+    {
+        
+        <div>                        
+            @Html.LabelFor(b => b.Name)
+            @Html.TextBoxFor(b => b.Name, new { @class = "form-length form-control"})
+            @Html.ValidationMessageFor(b => b.Name, "", new { @style = "color:red" })
+        </div>
+        <br />
+        <div>
+            @Html.LabelFor(b => b.ID)
+            @Html.TextBoxFor(b => b.ID, new { @class = "form-length form-control"})
+            @Html.ValidationMessageFor(b => b.ID, "", new { @style = "color:red" })
+        </div>
+        <br />
+        <div>
+            @Html.LabelFor(b => b.Price)
+            @Html.TextBoxFor(b => b.Price, new { @class = "form-length form-control"})
+            @Html.ValidationMessageFor(b => b.Price, "", new { @style = "color:red" })
+        </div>
+        <br />
+        <div>
+            @Html.LabelFor(b => b.ImagePath)
+            @Html.TextBoxFor(b => b.ImagePath, new { @class = "form-length form-control"})
+            @Html.ValidationMessageFor(b => b.ImagePath, "", new { @style = "color:red" })
+        </div>
+        <br />
+        <div class="btn-wrapper">
+            <button type="submit" class="btn btn-gray">Add</button>
+        </div>
+    }
+</div>
+
+
+

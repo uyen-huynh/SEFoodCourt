@@ -1,0 +1,111 @@
+﻿@using SFC.Models
+@model  List<food>
+@{
+    ViewBag.Title = "HomeManager";
+    Layout = "~/Views/Shared/_LayoutManager.cshtml";
+}
+
+
+@*<section>
+        <div id="carousel-example-multi" class="carousel slide carousel-multi-item v-2" data-ride="carousel">
+
+            <!--Controls-->
+            <div class="controls-top">
+                <a class="btn-floating" href="#carousel-example-multi" data-slide="prev">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+                <a class="btn-floating" href="#carousel-example-multi" data-slide="next">
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+            </div>
+            <!--/.Controls-->
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                @{
+                    var counter = 0;
+                    foreach (var food in Model)
+                    {
+                        <li data-target="#carousel-example-multi" data-slide-to="@(counter)" class="@(counter == 0 ? "active" : "null")"></li>
+                        counter++;
+                    }
+                }
+            </ol>
+            <!--/.Indicators-->
+
+            <div id="border_inner" class="border_inner carousel-inner v-2" role="listbox">
+                @{
+                    counter = 0;
+                    foreach (var food in Model)
+                    {
+                        <div class="carousel-item @(counter == 0 ? "active" : "null")">
+                            <div class="col-12 col-md-4">
+                                <div class="card mb-2">
+                                    <img class="card-img-top" src="@(food.ImagePath)" alt="Card image cap" />
+                                </div>
+
+                                <div class="card-body">
+                                    <h4 class="card-title font-weight-bold">Card title</h4>
+                                    <p class="card-text">
+                                        Some quick example text to build on the card title and make up the bulk of the
+                                        card's content.
+                                    </p>
+                                    <a class="btn btn-primary btn-md btn-rounded">Button</a>
+                                </div>
+
+                            </div>
+                        </div>
+                        counter++;
+                    }
+                }
+            </div>
+        </div>
+    </section>*@
+
+<section class="container py-3">
+    <div class="row">
+        <div class="col-lg-12">
+            <h3>Menu</h3>
+        </div>
+    </div>
+</section>
+<section class="carousel slide" data-ride="carousel" id="postsCarousel">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-md-right lead">
+                <a class="btn btn-outline-secondary prev" href="" data-slide="prev" title="go back"><i class="fa fa-lg fa-chevron-left"></i></a>
+                <a class="btn btn-outline-secondary next" href="" data-slide="next" title="more"><i class="fa fa-lg fa-chevron-right"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="container pt-0 mt-2">
+        <div class="row mt-0">
+            <div class="col-md-12">
+                <div class="carousel-inner">
+                @{
+                    var counter = 0;                    
+                    for (counter = 0; counter < Model.Count; )
+                    {                        
+                        <div class="card-deck carousel-item @(counter == 0 ? "active" : "null") flex-column flex-sm-row">
+                        @for (var i = 0; i < 3 && i + counter < Model.Count; ++i){
+                            <div class="card">
+                                <div class="card-img-top card-img-top-250">
+                                    <img class="img-fluid" src="@(Model.ElementAt(counter + i).ImagePath)" alt="carousel @(counter)">
+                                </div>
+                                <div class="card-block pt-2">
+                                    <h2>
+                                        <a href="">@(Model.ElementAt(counter + i).Name)</a>
+                                    </h2>
+                                </div>
+                            </div>
+                            counter++;
+                        }
+                        </div>                                                    
+                    }
+                }                                           
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</section>
+
