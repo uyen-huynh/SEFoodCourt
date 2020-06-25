@@ -47,5 +47,26 @@ namespace SFC.Models
             }
             return sum;
         }
+
+        public static void addCartItem(int id, int quantity)
+        {
+            for (int i = 0; i < cartItems.Count(); i++)
+            {
+                if (cartItems[i].id == id)
+                {
+                    cartItems[i].quantity += quantity;
+                    return;
+                }
+            }
+
+            for (int i = 0; i < items.Count(); i++)
+            {
+                if (items[i].id == id)
+                {
+                    cartItems.Add(new Food(items[i].price, items[i].quantity + quantity, items[i].name, items[i].src, id));
+                    return;
+                }
+            }
+        }
     }
 }

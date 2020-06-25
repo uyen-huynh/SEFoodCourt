@@ -2,10 +2,43 @@
 @{
     ViewBag.Title = "Home Page";
 }
+<script>
+    if (document.readyState == 'loading') {
+        document.addEventListener('DOMContentLoaded', ready)
+    } else {
+        ready()
+    }
+    function ready() {
 
-<script src="~/assets/myJS/myJS.js"></script>
+        var addToCartButtons = document.getElementsByName('Add-to-cart')
+        for (var i = 0; i < addToCartButtons.length; i++) {
+            var button = addToCartButtons[i]
+            button.addEventListener('click', addToCartClicked)
+        }
 
-<section class="engine">simple site templates</a></section>
+    }
+    function addToCartClicked(event) {
+        var buttonClicked = event.target
+        var itemGroup = buttonClicked.parentElement.parentElement
+        var itemID = itemGroup.children[0].innerHTML
+        var quantityItem = itemGroup.children[1].value
+        console.log(itemID)
+        console.log(quantityItem)
+        $.ajax({
+            type: 'post',
+            url: "@Url.Action("AddItemToCart")",
+            data: {
+                'id': itemID,
+                'quantity': quantityItem,
+            },
+            success: alert('Add to cart sucessfully')
+        })
+    }
+
+</script>
+<section class="engine">
+    simple site templates
+</section>
 <section class="cid-qTkA127IK8 mbr-fullscreen mbr-parallax-background" id="header2-1">
 
 
@@ -53,36 +86,38 @@
                 </h3>
             </div>
 
-            @foreach (var item in Model.getListFood())
+            @for (int i = 0; i < @Model.getListFood().Count(); i++)
             {
                 <div class="card col-12 col-md-6 p-3 col-lg-3">
                     <div class="card-wrapper">
                         <div class="card-img">
-                            <img src="@item.src" alt="Mobirise" title="">
+                            <img src="@Model.getListFood()[i].src" alt="Mobirise" title="">
                         </div>
                         <div class="card-box">
                             <h4 class="card-title mbr-fonts-style display-5">
-                                @item.name
+                                @Model.getListFood()[i].name
                             </h4>
                             <p class="mbr-text mbr-fonts-style display-7">
                                 Make with fresh vegetables<br>Remaining:
-                                34<br>$@item.price
+                                34<br>$@Model.getListFood()[i].price
                             </p>
                             <!--Btn-->
                             <br>
-                            <div class="input-group">
-                                <input style="text-align:center;" type="number" value=@item.quantity size="14" min="0" />
-                                <div class="mbr-section-btn align-center" onClick="showAddCart()">
-                                    <a class="btn btn-primary-outline display-4">
+                            <div class="cart-add">
+                                <p hidden>@Model.getListFood()[i].id</p>
+                                <input name="item-quantity" type="number" size="10" value="@Model.getListFood()[i].quantity" runat="server" />
+                                <div class="mbr-section-btn align-center">
+                                    <button class="btn btn-primary-outline display-4" type="submit" name="Add-to-cart">
                                         <span class="mbri-cart-add mbr-iconfont mbr-iconfont-btn"></span>
-                                    </a>
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
             }
+
+
 
         </div>
     </div>
@@ -132,13 +167,13 @@
                                 </div>
                             </div>
                             <div class="mbr-gallery-item mbr-gallery-item--p4" data-video-url="false"
-                                 data-tags="Awesome">
+                                 data-tags="Snack">
                                 <div href="#lb-gallery2-7" data-slide-to="1" data-toggle="modal">
                                     <img src="~/assets/images/gallery-img-2-506x337-506x337.jpg" alt="" title=""><span class="icon-focus"></span>
                                 </div>
                             </div>
                             <div class="mbr-gallery-item mbr-gallery-item--p4" data-video-url="false"
-                                 data-tags="Animated">
+                                 data-tags="Drink">
                                 <div href="#lb-gallery2-7" data-slide-to="2" data-toggle="modal">
                                     <img src="~/assets/images/slider-3-696x464-696x464.jpg" alt="" title=""><span class="icon-focus"></span>
                                 </div>

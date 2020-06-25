@@ -19,13 +19,11 @@ namespace SFC.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddItemToCart()
+        public void AddItemToCart(int id, int quantity)
         {
-
-            FoodList.cartItems.Add(FoodList.cartItems[0]);
-            return null;
+            FoodList.addCartItem(id, quantity);
         }
-       
+
         public ActionResult AboutUs()
         {
             ViewBag.Message = "Your application description page.";
