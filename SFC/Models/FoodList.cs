@@ -13,14 +13,12 @@ namespace SFC.Models
         private FoodList()
         {
             items = new List<Food>();
-            items.Add(new Food(20, 1, "Salad", "/assets/images/slider-2-696x464-556x371.jpeg", 1));
-            items.Add(new Food(10, 1, "Cake", "/assets/images/gallery-img-2-506x337-506x337.jpg", 2));
-            items.Add(new Food(30, 1, "Beefsteek", "/assets/images/slider-3-696x464.jpg", 3));
-            items.Add(new Food(35, 1, "Fried rice", "/assets/images/gallery-img-4-696x464.jpg", 4));
+            items.Add(new Food(20, 0, "Salad", "/assets/images/slider-2-696x464-556x371.jpeg", 1,"Food"));
+            items.Add(new Food(10, 0, "Cake", "/assets/images/gallery-img-2-506x337-506x337.jpg", 2,"Snack"));
+            items.Add(new Food(30, 0, "Beefsteek", "/assets/images/slider-3-696x464.jpg", 3,"Food"));
+            items.Add(new Food(35, 0, "Fried rice", "/assets/images/gallery-img-4-696x464.jpg", 4,"Drink"));
 
             cartItems = new List<Food>();
-            cartItems.Add(new Food(20, 1, "Salad", "/assets/images/slider-2-696x464-556x371.jpeg", 1));
-            cartItems.Add(new Food(10, 1, "Cake", "/assets/images/gallery-img-2-506x337-506x337.jpg", 2));
 
         }
 
@@ -63,7 +61,7 @@ namespace SFC.Models
             {
                 if (items[i].id == id)
                 {
-                    cartItems.Add(new Food(items[i].price, items[i].quantity + quantity, items[i].name, items[i].src, id));
+                    cartItems.Add(new Food(items[i].price, items[i].quantity + quantity, items[i].name, items[i].src, id,items[i].type));
                     return;
                 }
             }

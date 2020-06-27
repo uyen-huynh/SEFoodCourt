@@ -12,14 +12,16 @@ namespace SFC.Models
         public String name { get; set; }
         public string src { get; set; }
         public int id { get; }
+        public String type { get; set; }
 
-        public Food(int price, int quantity, String name, String src, int id)
+        public Food(int price, int quantity, String name, String src, int id, String type)
         {
             this.price = price;
             this.quantity = quantity;
             this.name = name;
             this.src = src;
             this.id = id;
+            this.type = type;
         }
     }
 }
