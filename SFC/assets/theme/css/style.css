@@ -1146,23 +1146,92 @@ body {
   left: -2400px;
 }
 
-/*My custom*/
-.btn-Up {
-  background-color: white;
-  color: black;
-  border: 2px solid #4CAF50;
-  padding: 10px 25px;
-  text-align: center;
-  font-size: 14px;
-  border-radius: 8px;
+/*My custom for Up Down Button*/
+.btnUpDown {
+    background-color: white;
+    color: black;
+    border: 2px solid #0f7699;
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 14px;
+    border-radius: 8px;
 }
 
-.btn-Down {
-  background-color: white;
-  color: black;
-  border: 2px solid #f50505;
-  padding: 10px 15px;
-  text-align: center;
-  font-size: 14px;
-  border-radius: 8px;
+.textUpDown {
+    border-radius: 8px;
+    border: 2px solid #0f7699;
+    text-align: center;
+    height: 46px;
+}
+
+/*My custom for SnackBar*/
+#snackbar {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: #0f7699;
+    color: #fff;
+    text-align: center;
+    border-radius: 8px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    bottom: 30px;
+    font-size: 12px;
+    font-family: 'Rubik', sans-serif;
+}
+
+#snackbar.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@-webkit-keyframes fadein {
+    from {
+        bottom: 0;
+        opacity: 0;
+    }
+
+    to {
+        bottom: 30px;
+        opacity: 1;
+    }
+}
+
+@keyframes fadein {
+    from {
+        bottom: 0;
+        opacity: 0;
+    }
+
+    to {
+        bottom: 30px;
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes fadeout {
+    from {
+        bottom: 30px;
+        opacity: 1;
+    }
+
+    to {
+        bottom: 0;
+        opacity: 0;
+    }
+}
+
+@keyframes fadeout {
+    from {
+        bottom: 30px;
+        opacity: 1;
+    }
+
+    to {
+        bottom: 0;
+        opacity: 0;
+    }
 }
