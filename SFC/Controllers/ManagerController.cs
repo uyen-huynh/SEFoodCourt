@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using SFC.Models;
 using System.IO;
+using System.Data.Entity.Infrastructure;
+
 //using MySql.Data.MySqlClient;
 namespace SFC.Controllers
 {
@@ -16,12 +18,12 @@ namespace SFC.Controllers
         //    _food = food;
         //}
         // GET: Manager                
-        public ActionResult HomeManager()
-        {
-            List<food> listFood = new List<food>();
+        public ActionResult HomeManager() {
+            
+            List<fooditem> listFood = new List<fooditem>();
             using (DBModel dbModel = new DBModel())
             {
-                listFood = dbModel.food.ToList<food>();
+                listFood = dbModel.fooditems.ToList<fooditem>();
             }           
             return View(listFood);
         }
@@ -32,13 +34,13 @@ namespace SFC.Controllers
         }
 
         [HttpPost]
-        public ActionResult Form(food food)
+        public ActionResult Form(fooditem food)
         {
             if (ModelState.IsValid)
             {
                 using(DBModel dbModel = new DBModel())
                 {
-                    dbModel.food.Add(food);
+                    dbModel.fooditems.Add(food);
                     dbModel.SaveChanges();
                 }
                 return RedirectToAction("HomeManager");

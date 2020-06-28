@@ -7,66 +7,23 @@ namespace SFC.Models
 {
     public class FoodList
     {
-        private static FoodList instance = new FoodList();
-        public static List<Food> cartItems { get; set; }
-        public static List<Food> items { get; set; }
+        public static Dictionary<int, fooditem> foodList;
+        static FoodList instance = new FoodList();
+
         private FoodList()
         {
-            items = new List<Food>();
-            items.Add(new Food(20, 1, "Salad", "/assets/images/slider-2-696x464-556x371.jpeg", 1));
-            items.Add(new Food(10, 1, "Cake", "/assets/images/gallery-img-2-506x337-506x337.jpg", 2));
-            items.Add(new Food(30, 1, "Beefsteek", "/assets/images/slider-3-696x464.jpg", 3));
-            items.Add(new Food(35, 1, "Fried rice", "/assets/images/gallery-img-4-696x464.jpg", 4));
-
-            cartItems = new List<Food>();
-            cartItems.Add(new Food(20, 1, "Salad", "/assets/images/slider-2-696x464-556x371.jpeg", 1));
-            cartItems.Add(new Food(10, 1, "Cake", "/assets/images/gallery-img-2-506x337-506x337.jpg", 2));
-
+            DBModel dbModel = new DBModel();
+            foodList = dbModel.fooditems.ToDictionary(p => p.id);
         }
 
-        public List<Food> getCartItems()
+        public Dictionary<int, fooditem> getListFood()
         {
-            return cartItems;
+            return foodList;
         }
 
-        public List<Food> getListFood()
-        {
-            return items;
-        }
-        public static FoodList getObj()
+        public static FoodList getInstance()
         {
             return instance;
-        }
-
-        public int getTotalCost()
-        {
-            int sum = 0;
-            foreach (var item in cartItems)
-            {
-                sum += item.quantity * item.price;
-            }
-            return sum;
-        }
-
-        public static void addCartItem(int id, int quantity)
-        {
-            for (int i = 0; i < cartItems.Count(); i++)
-            {
-                if (cartItems[i].id == id)
-                {
-                    cartItems[i].quantity += quantity;
-                    return;
-                }
-            }
-
-            for (int i = 0; i < items.Count(); i++)
-            {
-                if (items[i].id == id)
-                {
-                    cartItems.Add(new Food(items[i].price, items[i].quantity + quantity, items[i].name, items[i].src, id));
-                    return;
-                }
-            }
         }
     }
 }

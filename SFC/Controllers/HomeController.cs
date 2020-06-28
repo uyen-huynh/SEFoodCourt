@@ -9,19 +9,34 @@ namespace SFC.Controllers
 {
     public class HomeController : Controller
     {
-        
+        Order order;
+
         [HttpGet]
         public ActionResult Index()
         {
+            if (order == null)
+            {
+                if (TempData["Order"] == null)
+                {
+                    order = new Order();
+                    TempData["Order"] = order;
+                } 
+                else {
+                    order = (Order) TempData["Order"];
+                }              
+            }
 
-            FoodList foodList = FoodList.getObj();
+            FoodList foodList = FoodList.getInstance();
+            TempData.Keep();
             return View(foodList);
         }
 
         [HttpPost]
         public void AddItemToCart(int id, int quantity)
         {
-            FoodList.addCartItem(id, quantity);
+            Order order = (Order)TempData["Order"];
+            TempData.Keep();
+            order.addItemToCart(id, quantity);
         }
 
         public ActionResult AboutUs()

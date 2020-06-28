@@ -1,4 +1,5 @@
-﻿@model SFC.Models.FoodList
+﻿@using SFC.Models
+@model FoodList
 @{
     ViewBag.Title = "Home Page";
 }
@@ -86,26 +87,26 @@
                 </h3>
             </div>
 
-            @for (int i = 0; i < @Model.getListFood().Count(); i++)
+            @foreach (var item in Model.getListFood().Values)
             {
                 <div class="card col-12 col-md-6 p-3 col-lg-3">
                     <div class="card-wrapper">
                         <div class="card-img">
-                            <img src="@Model.getListFood()[i].src" alt="Mobirise" title="">
+                            <img src="@item.ImagePath" alt="Mobirise" title="">
                         </div>
                         <div class="card-box">
                             <h4 class="card-title mbr-fonts-style display-5">
-                                @Model.getListFood()[i].name
+                                @item.name
                             </h4>
                             <p class="mbr-text mbr-fonts-style display-7">
                                 Make with fresh vegetables<br>Remaining:
-                                34<br>$@Model.getListFood()[i].price
+                                34<br>$@item.price
                             </p>
                             <!--Btn-->
                             <br>
                             <div class="cart-add">
-                                <p hidden>@Model.getListFood()[i].id</p>
-                                <input name="item-quantity" type="number" size="10" value="@Model.getListFood()[i].quantity" runat="server" />
+                                <p hidden>@item.id</p>
+                                <input name="item-quantity" type="number" value="1" runat="server" min="0" max="@item.quantity" />
                                 <div class="mbr-section-btn align-center">
                                     <button class="btn btn-primary-outline display-4" type="submit" name="Add-to-cart">
                                         <span class="mbri-cart-add mbr-iconfont mbr-iconfont-btn"></span>

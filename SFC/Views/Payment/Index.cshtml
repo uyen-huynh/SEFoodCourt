@@ -1,4 +1,5 @@
-﻿@model SFC.Models.FoodList
+﻿@using SFC.Models
+@model Order
 @{
     ViewBag.Title = "Pay Order";
 }
@@ -24,6 +25,64 @@
         }
         document.getElementsByClassName('btn-purchase')[0].addEventListener('click', purchaseClicked)
     }
+
+    function purchaseClicked() {
+        $.ajax({
+            type: 'post',
+            url: "@Url.Action("SendRequest")",
+            success: function (result) {
+                JSON.stringify(result)
+                var url = result['responseUrl']
+                window.open(url, "_blank")
+                alert('Thank you for your purchase')
+                var cartItems = document.getElementsByClassName('cart-items')[0]
+                while (cartItems.hasChildNodes()) {
+                    cartItems.removeChild(cartItems.firstChild)
+                }
+
+            }
+        })
+    }
+
+    function removeCartItem(event) {
+        var buttonClicked = event.target
+        var id = buttonClicked.parentElement.children[0].innerText
+        buttonClicked.parentElement.parentElement.remove()
+
+        $.ajax({
+            type: 'post',
+            url: "@Url.Action("RemoveItem")",
+            data: {
+                'id': id,
+            },
+             success: function (result) {
+                JSON.stringify(result)
+                document.getElementsByClassName('cart-total-price')[0].innerText = '$' + result['totalCost']
+             }
+        })
+    }
+
+    function quantityChanged(event) {
+        var input = event.target
+        var group = input.parentElement
+        var id = group.children[0].innerText
+        var quantity = group.children[1].value
+
+        $.ajax({
+            type: 'post',
+            url: "@Url.Action("ChangeQuantity")",
+            data: {
+                'id': id,
+                'quantity': quantity,
+            },
+            dataType: 'json',
+            success: function (result) {
+                JSON.stringify(result)
+                document.getElementsByClassName('cart-total-price')[0].innerText = '$' + result['totalCost']
+            }
+        })
+    }
+
 </script>
 
 <section class="mbr-section content5 cid-s2gNlDMF3j" id="content5-r">
@@ -47,16 +106,20 @@
     </div>
 
     <div class="cart-items">
-        @foreach (var item in Model.getCartItems())
+
+        @foreach (var item in Model.items)
         {
+            var dbItem = Model.getItem(item.Key);
             <div class="cart-row">
                 <div class="cart-item cart-column">
-                    <img class="cart-item-image" src="@item.src" height="100">
-                    <span class="cart-item-title">@item.name</span>
+                    <img class="cart-item-image" src="@dbItem.ImagePath" height="100">
+                    <span class="cart-item-title">@dbItem.name</span>
+                    <p hidden>@item.Key</p>
                 </div>
-                <span class="cart-price cart-column">$@item.price.ToString()</span>
+                <span class="cart-price cart-column">$@dbItem.price.ToString()</span>
                 <div class="cart-quantity cart-column">
-                    <input class="cart-quantity-input" type="number" value="@item.quantity" min="0">
+                    <p hidden> @item.Key </p>
+                    <input class="cart-quantity-input" type="number" value="@item.Value" min="0">
                     <button class="btn btn-danger" type="button">REMOVE</button>
                 </div>
             </div>

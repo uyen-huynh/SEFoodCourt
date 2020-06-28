@@ -1,4 +1,4 @@
-﻿@model SFC.Models.food
+﻿@model SFC.Models.fooditem
 @{
     ViewBag.Title = "Form";
     Layout = "~/Views/Shared/_LayoutManager.cshtml";
@@ -13,21 +13,21 @@
     {
         
         <div>                        
-            @Html.LabelFor(b => b.Name)
-            @Html.TextBoxFor(b => b.Name, new { @class = "form-length form-control"})
-            @Html.ValidationMessageFor(b => b.Name, "", new { @style = "color:red" })
+            @Html.LabelFor(b => b.name)
+            @Html.TextBoxFor(b => b.name, new { @class = "form-length form-control"})
+            @Html.ValidationMessageFor(b => b.name, "", new { @style = "color:red" })
         </div>
         <br />
         <div>
-            @Html.LabelFor(b => b.ID)
-            @Html.TextBoxFor(b => b.ID, new { @class = "form-length form-control"})
-            @Html.ValidationMessageFor(b => b.ID, "", new { @style = "color:red" })
+            @Html.LabelFor(b => b.id)
+            @Html.TextBoxFor(b => b.id, new { @class = "form-length form-control"})
+            @Html.ValidationMessageFor(b => b.id, "", new { @style = "color:red" })
         </div>
         <br />
         <div>
-            @Html.LabelFor(b => b.Price)
-            @Html.TextBoxFor(b => b.Price, new { @class = "form-length form-control"})
-            @Html.ValidationMessageFor(b => b.Price, "", new { @style = "color:red" })
+            @Html.LabelFor(b => b.price)
+            @Html.TextBoxFor(b => b.price, new { @class = "form-length form-control"})
+            @Html.ValidationMessageFor(b => b.price, "", new { @style = "color:red" })
         </div>
         <br />
         <div>
