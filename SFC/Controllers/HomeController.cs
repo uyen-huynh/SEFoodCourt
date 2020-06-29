@@ -31,14 +31,6 @@ namespace SFC.Controllers
             return View(foodList);
         }
 
-        [HttpPost]
-        public void AddItemToCart(int id, int quantity)
-        {
-            Order order = (Order)TempData["Order"];
-            TempData.Keep();
-            order.addItemToCart(id, quantity);
-        }
-
         public ActionResult AboutUs()
         {
             ViewBag.Message = "Your application description page.";
@@ -53,5 +45,43 @@ namespace SFC.Controllers
             return View();
         }
 
+
+        // METHODS FOR ORDER
+        public ActionResult Cart()
+        {
+            Order order = (Order)TempData["Order"];
+            TempData.Keep();
+
+            return View(order);
+        }
+
+        [HttpPost]
+        public void AddItemToCart(int id, int quantity)
+        {
+            Order order = (Order)TempData["Order"];
+            TempData.Keep();
+            order.addItemToCart(id, quantity);
+        }
+
+        [HttpPost]
+        public JsonResult ChangeQuantity(int id, int quantity)
+        {
+            //
+            order = (Order)TempData["Order"];
+            TempData.Keep();
+
+            order.changeQuantity(id, quantity);
+            return Json(new { totalCost = order.getTotalCost() });
+        }
+
+        public JsonResult RemoveItem(int id)
+        {
+            //
+            order = (Order)TempData["Order"];
+            TempData.Keep();
+
+            order.removeCartItem(id);
+            return Json(new { totalCost = order.getTotalCost() });
+        }
     }
 }

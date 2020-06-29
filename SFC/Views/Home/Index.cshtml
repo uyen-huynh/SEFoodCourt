@@ -1,8 +1,6 @@
 ﻿﻿@using SFC.Models
 @model FoodList
-@{
-    ViewBag.Title = "Home Page";
-}
+@{ ViewBag.Title = "Home Page"; }
 <script>
     if (document.readyState == 'loading') {
         document.addEventListener('DOMContentLoaded', ready)
@@ -78,14 +76,10 @@
     }
 
 </script>
-<div id="snackbar">Add to cart successfully</div>
-
-<section class="engine">
-    simple site templates
-</section>
 
 <section class="cid-qTkA127IK8 mbr-fullscreen mbr-parallax-background" id="header2-1">
     <div class="mbr-overlay" style="opacity: 0.3; background-color: rgb(85, 180, 212);"></div>
+
     <div class="container align-center">
         <div class="row justify-content-md-center">
             <div class="mbr-white col-md-10">
@@ -93,6 +87,8 @@
                     WELCOME TO BACH KHOA<br>SMART
                     FOOD COURT
                 </h1>
+
+
                 <div class="mbr-section-btn">
                     <a class="btn btn-md btn-secondary display-4"
                        href="index.html#services1-3">
@@ -108,6 +104,7 @@
         </a>
     </div>
 </section>
+
 
 <section class="services1 cid-s2gv6RA8aE" id="services1-3">
     <!---->
@@ -128,41 +125,40 @@
             @foreach (var item in Model.getListFood().Values)
             {
                 var textBoxName = "hotTextBox" + @item.id.ToString();
-                <div class="card col-12 col-md-6 p-3 col-lg-3 align-center">
-                    <div class="card-wrapper">
-                        <div class="card-img">
-                            <img src="@item.ImagePath" alt="3nut" title="">
-                        </div>
-                        <div class="card-box">
-                            <h4 class="card-title mbr-fonts-style display-5">
-                                @item.name
-                            </h4>
-                            <p class="mbr-text mbr-fonts-style display-7">
-                                Make with fresh vegetables<br>Remaining:
-                                @item.quantity<br>$@item.price
-                            </p>
-                            <!--Btn-->
-                            <br>
-                            <div class="cart-add">
+<div class="card col-12 col-md-6 p-3 col-lg-3 align-center">
+    <div class="card-wrapper">
+        <div class="card-img">
+            <img src="@item.ImagePath" alt="3nut" title="">
+        </div>
+        <div class="card-box">
+            <h4 class="card-title mbr-fonts-style display-5">
+                @item.name
+            </h4>
+            <p class="mbr-text mbr-fonts-style display-7">
+                Make with fresh vegetables<br>Remaining:
+                @item.quantity<br>$@item.price
+            </p>
+            <!--Btn-->
+            <br>
+            <div class="cart-add">
 
-                                <div class="btn-group">
-                                    <button type="button" class="btnUpDown" onclick="downClick('@textBoxName')" runat="server">-</button>
-                                    &nbsp;
-                                    <input name="item-quantity" id="@textBoxName" type="text" value="1" style="max-width:100px" class="textUpDown" runat="server" min='1' max="@item.quantity">
-                                    &nbsp;
-                                    <button type="button" value="+" class="btnUpDown" onclick="upClick('@textBoxName')" runat="server">+</button>
-                                </div>
-
-                                <div class="mbr-section-btn align-center">
-                                    <button class="btn btn-primary-outline display-4" type="submit" name="Add-to-cart" onclick="clickOrder('@item.id','@textBoxName')">
-                                        <span class="mbri-cart-add mbr-iconfont mbr-iconfont-btn"></span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="btn-group">
+                    <button type="button" class="btnUpDown" onclick="downClick('@textBoxName')" runat="server">-</button>
+                    &nbsp;
+                    <input name="item-quantity" id="@textBoxName" type="text" value="1" style="max-width:100px" class="textUpDown" runat="server" min='1' max="@item.quantity">
+                    &nbsp;
+                    <button type="button" value="+" class="btnUpDown" onclick="upClick('@textBoxName')" runat="server">+</button>
                 </div>
-            }
+
+                <div class="mbr-section-btn align-center">
+                    <button class="btn btn-primary-outline display-4" type="submit" name="Add-to-cart" onclick="clickOrder('@item.id','@textBoxName')">
+                        <span class="mbri-cart-add mbr-iconfont mbr-iconfont-btn"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>            }
         </div>
     </div>
 </section>
@@ -200,44 +196,44 @@
                 {
                     var textBoxName = "galleryTextBox" + @item.id.ToString();
 
-                    <div class="mbr-gallery-item mbr-gallery-item--p4" data-video-url="false" data-tags="ii">
-                        <div href="#lb-gallery2-7" data-slide-to="@item.id">
-                            <img src="@item.ImagePath" alt="" title="Hihi">
-                            <span>
-                                <div class="card-box align-center">
-                                    <br>
-                                    <h4 class="card-title mbr-fonts-style display-5">
-                                    @item.name
-                                    </h4>
-                                    <p class="mbr-text mbr-fonts-style display-7">
-                                        Make with fresh vegetables<br>Remaining:
-                                        @item.quantity<br>$@item.price
-                                    </p>
-                                    <!--Btn-->
-                                    <div class="cart-add">
-                                        <div class="btn-group">
-                                            <button type="button" class="btnUpDown" onclick="downClick('@textBoxName')" runat="server">-</button>
-                                            &nbsp;
-                                            <input name="item-quantity" id="@textBoxName" type="text" value="1" style="max-width:100px" class="textUpDown" runat="server" min='1' max="@item.quantity">
-                                            &nbsp;
-                                            <button type="button" value="+" class="btnUpDown" onclick="upClick('@textBoxName')" runat="server">+</button>
-                                        </div>
-                                        <div class="btn-group">
-                                            <div class="mbr-section-btn align-center">
-                                                <button class="btn btn-primary-outline display-4" type="submit" name="Add-to-cart" onclick="clickOrder('@item.id','@textBoxName')">
-                                                    <span class="mbri-cart-add mbr-iconfont mbr-iconfont-btn"></span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </span>
+    <div class="mbr-gallery-item mbr-gallery-item--p4" data-video-url="false" data-tags="ii">
+        <div href="#lb-gallery2-7" data-slide-to="@item.id">
+            <img src="@item.ImagePath" alt="" title="Hihi">
+            <span>
+                <div class="card-box align-center">
+                    <br>
+                    <h4 class="card-title mbr-fonts-style display-5">
+                        @item.name
+                    </h4>
+                    <p class="mbr-text mbr-fonts-style display-7">
+                        Make with fresh vegetables<br>Remaining:
+                        @item.quantity<br>$@item.price
+                    </p>
+                    <!--Btn-->
+                    <div class="cart-add">
+                        <div class="btn-group">
+                            <button type="button" class="btnUpDown" onclick="downClick('@textBoxName')" runat="server">-</button>
+                            &nbsp;
+                            <input name="item-quantity" id="@textBoxName" type="text" value="1" style="max-width:100px" class="textUpDown" runat="server" min='1' max="@item.quantity">
+                            &nbsp;
+                            <button type="button" value="+" class="btnUpDown" onclick="upClick('@textBoxName')" runat="server">+</button>
+                        </div>
+                        <div class="btn-group">
+                            <div class="mbr-section-btn align-center">
+                                <button class="btn btn-primary-outline display-4" type="submit" name="Add-to-cart" onclick="clickOrder('@item.id','@textBoxName')">
+                                    <span class="mbri-cart-add mbr-iconfont mbr-iconfont-btn"></span>
+                                </button>
+                            </div>
                         </div>
                     </div>
-                }
+                </div>
+            </span>
+        </div>
+    </div>}
             </div>
             <div class="clearfix"></div>
         </div>
     </div>
 
 </section>
+<div id="snackbar">Add to cart successfully</div>

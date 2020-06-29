@@ -19,7 +19,7 @@ namespace SFC.Models
 
         public static void addOrder(Order order)
         {
-            orders[order.orderId] = order;
+            // orders.Add(order.orderId, order);
         }
 
         public static int getNumsOfOrders()

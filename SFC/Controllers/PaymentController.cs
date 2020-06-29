@@ -17,44 +17,20 @@ namespace SFC.Controllers
     {
         Order order;
 
-        // GET: Payment
         public ActionResult Index()
         {
-            if (TempData["Order"] == null)
-            {
-                order = new Order();
-                TempData["Order"] = order;
-            }
-            else order = (Order) TempData["Order"];
+            return View();
+        }
+        public void ProcessPayment()
+        {
+            order = (Order) TempData["Order"];
             TempData.Keep();
-
-            return View(order);
+            
         }
 
         public ActionResult Purchase(string partnerCode, string accessKey, string requestID, string amount, string orderID, string orderInfo, string orderType, string transID, int errorCode, string mesage, string localMessage, string payType, string responseTime, string extraData, string signature)
         {
             return Content(orderType);
-        }
-       
-        [HttpPost]
-        public JsonResult ChangeQuantity(int id, int quantity)
-        {
-            //
-            order = (Order)TempData["Order"];
-            TempData.Keep();
-
-            order.changeQuantity(id, quantity);
-            return Json(new { totalCost = order.getTotalCost() });
-        }
-
-        public JsonResult RemoveItem(int id)
-        {
-            //
-            order = (Order)TempData["Order"];
-            TempData.Keep();
-
-            order.removeCartItem(id);
-            return Json(new { totalCost = order.getTotalCost() });
         }
 
         public static string sendPaymentRequest(string endpoint, string postJsonString)
