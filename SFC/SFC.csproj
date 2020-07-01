@@ -245,27 +245,16 @@
     <Content Include="assets\payassets\fonts\flexslider-icon.svg" />
     <Content Include="assets\payassets\fonts\fontawesome-webfont.svg" />
     <Content Include="assets\payassets\fonts\slick.svg" />
-    <Content Include="assets\payassets\images\contact-bg.jpg" />
-    <Content Include="assets\payassets\images\cta-bg.jpg" />
-    <Content Include="assets\payassets\images\features-first-icon.png" />
-    <Content Include="assets\payassets\images\first-trainer.jpg" />
+    <Content Include="assets\payassets\images\failed.png" />
+    <Content Include="assets\payassets\images\food-cart.png" />
     <Content Include="assets\payassets\images\four.png" />
-    <Content Include="assets\payassets\images\gym-video.mp4" />
-    <Content Include="assets\payassets\images\line-dec.png" />
+    <Content Include="assets\payassets\images\hcmut-122x117.png" />
     <Content Include="assets\payassets\images\logo-momo.jpg" />
     <Content Include="assets\payassets\images\one.png" />
     <Content Include="assets\payassets\images\online-payment.png" />
     <Content Include="assets\payassets\images\paypal.png" />
-    <Content Include="assets\payassets\images\schedule-bg.jpg" />
-    <Content Include="assets\payassets\images\second-trainer.jpg" />
-    <Content Include="assets\payassets\images\slide-01.jpg" />
-    <Content Include="assets\payassets\images\tabs-first-icon.png" />
-    <Content Include="assets\payassets\images\third-trainer.jpg" />
+    <Content Include="assets\payassets\images\rating.png" />
     <Content Include="assets\payassets\images\three.png" />
-    <Content Include="assets\payassets\images\training-image-01.jpg" />
-    <Content Include="assets\payassets\images\training-image-02.jpg" />
-    <Content Include="assets\payassets\images\training-image-03.jpg" />
-    <Content Include="assets\payassets\images\training-image-04.jpg" />
     <Content Include="assets\payassets\images\two.png" />
     <Content Include="assets\payassets\images\zalo.png" />
     <Content Include="assets\payassets\js\accordions.js" />
@@ -359,9 +348,11 @@
     <Content Include="Views\Login\Manager.cshtml" />
     <Content Include="Views\Login\Chef.cshtml" />
     <Content Include="Views\Manager\Form.cshtml" />
-    <Content Include="Views\Manager\HomeManager.cshtml" />
     <Content Include="Views\Home\Cart.cshtml" />
     <Content Include="Views\Payment\Index.cshtml" />
+    <Content Include="Views\Payment\HandleResultPayment.cshtml" />
+    <Content Include="Views\Payment\Layout.cshtml" />
+    <Content Include="Views\Manager\HomeManager - Copy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

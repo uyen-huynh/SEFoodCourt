@@ -11,7 +11,7 @@ namespace SFC.Models
         public Dictionary<int, int> items;
         public int orderId { get; set; }
         int totalCost = 0;
-        bool paid = false;       
+        public int paid = 0;       
 
         public Order()
         {
@@ -60,6 +60,5 @@ namespace SFC.Models
             totalCost -= items[id] * (int)FoodList.foodList[id].price;
             items.Remove(id);
         }
-
     }
 }

@@ -158,7 +158,7 @@ body {
 }
 
 a {
-    text-decoration: none !important;
+    text-decoration: none !important
 }
 
 h1,
@@ -262,6 +262,7 @@ body {
     font-size: 15px;
     padding: 12px 20px;
     background-color: #17a2b8;
+    border-color: #17a2b8;
     color: #fff;
     text-align: center;
     font-weight: 400;
@@ -270,7 +271,9 @@ body {
 }
 
     .main-button a:hover {
-        background-color: #17a2b8bd;
+        color: #17a2b8;
+        background-color: #fff;
+        border-color: #17a2b8
     }
 
 
@@ -814,11 +817,11 @@ subscribe
 
 #call-to-action {
     padding: 120px 0px;
-    background-image: url(../images/cta-bg.jpg);
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
     text-align: center;
+    background-color: rgba(23, 162, 184, 0.8);
 }
 
 .cta-content h2 {
@@ -831,7 +834,7 @@ subscribe
 
     .cta-content h2 em {
         font-style: normal;
-        color: #ed563b;
+        color: #d05613;
     }
 
 .cta-content p {
@@ -896,7 +899,7 @@ Our Classes
 }
 
     #tabs .main-rounded-button a:hover {
-        background-color: #17a2b8bd;
+        background-color: #50cfe2;
     }
 
 #tabs ul li a img {
@@ -912,7 +915,8 @@ Our Classes
 }
 
 #tabs ul .ui-tabs-active a {
-    color: #17a2b8;
+    color: #fff;
+    background-color: #17a3b8d8;
 }
 
 #tabs ul .ui-tabs-active span {
@@ -920,7 +924,6 @@ Our Classes
 }
 
 .tabs-content {
-    margin-left: 30px;
     text-align: left;
     display: inline-block;
     transition: all 0.3s;
@@ -946,6 +949,13 @@ Our Classes
         color: #7a7a7a;
         margin-bottom: 28px;
     }
+
+.tabs-step h4 {
+    font-size: 23px;
+    font-weight: 700;
+    color: #232d39;
+    letter-spacing: 0.5px;
+}
 
 
 /* 

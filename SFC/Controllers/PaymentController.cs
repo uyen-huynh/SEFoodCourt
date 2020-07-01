@@ -10,6 +10,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.IO;
 using System.Web.Helpers;
+using System.Threading;
 
 namespace SFC.Controllers
 {
@@ -19,18 +20,21 @@ namespace SFC.Controllers
 
         public ActionResult Index()
         {
-            return View();
-        }
-        public void ProcessPayment()
-        {
-            order = (Order) TempData["Order"];
+            order = (Order)TempData["Order"];
             TempData.Keep();
-            
+            return View(order);
         }
 
-        public ActionResult Purchase(string partnerCode, string accessKey, string requestID, string amount, string orderID, string orderInfo, string orderType, string transID, int errorCode, string mesage, string localMessage, string payType, string responseTime, string extraData, string signature)
+        public ActionResult HandleResultPayment(string partnerCode, string accessKey, string requestID, string amount, string orderID, string orderInfo, string orderType, string transID, int errorCode, string mesage, string localMessage, string payType, string responseTime, string extraData, string signature)
         {
-            return Content(orderType);
+            if (TempData["success"] == null)
+                TempData.Add("success", true);
+            if (errorCode != 0)
+            {
+                TempData["success"] = false;
+                TempData.Keep();
+            }
+            return View();
         }
 
         public static string sendPaymentRequest(string endpoint, string postJsonString)
@@ -94,7 +98,7 @@ namespace SFC.Controllers
             string accessKey = "F8BBA842ECF85";
             string amount = (order.getTotalCost()*1000).ToString();
             string orderInfo = "order info";
-            string returnUrl = "http://b94d89448dfa.ngrok.io/Payment/Purchase/";
+            string returnUrl = "http://75a249bf72c8.ngrok.io/Payment/HandleResultPayment/";
             string notifyUrl = "https://momo.vn";
             string secretKey = "K951B6PE1waDMi640xX08PD3vg6EkVlz";
             string extraData = "email=uyenhuynh@gmail.com";
@@ -136,7 +140,8 @@ namespace SFC.Controllers
             JObject jmessage = JObject.Parse(responseFromMomo);
 
             string url = jmessage.GetValue("payUrl").ToString();
-            return Json(new { responseUrl = url});
+            string qrcode = jmessage.GetValue("qrCodeUrl").ToString();
+            return Json(new { responseUrl = url, qrCode = qrcode});
         }
 
 

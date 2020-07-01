@@ -1,27 +1,65 @@
 ﻿@model SFC.Models.Order
 
 @{
-    Layout = null;
+    ViewBag.Title = "Purchase";
+    Layout = "~/Views/Payment/Layout.cshtml";
+    var order = Model;
 }
 
-<!DOCTYPE html>
-<html lang="en">
 <script>
     if (document.readyState == 'loading') {
         document.addEventListener('DOMContentLoaded', ready)
-    } else {
+    }
+    else
+    {
         ready()
     }
 
     function ready() {
+        var qrcodeImg = document.getElementsByName("qrcode-img")[0]
+        var notifyImg = document.getElementsByName("notify-img")[0]
+
+        if ('@order' == null) {
+
+            qrcodeImg.src = "~/assets/payassets/images/noqrcode.png"
+            notifyImg.src = "~/assets/payassets/images/noqrcode.png"
+            qrcodeImg.setAttribute("height", "350")
+            notifyImg.setAttribute("height", "350")
+            var des = document.getElementsById(step4)
+            des.click()
+
+        }
+        else if ('@order.paid' == 1) {
+            notifyImg.src = "~/assets/payassets/images/successful.png"
+        }
+        else if ('@order.paid' == -1) {
+            notifyImg.src = "~/assets/payassets/images/failed.png"
+        }
+        else {
+            notifyImg.src = "~/assets/payassets/images/noqrcode.png"
+        }
+
+
         var wallet = document.getElementsByName('wallet-button')
         for (var i = 0; i < wallet.length; i++) {
             var button = wallet[i]
-            button.addEventListener('click', chooseWallet)
+            button.addEventListener('click', payWithWallet)
         }
+
+        var btn_confirm = document.getElementsByName('btn-confirm')[0]
+        btn_confirm.addEventListener('click', confirmOrder)
+
+        var btn_gateway = document.getElementsByName('btn-payment-gateway')[0]
+        btn_gateway.addEventListener('click', openPaymentGateway)
+
     }
 
-    function chooseWallet() {
+    function confirmOrder(event) {
+        var des = document.getElementById('step2')
+        des.click()
+    }
+
+    function payWithWallet(event) {
         var button = event.target
         console.log(button)
         $.ajax({
@@ -29,253 +67,216 @@
             url: "@Url.Action("SendRequest")",
             success: function (result) {
                 JSON.stringify(result)
-                window.open(result['responseUrl'], "_blank")
+                var img = document.getElementsByName("qrcode-img")[0]
+                img.src = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + result["qrCode"];
+                var btnOpenGateway = document.getElementsByName("btn-payment-gateway")[0]
+                btnOpenGateway.setAttribute("href", result['responseUrl'])
+
+                var des = document.getElementById("step3")
+                des.click()
             }
 
         })
+
     }
+
+    // function @*checkPaidOrder() {
+        var checkInterval = setInterval(function () {
+            if ('@Model.paid' == 1) {
+                return
+            }
+
+        },3000)
+    }*@
+
+    function openPaymentGateway(event) {
+        var button = event.target
+        var link = button.getAttribute("href")
+        window.open(link, "_blank")
+        setTimeout(function () {
+            notifyImg.src = "~/assets/payassets/images/successful.png"
+            notifyImg.setAttribute("height", "350")
+            
+        }, 10000)
+        setTimeout(function () {
+            var des = document.getElementById("step4")
+            des.click()
+        },60000)
+    }
+
 </script>
 
-<head>
+<div class="row" id="tabs">
+    <div class="col-lg-4">
+        <ul>
+            <li>
+                <a id='step1' href='#tabs-1'><img src="~/assets/payassets/images/one.png" height="50" alt="">Confirm the order</a>
+            </li>
+            <li>
+                <a id='step2' href='#tabs-2'><img src="~/assets/payassets/images/two.png" height="50" alt="">Choose a wallet</a>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
+            </li>
+            <li>
+                <a id='step3' href='#tabs-3'><img src="~/assets/payassets/images/three.png" height="50" alt="">Scan the QR Code</a>
 
-    <title>Training Studio - Free CSS Template</title>
-    <!--
+            </li>
+            <li>
+                <a id='step4' href='#tabs-4'><img src="~/assets/payassets/images/four.png" height="50" alt="">Get the order</a>
 
-    TemplateMo 548 Training Studio
-
-    https://templatemo.com/tm-548-training-studio
-
-    -->
-    <!-- Global Init -->
-    <link rel="stylesheet" type="text/css" href="~/assets/payassets/css/bootstrap.min.css">
-
-    <link rel="stylesheet" type="text/css" href="~/assets/payassets/css/font-awesome.css">
-
-    <link rel="stylesheet" href="~/assets/payassets/css/templatemo-training-studio.css">
-    <link rel="stylesheet" href="~/assets/payassets/pay.css">
-
-</head>
-
-<body>
-
-    <!-- ***** Preloader Start ***** -->
-    <div id="js-preloader" class="js-preloader">
-        <div class="preloader-inner">
-            <span class="dot"></span>
-            <div class="dots">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
+            </li>
+            <div class="main-rounded-button"><a href="#tabs-1">RE-PAY</a></div>
+        </ul>
     </div>
-    <!-- ***** Preloader End ***** -->
-    <!-- ***** Header Area Start ***** -->
-    <!-- ***** Header Area End ***** -->
-    <!-- ***** Main Banner Area Start ***** -->
-    <!-- ***** Main Banner Area End ***** -->
-    <!-- ***** Features Item Start ***** -->
-    <!-- ***** Features Item End ***** -->
-    <!-- ***** Call to Action Start ***** -->
-    <section class="section" id="call-to-action">
-        <div class="container">
+    <div class="col-lg-8">
+        <article id='tabs-1'>
             <div class="row">
-                <div class="col-lg-10 offset-lg-1">
-                    <div class="cta-content">
-                        <h2>Don’t <em>think</em>, begin <em>today</em>!</h2>
-                        <p>Ut consectetur, metus sit amet aliquet placerat, enim est ultricies ligula, sit amet dapibus odio augue eget libero. Morbi tempus mauris a nisi luctus imperdiet.</p>
-                        <div class="main-button scroll-to-section">
-                            <a href="#our-classes">Become a member</a>
+                <table class="table" cellspacing="0">
+                    @{
+                        var totalCost = 0;
+                        if (Model != null)
+                        {
+                            totalCost = Model.getTotalCost();
+                        }
+                    }
+                    <thead>
+                        <tr class="d-flex step1">
+                            <th class="col-lg-3 offset-lg-1">Name</th>
+                            <th class="col-lg-2">Quantity</th>
+                            <th class="col-lg-3">Price</th>
+                            <th class="col-lg-3">SubTotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            foreach (var item in Model.items)
+                            {
+                                var dbItem = Model.getItem(item.Key);
+                                <tr class="d-flex">
+                                    <td class="col-lg-3 offset-lg-1"><a href="#">@dbItem.name</a></td>
+                                    <td class="col-lg-2">x @item.Value</td>
+                                    <td class="col-lg-3">$@dbItem.price</td>
+                                    <td class="col-lg-3">$@(@dbItem.price * @item.Value)</td>
+                                </tr>
+
+                            }
+                        }
+
+                    <tfoot>
+                        <tr class="d-flex step1">
+                            <td class="col-lg-8 offset-lg-1" style="text-align: center">TOTAL COST</td>
+
+                            <td class="col-lg-3" style="text-align: left"> $@totalCost</td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+            </div>
+            <div class="row">
+                <div class="col-lg-10 offset-lg-1 step1">
+                    <section class="tabs-step">
+                        <h4>Confirm Your Order</h4>
+                        <p>Check the order carefully and press the bellow button. </p>
+                    </section>
+                </div>
+
+            </div>
+
+            <!--Button-->
+            <div class="row ">
+                <div class="col-lg-3 col-md-3 col-sm-4 col-6 offset-lg-1 step1">
+                    <button name="next-button " style="float: left; " class="btn btn-primary main-button ">CANCLE</button>
+                </div>
+                <div class=" col-lg-5 col-md-6 col-sm-4">
+                    <p style="color:#fff; "> SPACE BETWEEN 2 COLS</p>
+                </div>
+                <div class=" col-lg-3 col-md-3 col-sm-4 col-6 step1" align-item="right ">
+                    <button name="btn-confirm" class="btn btn-primary main-button" style="display: block; float: right; ">CONFIRM</button>
+                </div>
+            </div>               
+
+        </article>
+        <article id='tabs-2'>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="features-item pb-4">
+                        <div class="features-icon">
+                            <img src="~/assets/payassets/images/logo-momo.jpg" height="100" alt="">
+                        </div>
+                        <div class="features-content step1">
+                            <h4>Momo</h4>
+                            <p>Super No.1 payment application in VietNam</p>
+                            <button name="wallet-button" class="btn btn-primary main-button" type="button">Choose</button>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="features-item pb-4">
+                        <div class="features-icon">
+                            <img src="~/assets/payassets/images/zalo.png" height="100" alt="">
+                        </div>
+                        <div class="features-content step1">
+                            <h4>ZaloPay</h4>
+                            <p>Pay only in 2s</p>
+                            <button name="wallet-button" class="btn btn-primary main-button" type="button">Choose</button>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-    <!-- ***** Call to Action End ***** -->
-    <!-- ***** Our Classes Start ***** -->
-    <section class="section" id="our-classes">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6 offset-lg-3">
-                    <div class="section-heading">
-                        <h2>Our <em>Classes</em></h2>
-                        <img src="~/assets/payassets/images/online-payment.png" height="100" alt="">
-                        <p>Nunc urna sem, laoreet ut metus id, aliquet consequat magna. Sed viverra ipsum dolor, ultricies fermentum massa consequat eu.</p>
-                    </div>
+
+        </article>
+
+        <article id='tabs-3'>
+            <div class="row ">
+                <div class="col-lg-10 offset-lg-1 step1 ">
+                    <img name="qrcode-img" src="~/assets/payassets/images/noqrcode.png" width="350" alt="Loading ..." />
                 </div>
+
             </div>
-            <div class="row" id="tabs">
-                <div class="col-lg-4">
-                    <ul>
-                        <li>
-                            <a id='step1' href='#tabs-1'><img src="~/assets/payassets/images/one.png" height="50" alt="">Confirm the order</a>
-                        </li>
-                        <li>
-                            <a id='step2' href='#tabs-2'><img src="~/assets/payassets/images/two.png" height="50" alt="">Choose a wallet</a>
-                            
-                        </li>
-                        <li>
-                            <a id='step3' href='#tabs-3'><img src="~/assets/payassets/images/three.png" height="50" alt="">Scan the QR Code</a>
-                            
-                        </li>
-                        <li>
-                            <a id='step4' href='#tabs-4'><img src="~/assets/payassets/images/four.png" height="50" alt="">Get the order</a>
-                            
-                        </li>
-                        <div class="main-rounded-button"><a href="#">View All Schedules</a></div>
-                    </ul>
-                </div>
-                <div class="col-lg-8">
-                    <section class='tabs-content'>
-                        <article id='tabs-1'>
-                            <div class="row">
-
-                            </div>
-                            <table class="table" cellspacing="0">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Quantity</th>
-                                        <th>Price</th>
-                                        <th>SubTotal</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><a href="#">Cake</a></td>
-                                        <td>x 2</td>
-                                        <td>$20</td>
-                                        <td>$40</td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="#">Cake</a></td>
-                                        <td>x 2</td>
-                                        <td>$20</td>
-                                        <td>$40</td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="#">Cake</a></td>
-                                        <td>x 2</td>
-                                        <td>$20</td>
-                                        <td>$40</td>
-                                    </tr>
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td colspan="3"> Total Cost
-                                        <th> $120</th>
-                                        </td>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                            <h5>Confirm the order</h5>
-                            <p>Check the order carefully and press the bellow button. </p>
-                            <div class="main-button">
-                                <a href="#">Next</a>
-                            </div>
-                        </article>
-                        <article id='tabs-2'>
-                            <div class="row">
-                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" data-scroll-reveal="enter left move 30px over 0.6s after 0.4s">
-                                    <div class="features-item pb-4">
-                                        <div class="features-icon">
-                                            <img src="~/assets/payassets/images/logo-momo.jpg" height="100" alt="">
-                                        </div>
-                                        <div class="features-content">
-                                            <h4>Momo</h4>
-                                            <p>Proin euismod sem ut diam ultricies, ut faucibus velit ultricies. Nam eu turpis quam. Duis ac condimentum eros.</p>
-                                            <button name="wallet-button" class="btn btn-primary main-button" type="button">Choose</button>
-                                           
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" data-scroll-reveal="enter left move 30px over 0.6s after 0.4s">
-                                    <div class="features-item pb-4">
-                                        <div class="features-icon">
-                                            <img src="~/assets/payassets/images/zalo.png" height="100" alt="">
-                                        </div>
-                                        <div class="features-content">
-                                            <h4>ZaloPay</h4>
-                                            <p>Proin euismod sem ut diam ultricies, ut faucibus velit ultricies. Nam eu turpis quam. Duis ac condimentum eros.</p>
-                                            <button name="wallet-button" class="btn btn-primary main-button" type="button">Choose</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </article>
-                        <article id='tabs-3'>
-                            <img src="~/assets/payassets/images/training-image-03.jpg" alt="Third Class">
-                            <h4>Third Training Class</h4>
-                            <p>
-                                Fusce laoreet malesuada rhoncus. Donec ultricies diam tortor, id auctor neque posuere sit amet. Aliquam pharetra, augue vel cursus porta, nisi tortor vulputate sapien, id scelerisque felis magna id felis. Proin neque metus,
-                                pellentesque pharetra semper vel, accumsan a neque.
-                            </p>
-                            <div class="main-button">
-                                <a href="#">View Schedule</a>
-                            </div>
-                        </article>
-                        <article id='tabs-4'>
-                            <img src="~/assets/payassets/images/training-image-04.jpg" alt="Fourth Training">
-                            <h4>Fourth Training Class</h4>
-                            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aenean ultrices elementum odio ac tempus. Etiam eleifend orci lectus, eget venenatis ipsum commodo et.</p>
-                            <div class="main-button">
-                                <a href="#">View Schedule</a>
-                            </div>
-                        </article>
+            <div class="row ">
+                <div class="col-lg-11 offset-lg-1 step1 ">
+                    <section class="tabs-step ">
+                        <h4>Scan the QR Code</h4>
+                        <p>Open your payment app or use the camera which supports scanner to scan the above QR Code.  </p>
+                        <p>You also click the below link to go to payment gateway,</p>
                     </section>
+                </div>
 
+            </div>
+
+            <div class="row ">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-10 offset-lg-1 step1 ">
+                    <button name="btn-payment-gateway" class="btn btn-primary main-button" type="button" href="#">OPEN MOMO GATEWAY</button>
+                </div>
+            </div>           
+
+        </article>
+
+        <article id='tabs-4'>
+            <div class="row ">
+                <div class="col-lg-10 offset-lg-1 step1 ">
+                    <img name="notify-img" src="~/assets/payassets/images/noqrcode.png" width="350" alt="Loading ..." />
+                </div>
+
+            </div>
+            <div class="row ">
+                <div class="col-lg-11 offset-lg-1 step1 ">
+                    <section class="tabs-step ">
+                        <h4>Get your order</h4>
+                        <p>Now, you can check email, get your food and enjoy.</p>
+                    </section>
                 </div>
             </div>
-        </div>
-    </section>
-    <!-- ***** Our Classes End ***** -->
-    <!-- ***** Testimonials Starts ***** -->
-    <!-- ***** Testimonials Ends ***** -->
-    <!-- ***** Contact Us Area Starts ***** -->
-    
-    <!-- ***** Contact Us Area Ends ***** -->
-    <!-- ***** Footer Start ***** -->
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <p>Copyright &copy; 2020 Training Studio - Designed by <a rel="nofollow" href="https://templatemo.com" class="tm-text-link" target="_parent">TemplateMo</a></p>
 
-                    <!-- You shall support us a little via PayPal to info@templatemo.com -->
-
+            <div class="row ">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-10 offset-lg-1 step1 ">
+                    <button name="btn-new-order" class="btn btn-primary main-button" type="button" onclick="location.href='@Url.Action("Index", "HomE")'">GET NEW ORDER</button>
                 </div>
             </div>
-        </div>
-    </footer>
-
-    <!-- jQuery -->
-    <script src="~/assets/payassets/js/jquery-2.1.0.min.js"></script>
-
-    <!-- Bootstrap -->
-    <script src="~/assets/payassets/js/popper.js"></script>
-    <script src="~/assets/payassets/js/bootstrap.min.js"></script>
-
-    <!-- Plugins -->
-    <script src="~/assets/payassets/js/scrollreveal.min.js"></script>
-    <script src="~/assets/payassets/js/waypoints.min.js"></script>
-    <script src="~/assets/payassets/js/jquery.counterup.min.js"></script>
-    <script src="~/assets/payassets/js/imgfix.min.js"></script>
-    <script src="~/assets/payassets/js/mixitup.js"></script>
-    <script src="~/assets/payassets/js/accordions.js"></script>
-
-    <!-- Global Init -->
-    <script src="~/assets/payassets/js/custom.js"></script>
+           
+        </article>
+    </div>
+</div>
 
 
-
-</body>
-
-</html>

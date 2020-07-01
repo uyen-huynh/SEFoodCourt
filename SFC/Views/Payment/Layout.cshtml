@@ -1,0 +1,204 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
+
+    <title>@ViewBag.Title</title>
+    <!--
+
+    TemplateMo 548 Training Studio
+
+    https://templatemo.com/tm-548-training-studio
+
+    -->
+    <!-- Global Init -->
+    <link rel="stylesheet" type="text/css" href="~/assets/payassets/css/bootstrap.min.css">
+
+    <link rel="stylesheet" type="text/css" href="~/assets/payassets/css/font-awesome.css">
+
+    <link rel="stylesheet" href="~/assets/payassets/css/templatemo-training-studio.css">
+    <link rel="stylesheet" href="~/assets/payassets/pay.css">
+
+</head>
+<body>
+    <!-- ***** Preloader Start ***** -->
+    <div id="js-preloader" class="js-preloader">
+        <div class="preloader-inner">
+            <span class="dot"></span>
+            <div class="dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+    <!-- ***** Preloader End ***** -->
+    <section class="pay-nav" once="menu" id="menu2-g">
+
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #fff;">
+
+
+
+
+            <div class="navbar-brand" href="index.html">
+                <span> <img title="HCMUT Smart Food Court" src="~/assets/payassets/images/hcmut-122x117.png" alt="HCMUT Smart Food Court" style="width:5%;color: #000;"> </span>
+                <span class="navbar-caption-wrap">
+                    <a class="navbar-caption text-black" href="@Url.Action("Index","Home")" style="font-size: 80%; font-weight: bold;">
+                        HCMUT Smart Food Court
+                    </a>
+                </span>
+            </div>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon" style="color: #000;"></span>
+            </button>
+
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav nav-dropdown" data-app-modern-menu="true">
+                    <li class="nav-item">
+                        <a class="nav-link " href="@Url.Action("Index","Home")">
+                            <img src="https://image.flaticon.com/icons/svg/2948/2948025.svg" style="margin-right: 0.5em;" width="30px">Home
+                        </a>
+
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="@Url.Action("Index","Home")">
+                            <img src="https://image.flaticon.com/icons/svg/1077/1077035.svg" style="margin-right: 0.5em;" width="30">About us
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("AboutUs","Home")">
+                            <button class="btn btn-primary btn-sm display-7" href="#" style="color: #fff;margin-right: 0em;">
+                                <img src="~/assets/payassets/images/white-supermarket.png" style="margin-right: 0.5em;" width="25">Cart
+                            </button>
+                        </a>
+
+
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Login","Home")">
+                            <button class="btn btn-primary btn-sm display-7" href="#" style="color: #fff;margin-right: 0em;">
+                                Login
+                            </button>
+                        </a>
+
+
+                    </li>
+
+                </ul>
+
+            </div>
+        </nav>
+
+
+    </section>
+   
+    <section class="section" id="call-to-action">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 offset-lg-1">
+                    <div class="cta-content">
+                        <h2> <em>DON'T</em> FORGET TO <em>PAY </em>THE ORDER</h2>
+                        <p>With a few simple clicks, you will own our delicious dishes. </p>
+                        <div class="main-button scroll-to-section">
+                            <a href="#our-classes">PURCHASE</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="our-classes">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 offset-lg-3">
+                    <div class="section-heading">
+                        <h2> <em>PURCHASE</em> ORDER</h2>
+                        <img src="~/assets/payassets/images/online-payment.png" height=100 alt="">
+                        <h6> Are you hungry? Are you thirsty?</h6>
+                        <p>Let purchase your order with just a few simple mouse clicks.</p>
+
+                    </div>
+                </div>
+            </div>
+            @RenderBody()
+        </div>
+    </section>
+
+    <section class="section footer-section" id="footer1-i">
+        <footer class="container py-5">
+            <div class="row " style="color: #fff; text-align: left; ">
+                <div class="col-4 col-sm-2 col-md-2 col-lg-2" style="display:inline-block">
+                    <img src="~/assets/payassets/images/hcmut-122x117.png" width="100%">
+                </div>
+                <div class="col-8 col-sm-3 col-md-3 col-lg-3 " style="text-align:left;">
+                    <h5>Address</h5>
+                    <hr>
+                    <li>268 Ly Thuong Kiet</li>
+                    <li>District 10</li>
+                    <li>Ho Chi Minh City, Viet Nam</li>
+                    <hr>
+                </div>
+                <div class="col-6 col-sm-3 col-md-3 col-lg-3 ">
+                    <h5>Contacts</h5>
+                    <hr> Email: abc@gmail.com
+                    <li>Phone: 012345678</li>
+
+                </div>
+                <div class="col-6 col-sm-4 col-md-4 col-lg-4 " style="padding-left: 1em;">
+                    <h5>Feedback</h5>
+                    <hr>
+                    <li>Please send us your ideas, bug reports, suggestions!</li>
+                    <li>Any feedback would be appreciated.</li>
+                </div>
+
+            </div>
+            <div class="row">
+                <hr>
+            </div>
+            <div class="row " style="color: #fff; text-align: left; ">
+                <div class="col-lg-10 col-md-10 col-10">© Copyright 2020 Mobirise - All Rights Reserved</div>
+
+                <div class="col-lg-2 col-md-2 col-2" style="float: right;">
+                    <img src="https://image.flaticon.com/icons/svg/733/733579.svg" width="20%">
+                    <img src="https://image.flaticon.com/icons/svg/145/145802.svg" width="20%">
+                </div>
+
+
+            </div>
+
+        </footer>
+
+
+
+    </section>
+
+    <!-- jQuery -->
+    <script src="~/assets/payassets/js/jquery-2.1.0.min.js "></script>
+
+    <!-- Bootstrap -->
+    <script src="~/assets/payassets/js/popper.js "></script>
+    <script src="~/assets/payassets/js/bootstrap.min.js "></script>
+
+    <!-- Plugins -->
+    <script src="~/assets/payassets/js/scrollreveal.min.js "></script>
+    <script src="~/assets/payassets/js/waypoints.min.js "></script>
+    <script src="~/assets/payassets/js/jquery.counterup.min.js "></script>
+    <script src="~/assets/payassets/js/imgfix.min.js "></script>
+    <script src="~/assets/payassets/js/mixitup.js "></script>
+    <script src="~/assets/payassets/js/accordions.js "></script>
+
+    <!-- Global Init -->
+    <script src="~/assets/payassets/js/custom.js "></script>
+
+
+</body>
+</html>

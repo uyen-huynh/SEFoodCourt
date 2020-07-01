@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewBag.Title = "PURCHASE";
+    Layout = "~/Views/Payment/Layout.cshtml";
+}
+
+<div class="row" id="tabs">
+    <div class="col-lg-8 offset-lg-2" style="text-align: center; ">
+        @{
+            var paySuccess = (Boolean)TempData["success"];
+            if (paySuccess == true)
+            {
+                <img src="~/assets/payassets/images/successful.png " width="100% " alt=" " />
+            }
+            else
+            {
+                <img src="~/assets/payassets/images/failed.png " width="100% " alt=" " />
+            }
+        }
+
+    </div>
+</div>
+
+<div class="row ">
+    <p style="color:#fff; "> SPACE BETWEEN 2 ROWS</p>
+</div>
+
+<div class="row ">
+    <div class="col-lg-3 col-md-3 col-sm-4 col-6 offset-lg-2 ">
+        <button style="float: left; " type="button " name="next-button " class="btn btn-primary main-button ">
+            <span> <img src="~/assets/payassets/images/rating.png " width="20%"> REVIEW</span>
+        </button>
+
+    </div>
+    <div class=" col-lg-2 col-md-6 col-sm-4">
+        <p style="color:#fff; "> SPACE BETWEEN 2 COLS</p>
+    </div>
+    <div class=" col-lg-3 col-md-3 col-sm-4 col-6" align-item="right ">
+        <button onclick="location.href='@Url.Action("Index", "HomE")'" style="display: block; float: right; " type=" button " name="next-button " class="btn btn-primary main-button ">
+            <span> <img src="~/assets/payassets/images/food-cart.png " width="20%"> NEW ORDER</span>
+        </button>
+
+    </div>
+
+</div>
+
