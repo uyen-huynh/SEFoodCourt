@@ -1,5 +1,5 @@
 ﻿﻿@using SFC.Models
-@model FoodList
+@model Menu
 @{ ViewBag.Title = "Home Page"; }
 <script>
     if (document.readyState == 'loading') {
@@ -128,7 +128,7 @@
 <div class="card col-12 col-md-6 p-3 col-lg-3 align-center">
     <div class="card-wrapper">
         <div class="card-img">
-            <img src="@item.ImagePath" alt="3nut" title="">
+            <img src="@item.imageSrc" alt="3nut" title="">
         </div>
         <div class="card-box">
             <h4 class="card-title mbr-fonts-style display-5">
@@ -158,7 +158,7 @@
             </div>
         </div>
     </div>
-</div>            }
+</div>      }
         </div>
     </div>
 </section>
@@ -196,9 +196,9 @@
                 {
                     var textBoxName = "galleryTextBox" + @item.id.ToString();
 
-    <div class="mbr-gallery-item mbr-gallery-item--p4" data-video-url="false" data-tags="ii">
+    <div class="mbr-gallery-item mbr-gallery-item--p4" data-video-url="false" data-tags="@item.type">
         <div href="#lb-gallery2-7" data-slide-to="@item.id">
-            <img src="@item.ImagePath" alt="" title="Hihi">
+            <img src="@item.imageSrc" alt="" title="@item.name">
             <span>
                 <div class="card-box align-center">
                     <br>
@@ -206,8 +206,9 @@
                         @item.name
                     </h4>
                     <p class="mbr-text mbr-fonts-style display-7">
-                        Make with fresh vegetables<br>Remaining:
-                        @item.quantity<br>$@item.price
+                        @item.description<hr>
+                        Remaining: @item.quantity<br>
+                        Price: $@item.price
                     </p>
                     <!--Btn-->
                     <div class="cart-add">

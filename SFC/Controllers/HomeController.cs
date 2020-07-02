@@ -14,20 +14,19 @@ namespace SFC.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            if (order == null)
+            if (TempData["Order"] == null)
             {
-                if (TempData["Order"] == null)
-                {
-                    order = new Order();
-                    TempData["Order"] = order;
-                } 
-                else {
-                    order = (Order) TempData["Order"];
-                }              
+                order = new Order();
+                TempData["Order"] = order;
+            }
+            else
+            {
+                order = (Order)TempData["Order"];
+                TempData.Keep();
             }
 
-            FoodList foodList = FoodList.getInstance();
-            TempData.Keep();
+            Menu foodList = Menu.getMenu();
+            
             return View(foodList);
         }
 
@@ -46,7 +45,7 @@ namespace SFC.Controllers
         }
 
 
-        // METHODS FOR ORDER
+        /* ----------------------------------- METHODS FOR CART---------------------*/
         public ActionResult Cart()
         {
             Order order = (Order)TempData["Order"];

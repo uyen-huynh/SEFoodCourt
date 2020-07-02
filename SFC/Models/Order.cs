@@ -8,57 +8,89 @@ namespace SFC.Models
 {
     public class Order
     {
+        // Attribute
         public Dictionary<int, int> items;
-        public int orderId { get; set; }
-        int totalCost = 0;
-        public int paid = 0;       
+        public int id { get; set; }
+        public long totalCost = 0;
+        public int numberOfCompleted { get; set; }
+        public bool paid { get; set; }
+        public String time { get; set; }
+        public String request { get; set; }
 
+        // Method
         public Order()
         {
-            orderId = OrderList.getNumsOfOrders() + 1;
+            id = OrderList.getNewID();
             items = new Dictionary<int, int>();
-            OrderList.addOrder(this);
-            
         }
 
-        public fooditem getItem(int id)
+        public Food getItem(int foodID)
         {
-            return FoodList.foodList[id];
+            return Menu.getMenu().foodList[foodID];
         }
 
-        public Dictionary<int, int> getOrderList()
+        public void addItemToCart(int foodId, int quantity)
         {
-            return items;
-        }
+            if (quantity <= 0) return;
+            if (!Menu.getMenu().checkSufficient(foodId, quantity)) return;
 
-        public int getTotalCost()
-        {
-            return totalCost;
-        }
-
-        public void addItemToCart(int id, int quantity)
-        {
-            if (items.ContainsKey(id))
+            if (items.ContainsKey(foodId))
             {
-                items[id] += quantity;
+                items[foodId] += quantity;
             }
             else
             {
-                items.Add(id, quantity);
+                items.Add(foodId, quantity);
             }
-            totalCost += quantity * (int)FoodList.foodList[id].price;
+            totalCost += quantity * Menu.getMenu().foodList[foodId].price;
+            return;
         }
 
-        public void changeQuantity(int id, int quantity)
+        public void removeCartItem(int foodId)
         {
-            totalCost += (quantity - items[id]) * (int)FoodList.foodList[id].price;
-            items[id] = quantity;
+            totalCost -= items[foodId] * Menu.getMenu().foodList[foodId].price;
+            items.Remove(foodId);
+            return;
         }
 
-        public void removeCartItem(int id)
+        public void changeQuantity(int foodId, int quantity)
         {
-            totalCost -= items[id] * (int)FoodList.foodList[id].price;
-            items.Remove(id);
+            if (quantity < 0) return;
+            if (!Menu.getMenu().checkSufficient(foodId, quantity)) return;
+
+            if (items.ContainsKey(foodId))
+            {
+                totalCost += (quantity - items[foodId]) * Menu.getMenu().foodList[foodId].price;
+                items[foodId] = quantity;
+            }
+            return;
+        }
+
+        public long getTotalCost() => totalCost;
+
+        public bool checkComplete() => numberOfCompleted == items.Count();
+
+        public async System.Threading.Tasks.Task makeOrder()
+        {
+            /*
+             * Ham gi do do cua thanh toan
+             */
+            // Thanh toan xong se chay dong nay
+
+            time = DateTime.Now.ToString("h:mm:ss tt");
+            await OrderService.Process(id, items, request);
+            OrderList.getOrderList().addNewOrder(this);
+            return;
+        }
+
+        public void clear()
+        {
+            items.Clear();
+            totalCost = 0;
+            numberOfCompleted = 0;
+            paid = false;
+            request = "";
+            return;
         }
     }
 }
