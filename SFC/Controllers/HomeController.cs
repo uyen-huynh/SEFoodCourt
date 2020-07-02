@@ -17,7 +17,8 @@ namespace SFC.Controllers
             if (TempData["Order"] == null)
             {
                 order = new Order();
-                TempData["Order"] = order;
+                TempData.Add("Order", order);
+               
             }
             else
             {
@@ -48,8 +49,12 @@ namespace SFC.Controllers
         /* ----------------------------------- METHODS FOR CART---------------------*/
         public ActionResult Cart()
         {
-            Order order = (Order)TempData["Order"];
-            TempData.Keep();
+
+            if (TempData["Order"] != null)
+            {
+                order = (Order)TempData["Order"];
+                TempData.Keep();
+            }
 
             return View(order);
         }
@@ -57,7 +62,7 @@ namespace SFC.Controllers
         [HttpPost]
         public void AddItemToCart(int id, int quantity)
         {
-            Order order = (Order)TempData["Order"];
+            order = (Order)TempData["Order"];
             TempData.Keep();
             order.addItemToCart(id, quantity);
         }
@@ -69,7 +74,7 @@ namespace SFC.Controllers
             order = (Order)TempData["Order"];
             TempData.Keep();
 
-            order.changeQuantity(id, quantity);
+            order.changeQuantity(id, quantity); 
             return Json(new { totalCost = order.getTotalCost() });
         }
 

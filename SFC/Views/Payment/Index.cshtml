@@ -1,4 +1,5 @@
-﻿@model SFC.Models.Order;
+﻿﻿@using SFC.Models
+@model Order
 @{
     ViewBag.Title = "Purchase";
     Layout = "~/Views/Payment/Layout.cshtml";
@@ -15,7 +16,8 @@
     }
 
     function ready() {
-        var qrcodeImg = document.getElementsByName("qrcode-img")[0]
+
+        @*var qrcodeImg = document.getElementsByName("qrcode-img")[0]
         var notifyImg = document.getElementsByName("notify-img")[0]
 
         if ('@order' == null) {
@@ -36,7 +38,7 @@
         }
         else {
             notifyImg.src = "~/assets/payassets/images/noqrcode.png"
-        }
+        }*@
 
 
         var wallet = document.getElementsByName('wallet-button')
@@ -54,8 +56,15 @@
     }
 
     function confirmOrder(event) {
-        var des = document.getElementById('step2')
-        des.click()
+
+        var totalCost = parseInt(document.getElementsByName('total-cost')[0].innerText.replace('$', ''))
+        if (totalCost == '0') {
+            alert('No no no, go to order first babe <3')
+        }
+        else {
+            var des = document.getElementById('step2')
+            des.click()
+        }     
     }
 
     function payWithWallet(event) {
@@ -79,7 +88,7 @@
 
     }
 
-    // function @*checkPaidOrder() {
+    @*function checkPaidOrder() {
         var checkInterval = setInterval(function () {
             if ('@Model.paid' == 1) {
                 return
@@ -95,7 +104,7 @@
         setTimeout(function () {
             notifyImg.src = "~/assets/payassets/images/successful.png"
             notifyImg.setAttribute("height", "350")
-            
+
         }, 10000)
         setTimeout(function () {
             var des = document.getElementById("step4")
@@ -134,7 +143,7 @@
                         var totalCost = 0;
                         if (Model != null)
                         {
-                            totalCost = Model.getTotalCost();
+                            totalCost = (int) Model.getTotalCost();
                         }
                     }
                     <thead>
@@ -151,12 +160,12 @@
                             foreach (var item in Model.items)
                             {
                                 var dbItem = Model.getItem(item.Key);
-                                <tr class="d-flex">
-                                    <td class="col-lg-3 offset-lg-1"><a href="#">@dbItem.name</a></td>
-                                    <td class="col-lg-2">x @item.Value</td>
-                                    <td class="col-lg-3">$@dbItem.price</td>
-                                    <td class="col-lg-3">$@(@dbItem.price * @item.Value)</td>
-                                </tr>
+                        <tr class="d-flex">
+                            <td class="col-lg-3 offset-lg-1"><a href="#">@dbItem.name</a></td>
+                            <td class="col-lg-2">x @item.Value</td>
+                            <td class="col-lg-3">$@dbItem.price</td>
+                            <td class="col-lg-3">$@(@dbItem.price * @item.Value)</td>
+                        </tr>
 
                             }
                         }
@@ -165,7 +174,7 @@
                         <tr class="d-flex step1">
                             <td class="col-lg-8 offset-lg-1" style="text-align: center">TOTAL COST</td>
 
-                            <td class="col-lg-3" style="text-align: left"> $@totalCost</td>
+                            <td name="total-cost" class="col-lg-3" style="text-align: left"> $@totalCost</td>
                         </tr>
                     </tfoot>
                 </table>
@@ -192,7 +201,7 @@
                 <div class=" col-lg-3 col-md-3 col-sm-4 col-6 step1" align-item="right ">
                     <button name="btn-confirm" class="btn btn-primary main-button" style="display: block; float: right; ">CONFIRM</button>
                 </div>
-            </div>               
+            </div>
 
         </article>
         <article id='tabs-2'>
@@ -248,7 +257,7 @@
                 <div class="col-lg-6 col-md-6 col-sm-6 col-10 offset-lg-1 step1 ">
                     <button name="btn-payment-gateway" class="btn btn-primary main-button" type="button" href="#">OPEN MOMO GATEWAY</button>
                 </div>
-            </div>           
+            </div>
 
         </article>
 
@@ -270,10 +279,10 @@
 
             <div class="row ">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-10 offset-lg-1 step1 ">
-                    <button name="btn-new-order" class="btn btn-primary main-button" type="button" onclick="location.href='@Url.Action("Index", "HomE")'">GET NEW ORDER</button>
+                    <button name="btn-new-order" class="btn btn-primary main-button" type="button" onclick="location.href='@Url.Action("Index", "Home")'">GET NEW ORDER</button>
                 </div>
             </div>
-           
+
         </article>
     </div>
 </div>

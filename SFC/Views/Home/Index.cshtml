@@ -21,8 +21,7 @@
         var itemGroup = buttonClicked.parentElement.parentElement
         var itemID = itemGroup.children[0].innerHTML
         var quantityItem = itemGroup.children[1].value
-        console.log(itemID)
-        console.log(quantityItem)
+ 
         $.ajax({
             type: 'post',
             url: "@Url.Action("AddItemToCart")",

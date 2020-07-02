@@ -96,7 +96,7 @@ namespace SFC.Controllers
             string requestId = Guid.NewGuid().ToString();
             string partnerCode = "MOMO";
             string accessKey = "F8BBA842ECF85";
-            string amount = (order.getTotalCost()*1000).ToString();
+            string amount = (order.getTotalCost()).ToString();
             string orderInfo = "order info";
             string returnUrl = "http://75a249bf72c8.ngrok.io/Payment/HandleResultPayment/";
             string notifyUrl = "https://momo.vn";

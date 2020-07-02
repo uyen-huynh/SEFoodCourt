@@ -25,24 +25,20 @@
             input.addEventListener('change', quantityChanged)
         }
 
+        var btnPurchase = document.getElementsByName('btn-purchase')[0]
+        btnPurchase.addEventListener('click', purchaseClicked)
     }
 
-    function purchaseClicked() {
-        /@*/$.ajax({
-          //  type: 'post',
-            url: "@Url.Action("processPayment","Payment")",
-            success: function (result) {
-                JSON.stringify(result)
-                var url = result['responseUrl']
-                window.open(url, "_blank")
-                alert('Thank you for your purchase')
-                var cartItems = document.getElementsByClassName('cart-items')[0]
-                while (cartItems.hasChildNodes()) {
-                    cartItems.removeChild(cartItems.firstChild)
-                }
-
-            }
-        })*/*@
+    function purchaseClicked(event) {
+        var btn = event.target
+        var btnPrice = document.getElementsByClassName('cart-total-price')[0]
+        var price = parseInt(btnPrice.innerText.replace('$', ''))
+        if (price == '0') {
+            alert('No no no, choose our food first babe <3')
+        }
+        else {
+            window.location.href='@Url.Action("Index", "Payment")'
+        }
     }
 
     function removeCartItem(event) {
@@ -107,35 +103,49 @@
     </div>
 
     <div class="cart-items">
-
-        @foreach (var item in Model.items)
-        {
-            var dbItem = Model.getItem(item.Key);
-            <div class="cart-row">
-                <div class="cart-item cart-column">
-                    <img class="cart-item-image" src="@dbItem.imageSrc" height="100">
-                    <span class="cart-item-title">@dbItem.name</span>
-                    <p hidden>@item.Key</p>
-                </div>
-                <span class="cart-price cart-column">$@dbItem.price.ToString()</span>
-                <div class="cart-quantity cart-column">
-                    <p hidden> @item.Key </p>
-                    <input class="cart-quantity-input" type="number" value="@item.Value" min="0">
-                    <button class="btn btn-danger" type="button">REMOVE</button>
-                </div>
-            </div>
+        @{
+            if (Model != null)
+            {
+                foreach (var item in Model.items)
+                {
+                    var dbItem = Model.getItem(item.Key);
+                    <div class="cart-row">
+                        <div class="cart-item cart-column">
+                            <img class="cart-item-image" src="@dbItem.imageSrc" height="100">
+                            <span class="cart-item-title">@dbItem.name</span>
+                            <p hidden>@item.Key</p>
+                        </div>
+                        <span class="cart-price cart-column">$@dbItem.price.ToString()</span>
+                        <div class="cart-quantity cart-column">
+                            <p hidden> @item.Key </p>
+                            <input class="cart-quantity-input" type="number" value="@item.Value" min="0">
+                            <button class="btn btn-danger" type="button">REMOVE</button>
+                        </div>
+                    </div>
+                }
+            }
         }
+
     </div>
 
 </section>
 
 <div class="cart-total">
     <strong class="cart-total-title">Total</strong>
-    <span class="cart-total-price">$@Model.getTotalCost()</span>
+    @{
+        var totalCost = 0;
+        if (Model != null)
+        {
+            totalCost = (int)Model.getTotalCost();
+        }
+        <span class="cart-total-price">$@totalCost</span>
+
+    }
+
 </div>
 
 <div class="align-center">
-    <button class="btn btn-primary btn-purchase" onclick="location.href='@Url.Action("Index", "Payment")'" type="button">PURCHASE</button>
+    <button class="btn btn-primary btn-purchase" name="btn-purchase" type="button">PURCHASE</button>
 </div>
 
 <section class="mbr-section content8 cid-s2gMfRE15Z" id="content8-m"></section>
