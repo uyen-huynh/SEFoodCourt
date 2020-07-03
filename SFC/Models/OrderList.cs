@@ -10,8 +10,8 @@ namespace SFC.Models
     public class OrderList
     {
         // Attribute
-        private static OrderList instance;
-        public Dictionary<int, Order> orders { get; set; }
+        private static OrderList instance = new OrderList();
+        public static Dictionary<int, Order> orders { get; set; }
         public static int currentID = 0;
 
         // Method

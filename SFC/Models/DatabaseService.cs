@@ -35,7 +35,6 @@ namespace SFC.Models
                 return false; // Fail connect
             return true; // Success connect
         }
-
         public static async Task DBWrite<T>(T data, string link)
         {
             await client.SetAsync(link, data);
@@ -58,8 +57,8 @@ namespace SFC.Models
                 throw new Exception("Fail Connect! Wrong Link");
 
             FirebaseResponse response = client.Get(link);
-
             string json = response.Body;
+
             if (json == "null") return null;
 
             if (json[0] == '[')
@@ -74,6 +73,24 @@ namespace SFC.Models
             }
 
         }
+        public static Dictionary<string, T> DBGetDictionary<T>(string link)
+        {
+            FirebaseResponse response = client.Get(link);
+            string json = response.Body;
+
+            if (json == "null") return null;
+
+            if (json[0] != '[')
+            {
+                return JsonConvert.DeserializeObject<Dictionary<string, T>>(json);
+            }
+            else
+            {
+                return null;
+            }
+
+        }
+
         public static async Task DBDelete(string link)
         {
             if (!DBCheckLink(link))

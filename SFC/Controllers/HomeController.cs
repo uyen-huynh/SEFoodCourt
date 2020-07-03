@@ -18,6 +18,7 @@ namespace SFC.Controllers
             {
                 order = new Order();
                 TempData.Add("Order", order);
+                ViewData.Add("Order", order);
                
             }
             else
@@ -50,11 +51,17 @@ namespace SFC.Controllers
         public ActionResult Cart()
         {
 
-            if (TempData["Order"] != null)
+            if (TempData["Order"] == null)
+            {
+                order = new Order();
+                TempData["Order"] = order;
+            }
+            else
             {
                 order = (Order)TempData["Order"];
                 TempData.Keep();
             }
+            return View(order);
 
             return View(order);
         }

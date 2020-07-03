@@ -5,8 +5,7 @@
     Layout = "~/Views/Payment/Layout.cshtml";
     var order = Model;
 }
-
-<script>
+    <script>
     if (document.readyState == 'loading') {
         document.addEventListener('DOMContentLoaded', ready)
     }
@@ -15,135 +14,153 @@
         ready()
     }
 
-    function ready() {
+        function ready() {
 
-        @*var qrcodeImg = document.getElementsByName("qrcode-img")[0]
-        var notifyImg = document.getElementsByName("notify-img")[0]
+            var wallet = document.getElementsByName('wallet-button')
+            for (var i = 0; i < wallet.length; i++) {
+                var button = wallet[i]
+                button.addEventListener('click', payWithWallet)
+            }
 
-        if ('@order' == null) {
+            var btn_confirm = document.getElementsByName('btn-confirm')[0]
+            btn_confirm.addEventListener('click', confirmOrder)
 
-            qrcodeImg.src = "~/assets/payassets/images/noqrcode.png"
-            notifyImg.src = "~/assets/payassets/images/noqrcode.png"
-            qrcodeImg.setAttribute("height", "350")
-            notifyImg.setAttribute("height", "350")
-            var des = document.getElementsById(step4)
+            var btn_gateway = document.getElementsByName('btn-payment-gateway')[0]
+            btn_gateway.addEventListener('click', openPaymentGateway)
+
+            var btnStep3 = document.getElementById("step3")
+            btnStep3.addEventListener('click', checkOrderStep3)
+
+            var btnRepay = document.getElementsByName("btn-repay")
+            btnRepay.addEventListener('click', repayClicked)
+        }
+
+        function repayClicked(event) {
+            var des = document.getElementById("step1")
             des.click()
-
-        }
-        else if ('@order.paid' == 1) {
-            notifyImg.src = "~/assets/payassets/images/successful.png"
-        }
-        else if ('@order.paid' == -1) {
-            notifyImg.src = "~/assets/payassets/images/failed.png"
-        }
-        else {
-            notifyImg.src = "~/assets/payassets/images/noqrcode.png"
-        }*@
-
-
-        var wallet = document.getElementsByName('wallet-button')
-        for (var i = 0; i < wallet.length; i++) {
-            var button = wallet[i]
-            button.addEventListener('click', payWithWallet)
         }
 
-        var btn_confirm = document.getElementsByName('btn-confirm')[0]
-        btn_confirm.addEventListener('click', confirmOrder)
-
-        var btn_gateway = document.getElementsByName('btn-payment-gateway')[0]
-        btn_gateway.addEventListener('click', openPaymentGateway)
-
-    }
-
-    function confirmOrder(event) {
-
-        var totalCost = parseInt(document.getElementsByName('total-cost')[0].innerText.replace('$', ''))
-        if (totalCost == '0') {
-            alert('No no no, go to order first babe <3')
+        function checkOrderStep3(event) {
+            var notifyImg = document.getElementsByName('notify-img')[0]
+            var des = document.getElementById("step4")
+            if ('@(Model.totalCost==0)' == "False") {
+                var count = 0;
+                var timer = setInterval(function () {
+                    count++;
+                    $.ajax({
+                        type: 'post',
+                        url: '@Url.Action("checkPaid")',
+                        success: function (result) {
+                            JSON.stringify(result)
+                            if (result["isPaid"] == true) {
+                                count = -1;
+                                notifyImg.src = "/assets/payassets/images/successful.png?random=" + new Date().getTime()
+                                notifyImg.setAttribute("width", "100%")
+                                console.log(count)
+                                des.click()
+                                window.clearInterval(timer)
+                            }
+                        }
+                    })
+                    if (count == 120) {
+                        notifyImg.src = "/assets/payassets/images/failed.png?random=" + new Date().getTime()
+                        notifyImg.setAttribute("width", "100%")
+                        console.log(count)
+                        des.click()
+                    }
+                }, 2000)
+            }
+            else {
+                notifyImg.src = "~/assets/payassets/images/noqrcode.png?random=" + new Date().getTime()
+                notifyImg.setAttribute("width", "350")
+            }
+        
         }
-        else {
-            var des = document.getElementById('step2')
-            des.click()
-        }     
-    }
 
-    function payWithWallet(event) {
-        var button = event.target
-        console.log(button)
-        $.ajax({
-            type: 'post',
-            url: "@Url.Action("SendRequest")",
-            success: function (result) {
-                JSON.stringify(result)
-                var img = document.getElementsByName("qrcode-img")[0]
-                img.src = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + result["qrCode"];
-                var btnOpenGateway = document.getElementsByName("btn-payment-gateway")[0]
-                btnOpenGateway.setAttribute("href", result['responseUrl'])
+        function confirmOrder(event) {
 
-                var des = document.getElementById("step3")
+            var totalCost = parseInt(document.getElementsByName('total-cost')[0].innerText.replace('$', ''))
+            if (totalCost == '0') {
+                alert('No no no, go to order first babe <3')
+            }
+            else {
+                var des = document.getElementById('step2')
                 des.click()
             }
+        }
 
-        })
-
-    }
-
-    @*function checkPaidOrder() {
-        var checkInterval = setInterval(function () {
-            if ('@Model.paid' == 1) {
-                return
+        function payWithWallet(event) {
+            var button = event.target
+            var totalCost = parseInt(document.getElementsByName('total-cost')[0].innerText.replace('$', ''))
+            if (totalCost == '0') {
+                alert('No no no, go to order first babe <3')
             }
+            else {
+                $.ajax({
+                    type: 'post',
+                    url: "@Url.Action("RequestPayment")",
+                    data: {
+                        'nameWallet' : "momo" ,
+                    },
+                    success: function (result) {
+                        JSON.stringify(result)
+                        var img = document.getElementsByName("qrcode-img")[0]
+                        img.src = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + result["qrCode"];
+                        var btnOpenGateway = document.getElementsByName("btn-payment-gateway")[0]
+                        btnOpenGateway.setAttribute("href", result['responseUrl'])
+                        var des = document.getElementById("step3")
+                        des.click()
 
-        },3000)
-    }*@
-
-    function openPaymentGateway(event) {
-        var button = event.target
-        var link = button.getAttribute("href")
-        window.open(link, "_blank")
-        setTimeout(function () {
-            notifyImg.src = "~/assets/payassets/images/successful.png"
-            notifyImg.setAttribute("height", "350")
-
-        }, 10000)
-        setTimeout(function () {
-            var des = document.getElementById("step4")
-            des.click()
-        },60000)
+                    }
+                })
+            }
     }
 
-</script>
+        function openPaymentGateway(event) {
+            var button = event.target
+            var link = button.getAttribute("href")
+            window.open(link, "_blank")
+            setTimeout(function () {
+                var notifyImg = document.getElementsByName('notify-img')[0]
+                notifyImg.src = "/assets/payassets/images/successful.png?random=" + new Date().getTime()
+                notifyImg.setAttribute("width", "100%")
+                var des = document.getElementById("step4")
+                des.click()
+            }, 300000)
+        }
+
+    </script>
 
 <div class="row" id="tabs">
     <div class="col-lg-4">
         <ul>
             <li>
-                <a id='step1' href='#tabs-1'><img src="~/assets/payassets/images/one.png" height="50" alt="">Confirm the order</a>
+                <a id='step1' href='#tabs-1'><img src="~/assets/payassets/images/one.png" height="40" alt="">Confirm the order</a>
             </li>
             <li>
-                <a id='step2' href='#tabs-2'><img src="~/assets/payassets/images/two.png" height="50" alt="">Choose a wallet</a>
+                <a id='step2' href='#tabs-2'><img src="~/assets/payassets/images/two.png" height="40" alt="">Choose a wallet</a>
 
             </li>
             <li>
-                <a id='step3' href='#tabs-3'><img src="~/assets/payassets/images/three.png" height="50" alt="">Scan the QR Code</a>
+                <a id='step3' href='#tabs-3'><img src="~/assets/payassets/images/three.png" height="40" alt="">Scan the QR Code</a>
 
             </li>
             <li>
-                <a id='step4' href='#tabs-4'><img src="~/assets/payassets/images/four.png" height="50" alt="">Get the order</a>
+                <a id='step4' href='#tabs-4'><img src="~/assets/payassets/images/four.png" height="40" alt="">Get the order</a>
 
             </li>
-            <div class="main-rounded-button"><a href="#tabs-1">RE-PAY</a></div>
+            <li class="main-rounded-button" name="btn-repay" style="border-radius: 15px;padding-bottom: 20px;"><a >RE-PAY</a></li>
         </ul>
     </div>
     <div class="col-lg-8">
         <article id='tabs-1'>
-            <div class="row">
+            <div class="row"  style="padding-left: 15px;padding-bottom: 20px;">
                 <table class="table" cellspacing="0">
                     @{
                         var totalCost = 0;
                         if (Model != null)
                         {
-                            totalCost = (int) Model.getTotalCost();
+                            totalCost = (int)Model.getTotalCost();
                         }
                     }
                     <thead>
@@ -160,12 +177,12 @@
                             foreach (var item in Model.items)
                             {
                                 var dbItem = Model.getItem(item.Key);
-                        <tr class="d-flex">
-                            <td class="col-lg-3 offset-lg-1"><a href="#">@dbItem.name</a></td>
-                            <td class="col-lg-2">x @item.Value</td>
-                            <td class="col-lg-3">$@dbItem.price</td>
-                            <td class="col-lg-3">$@(@dbItem.price * @item.Value)</td>
-                        </tr>
+                                <tr class="d-flex">
+                                    <td class="col-lg-3 offset-lg-1 offset"><a href="#">@dbItem.name</a></td>
+                                    <td class="col-lg-2">x @item.Value</td>
+                                    <td class="col-lg-3">$@dbItem.price</td>
+                                    <td class="col-lg-3">$@(@dbItem.price * @item.Value)</td>
+                                </tr>
 
                             }
                         }
@@ -180,7 +197,7 @@
                 </table>
 
             </div>
-            <div class="row">
+            <div class="row"  style="padding-left: 15px;padding-bottom: 20px;">
                 <div class="col-lg-10 offset-lg-1 step1">
                     <section class="tabs-step">
                         <h4>Confirm Your Order</h4>
@@ -191,7 +208,7 @@
             </div>
 
             <!--Button-->
-            <div class="row ">
+            <div class="row " style="padding-left: 15px;">
                 <div class="col-lg-3 col-md-3 col-sm-4 col-6 offset-lg-1 step1">
                     <button name="next-button " style="float: left; " class="btn btn-primary main-button ">CANCLE</button>
                 </div>
@@ -205,7 +222,7 @@
 
         </article>
         <article id='tabs-2'>
-            <div class="row">
+            <div class="row" >
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <div class="features-item pb-4">
                         <div class="features-icon">
@@ -236,13 +253,13 @@
         </article>
 
         <article id='tabs-3'>
-            <div class="row ">
+            <div class="row " style="padding-left: 15px;padding-bottom: 20px;">
                 <div class="col-lg-10 offset-lg-1 step1 ">
                     <img name="qrcode-img" src="~/assets/payassets/images/noqrcode.png" width="350" alt="Loading ..." />
                 </div>
 
             </div>
-            <div class="row ">
+            <div class="row " style="padding-left: 15px;padding-bottom: 20px;">
                 <div class="col-lg-11 offset-lg-1 step1 ">
                     <section class="tabs-step ">
                         <h4>Scan the QR Code</h4>
@@ -253,7 +270,7 @@
 
             </div>
 
-            <div class="row ">
+            <div class="row " style="padding-left: 15px;padding-bottom: 20px;">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-10 offset-lg-1 step1 ">
                     <button name="btn-payment-gateway" class="btn btn-primary main-button" type="button" href="#">OPEN MOMO GATEWAY</button>
                 </div>
@@ -262,13 +279,13 @@
         </article>
 
         <article id='tabs-4'>
-            <div class="row ">
+            <div class="row " style="padding-left: 15px;padding-bottom: 20px;">
                 <div class="col-lg-10 offset-lg-1 step1 ">
                     <img name="notify-img" src="~/assets/payassets/images/noqrcode.png" width="350" alt="Loading ..." />
                 </div>
 
             </div>
-            <div class="row ">
+            <div class="row " style="padding-left: 15px;padding-bottom: 20px;">
                 <div class="col-lg-11 offset-lg-1 step1 ">
                     <section class="tabs-step ">
                         <h4>Get your order</h4>
@@ -277,7 +294,7 @@
                 </div>
             </div>
 
-            <div class="row ">
+            <div class="row " style="padding-left: 15px;">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-10 offset-lg-1 step1 ">
                     <button name="btn-new-order" class="btn btn-primary main-button" type="button" onclick="location.href='@Url.Action("Index", "Home")'">GET NEW ORDER</button>
                 </div>

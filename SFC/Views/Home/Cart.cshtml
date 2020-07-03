@@ -104,7 +104,7 @@
 
     <div class="cart-items">
         @{
-            if (Model != null)
+            if (@Model.totalCost != 0)
             {
                 foreach (var item in Model.items)
                 {
@@ -132,15 +132,7 @@
 
 <div class="cart-total">
     <strong class="cart-total-title">Total</strong>
-    @{
-        var totalCost = 0;
-        if (Model != null)
-        {
-            totalCost = (int)Model.getTotalCost();
-        }
-        <span class="cart-total-price">$@totalCost</span>
-
-    }
+    <span class="cart-total-price">$@Model.getTotalCost()</span>
 
 </div>
 
