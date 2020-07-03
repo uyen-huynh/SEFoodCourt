@@ -15,6 +15,7 @@ using Org.BouncyCastle.Asn1.Nist;
 using FireSharp.Extensions;
 using System.Web.Script.Serialization;
 using Microsoft.Ajax.Utilities;
+using RestSharp;
 
 namespace SFC.Controllers
 {
@@ -94,12 +95,36 @@ namespace SFC.Controllers
             TempData.Keep();
             return Json(new { isPaid = order.paid});
         }
+
+        
+        [HttpPost]
+        public void HandleIPN()
+        {
+            Wallet wallet = new MomoWallet(0, "0");
+            using (Stream IPNReceive = Request.InputStream)
+            {
+                wallet.handleIPN(IPNReceive);
+                JObject jmessage = JObject.Parse(wallet.getJsonIPN());
+
+                if (jmessage.GetValue("errorCode").ToString() == "0")
+                {
+                    int id = Int32.Parse(jmessage.GetValue("orderInfo").ToString());
+                    Order paidOrder = new Order();
+                    paidOrder.id = id;
+                    OrderList.orders.Add(id, null);
+                }                
+            }
+            
+        }
+
     }
     
     interface Wallet
     {
         void sendPaymentRequest();
         string getJsonResponse();
+        void handleIPN(Stream IPNReceiver);
+        string getJsonIPN();
     }
 
     public class MomoWallet : Wallet
@@ -107,6 +132,7 @@ namespace SFC.Controllers
         long totalCost;
         string orderInfo;
         string jsonResponse;
+        string jsonIPN;
 
         public MomoWallet(long totalCost, string orderInfo)
         {
@@ -125,7 +151,7 @@ namespace SFC.Controllers
             string amount = totalCost.ToString();
             string orderInfo = this.orderInfo;
             string returnUrl = "http://fd0300346fb1.ngrok.io/Payment/HandleResultPayment/";
-            string notifyUrl = "https://momo.vn";
+            string notifyUrl = "http://fd0300346fb1.ngrok.io/Payment/HandleIPN";
             string secretKey = "K951B6PE1waDMi640xX08PD3vg6EkVlz";
             string extraData = "email=uyenhuynh@gmail.com";
 
@@ -206,5 +232,29 @@ namespace SFC.Controllers
             return jsonResponse;
         }
 
+        public void handleIPN(Stream IPNReceive)
+        {
+            using (StreamReader reader = new StreamReader(IPNReceive, Encoding.ASCII))
+            {
+                string temp = null;
+                while ((temp = reader.ReadLine()) != null)
+                {
+                    jsonIPN += temp;
+                }
+            }
+            var dict = HttpUtility.ParseQueryString(jsonIPN);
+            jsonIPN = new JavaScriptSerializer().Serialize(
+                                dict.AllKeys.ToDictionary(k => k, k => dict[k])
+                       );
+        }
+
+        public string getJsonIPN()
+        {
+            return jsonIPN;
+        }
+
+            
+
+     
     }
 }
