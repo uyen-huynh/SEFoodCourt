@@ -96,14 +96,19 @@
 </section>
 
 <section class="container container-fluid">
-    <div class="cart-row">
-        <span class="cart-item cart-header cart-column">ITEM</span>
-        <span class="cart-price cart-header cart-column">PRICE</span>
-        <span class="cart-quantity cart-header cart-column">QUANTITY</span>
-    </div>
+    <div class="row" style="display: flex;">
+        <div class=" col-4 border-bottom border-dark cart-header cart-column ">ITEM </div>
+        <div class=" col-2 border-bottom border-dark cart-price cart-header cart-column ">PRICE </div>
+        <div class=" col-lg-5 col-md-4 border-bottom border-dark cart-quantity cart-header cart-column ">QUANTITY</div>
 
-    <div class="cart-items">
-        @{
+    </div>
+    @*
+        <div class="cart-row">
+            <span class="cart-item cart-header cart-column">ITEM</span>
+            <span class="cart-price cart-header cart-column">PRICE</span>
+            <span class="cart-quantity cart-header cart-column">QUANTITY</span>
+        </div>*@
+    @*@{
             if (@Model.totalCost != 0)
             {
                 foreach (var item in Model.items)
@@ -124,9 +129,38 @@
                     </div>
                 }
             }
-        }
+        }*@
+    @{
+        if (@Model.totalCost != 0)
+        {
+            foreach (var item in Model.items)
+            {
 
-    </div>
+                var dbItem = Model.getItem(item.Key);
+                <div class="row " style="display: flex;">
+                    <div class="col-md-4 col-4 cart-column ">
+                        <div class="row" style="padding-left:15px;">
+                            <img class="cart-item-image " src="@dbItem.imageSrc" height="100%">
+                            <div class="cart-item-title cart-column" style="padding-left: 15px;">Salad</div>
+                        </div>
+                        <p hidden>@item.Key</p>
+
+                    </div>
+
+                    <div class="col-md-2 col-2 cart-column ">
+                        <div class="cart-price cart-column" style="padding-left: 0px;">$@dbItem.price.ToString()</div>
+                    </div>
+
+                    <div class="col-md-4 col-10 cart-quantity cart-header cart-column " >
+                        <p hidden> @item.Key </p>
+                        <input class="cart-quantity-input" type="number" value="@item.Value" min="0">
+                        <button class="btn btn-danger" type="button" style="padding:0.8em 1em;background-color:#17a2b8;border-color:#17a2b8; ">REMOVE</button>
+                    </div>
+                </div>
+
+            }
+        }
+    }
 
 </section>
 

@@ -36,7 +36,7 @@ namespace SFC.Controllers
                 order = (Order)TempData["Order"];
                 TempData.Keep();
             }
-            order.totalCost = 30000;
+            
             return View(order);
         }
 
@@ -141,6 +141,7 @@ namespace SFC.Controllers
 
         }
 
+        // Http Request to Momo Server
         public void sendPaymentRequest()
         {
             string endpoint = "https://test-payment.momo.vn/gw_payment/transactionProcessor";
@@ -150,8 +151,8 @@ namespace SFC.Controllers
             string accessKey = "F8BBA842ECF85";
             string amount = totalCost.ToString();
             string orderInfo = this.orderInfo;
-            string returnUrl = "http://fd0300346fb1.ngrok.io/Payment/HandleResultPayment/";
-            string notifyUrl = "http://fd0300346fb1.ngrok.io/Payment/HandleIPN";
+            string returnUrl = "http://c697d9b6d5ec.ngrok.io/Payment/HandleResultPayment/";
+            string notifyUrl = "http://c697d9b6d5ec.ngrok.io/Payment/HandleIPN";
             string secretKey = "K951B6PE1waDMi640xX08PD3vg6EkVlz";
             string extraData = "email=uyenhuynh@gmail.com";
 
@@ -232,6 +233,7 @@ namespace SFC.Controllers
             return jsonResponse;
         }
 
+        // Receive IPN from Momo Server
         public void handleIPN(Stream IPNReceive)
         {
             using (StreamReader reader = new StreamReader(IPNReceive, Encoding.ASCII))

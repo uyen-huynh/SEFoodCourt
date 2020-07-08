@@ -5,7 +5,11 @@
 section {
   background-color: #eeeeee;
 }
-
+section {
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 .form-control:focus {
   box-shadow: none;
 }
@@ -451,7 +455,7 @@ nav .mbr-section-btn {
   opacity: 0.5;
   position: absolute;
   right: 0;
-  top: 0;
+  top: 0px;
   z-index: 0;
   pointer-events: none;
 }
