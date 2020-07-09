@@ -260,19 +260,19 @@ body {
 .main-button a {
     display: inline-block;
     font-size: 15px;
-    padding: 12px 20px;
-    background-color: #17a2b8;
+    padding: 12px 30px;
+    background-color: #FFF;
     border-color: #17a2b8;
-    color: #fff;
+    color: #17a2b8;
     text-align: center;
-    font-weight: 400;
+    font-weight: 550;
     text-transform: uppercase;
     transition: all .3s;
 }
 
     .main-button a:hover {
-        color: #17a2b8;
-        background-color: #fff;
+        color: #fff;
+        background-color: #42A7BA;
         border-color: #17a2b8
     }
 
@@ -821,7 +821,7 @@ subscribe
     background-repeat: no-repeat;
     background-size: cover;
     text-align: center;
-    background-color: rgba(23, 162, 184, 0.8);
+    background-color: rgba(17, 165, 190, 0.87);
 }
 
 .cta-content h2 {
@@ -834,7 +834,7 @@ subscribe
 
     .cta-content h2 em {
         font-style: normal;
-        color: #d05613;
+        color: #cc6600;
     }
 
 .cta-content p {

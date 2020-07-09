@@ -63,10 +63,7 @@ namespace SFC.Models
 
         public void addNewOrder(Order order)
         {
-            if (order != null)
-            {
-                orders.Add(order.id, order);
-            }
+            orders.Add(order.id, order);
             return;
         }
 

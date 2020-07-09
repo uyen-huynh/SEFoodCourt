@@ -42,22 +42,16 @@ namespace SFC.Controllers
 
         public ActionResult HandleResultPayment(string partnerCode, string accessKey, string requestID, string amount, string orderID, string orderInfo, string orderType, string transID, int errorCode, string mesage, string localMessage, string payType, string responseTime, string extraData, string signature)
         {
-            order = (Order)TempData["Order"];
-            if (ViewData.ContainsKey("Order"))
-            {
-                order = (Order)ViewData["Order"];
-            }
-
-            TempData.Keep();           
-            if (TempData["success"] == null)
-                TempData.Add("success", true);
             if (errorCode == 0)
             {
                 int id = Int32.Parse(orderInfo);
-                Order paidOrder = new Order();
-                paidOrder.id = id;
-                OrderList.orders.Add(id, null);
+                if (!OrderList.orders.ContainsKey(id))
+                {
+                    OrderList.orders.Add(id, null);
+                }
+                TempData["success"] = true;
             }
+            else TempData["success"] = false;
             return View();
         }
         
@@ -108,9 +102,7 @@ namespace SFC.Controllers
 
                 if (jmessage.GetValue("errorCode").ToString() == "0")
                 {
-                    int id = Int32.Parse(jmessage.GetValue("orderInfo").ToString());
-                    Order paidOrder = new Order();
-                    paidOrder.id = id;
+                    int id = Int32.Parse(jmessage.GetValue("orderInfo").ToString());             
                     OrderList.orders.Add(id, null);
                 }                
             }
@@ -151,8 +143,8 @@ namespace SFC.Controllers
             string accessKey = "F8BBA842ECF85";
             string amount = totalCost.ToString();
             string orderInfo = this.orderInfo;
-            string returnUrl = "http://c697d9b6d5ec.ngrok.io/Payment/HandleResultPayment/";
-            string notifyUrl = "http://c697d9b6d5ec.ngrok.io/Payment/HandleIPN";
+            string returnUrl = "http://522a0f73086c.ngrok.io/Payment/HandleResultPayment/";
+            string notifyUrl = "http://522a0f73086c.ngrok.io/Payment/HandleIPN";
             string secretKey = "K951B6PE1waDMi640xX08PD3vg6EkVlz";
             string extraData = "email=uyenhuynh@gmail.com";
 
