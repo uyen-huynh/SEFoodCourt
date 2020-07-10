@@ -81,17 +81,8 @@ namespace SFC.Models
             }
 
         }
-        public static async Task<bool> CheckSignUp(string username, string password, string name, int birthYear, string email)
+        public static async Task<bool> CheckSignUp(string username, string password, string name, string birthYear, string email)
         {
-            if (password.Length < 8)
-            {
-                throw new Exception("Your password's length < 8");
-            }
-            if (username.Length < 8)
-            {
-                throw new Exception("Your user name's length < 8");
-            }
-
             // Check username
             if (accountDict != null)
                 if (accountDict.ContainsKey(username))

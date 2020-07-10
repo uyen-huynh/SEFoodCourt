@@ -125,9 +125,12 @@
                 </h3>
             </div>
 
+            @{
+                int count = 1;
+            }
             @foreach (var item in Model.getListFood().Values)
             {
-                if (item.quantity < 30 && item.quantity > 0)
+                if (item.quantity < 30 && item.quantity > 0 && count++<=4)
                 {
                     var textBoxName = "hotTextBox" + @item.id.ToString();
                     <div class="card col-12 col-md-6 p-3 col-lg-3 align-center">
@@ -199,7 +202,7 @@
         <div class="mbr-gallery-row">
             <div class="mbr-gallery-layout-default">
 
-                @foreach (var item in Model.getListFood().Values)
+                @foreach (var item in Model.sortedMenu())
                 {
                     var textBoxName = "galleryTextBox" + @item.id.ToString();
 

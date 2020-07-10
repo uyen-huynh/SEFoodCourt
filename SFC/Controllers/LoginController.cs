@@ -14,6 +14,12 @@ namespace SFC.Controllers
         {
             return View();
         }
+
+        public ActionResult Signup()
+        {
+            return View();
+        }
+
         public ActionResult Manager()
         {
             return View();
@@ -42,6 +48,19 @@ namespace SFC.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        public async System.Threading.Tasks.Task<string> SignUp(string username, string password, string name, string birthYear, string email)
+        {
+            try
+            {
+                bool check = await AccountService.CheckSignUp(username, password, name, birthYear, email);
+                return "1";
+            }
+            catch (Exception e)
+            {
+                return "0";
+            }
+        }
 
     }
 }

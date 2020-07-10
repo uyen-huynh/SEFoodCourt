@@ -8,11 +8,11 @@ namespace SFC.Models
         public string username { get; set; }
         public string cipherPassword { get; set; }
         public string name { get; set; }
-        public int birthYear { get; set; }
+        public string birthYear { get; set; }
         public string email { get; set; }
 
         public CustomerAccount() { }
-        public CustomerAccount(string username, string plainPassword, string name, int birthYear, string email)
+        public CustomerAccount(string username, string plainPassword, string name, string birthYear, string email)
         {
             this.username = username;
             cipherPassword = AccountService.ComputeMD5Hash(plainPassword);

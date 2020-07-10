@@ -64,6 +64,7 @@ namespace SFC.Models
             if (json[0] == '[')
             {
                 var sList = JsonConvert.DeserializeObject<List<T>>(json);
+                sList.RemoveAll(item => item == null);
                 return sList;
             }
             else
