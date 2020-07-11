@@ -63,6 +63,13 @@ namespace SFC.Models
             return false;
         }
 
+        public List<Food> sortedMenu()
+        {
+            List<Food> allItems = foodList.Values.ToList();
+            allItems.Sort((x, y) => x.price.CompareTo(y.price));
+            return allItems;
+        }
+
         public async System.Threading.Tasks.Task addFood(Food food)
         {
             if (foodList.ContainsKey(food.id))

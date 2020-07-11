@@ -1,0 +1,147 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/assets/login/css/loginstyle.css">
+<script>
+
+    function signup() {
+        var username = document.getElementById("username").value;
+        var password = document.getElementById("password").value;
+        var name = document.getElementById("name").value;
+        var email = document.getElementById("email").value;
+        var birthday = document.getElementById("birthday").value;
+
+        if (!username || !password || !name || !email || !birthday) {
+            alert("Please fill in the information");
+            return;
+        }
+
+        $.ajax({
+            type: 'post',
+            url: "@Url.Action("SignUp")",
+            data: {
+                'username': username,
+                'password': password,
+                'name': name,
+                'birthYear': birthday,
+                'email': email,
+            },
+            dataType: 'json',
+            success: function (result) {
+                console.log(result);
+                if (result == "1")
+                    alert("Create Account Successfully :> Let's Login");
+                else {
+                    alert("Create Account Fail! Please choose another username!");
+                }
+            }
+        })
+    }
+
+</script>
+
+<section class="mbr-section content5 cid-s2gPyz5iF6" id="content5-x">
+
+    <div class="container">
+        <div class="media-container-row">
+            <div class="title col-12 col-md-8">
+                <h2 class="align-center mbr-bold mbr-white pb-3 mbr-fonts-style display-1">Sign Up</h2>
+                <h3 class="mbr-section-subtitle align-center mbr-light mbr-white pb-3 mbr-fonts-style display-5">Hi! Welcome to our Food Court<br>Let's create new Account to enjoy all our services <3</h3>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="mbr-section form1 cid-s2gT73reu9" id="form1-12">
+
+    <!---Formbuilder Form--->
+    <div id="login">
+        <div class="container">
+            <div id="login-row" class="row justify-content-center align-items-center">
+                <div id="login-column" class="col-md-6">
+                    <div id="login-box" class="col-md-12">
+                        <form id="login-form" class="form" method="post">
+                            <br />
+                            <h3 class="text-center text-info text-white">Sign up</h3>
+
+                            <div class="form-group">
+                                <label for="username" class="text-info text-white">Username:</label><br>
+                                <input type="text" name="username" id="username" class="form-control" minlength="8" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password" class="text-info text-white">Password:</label><br>
+                                <input type="password" name="password" id="password" class="form-control" minlength="8" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="text-info text-white">Name:</label><br>
+                                <input type="text" name="name" id="name" class="form-control" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="text-info text-white">Email:</label><br>
+                                <input type="email" name="email" id="email" class="form-control" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="text-info text-white">Birthday:</label><br>
+                                <input type="date" name="birthday" id="birthday" class="form-control" required>
+                            </div>
+
+                            <div class="justify-content-sm-center text-center">
+                                <input type="button" name="submit" class="btn btn-primary btn-md" onclick="signup()" style="background-color:#016485" value="Submit">
+                            </div>
+
+                            <div id="register-link" class="text-right">
+                                <a href="@Url.Action("Index","Login")" class="text-info text-white">Login here</a><br /><br />
+                            </div>
+
+                            <div class=" text-center ">
+                                <label for="msg" id="msg" style=" border:1px solid #550519; background-color:#b20202; visibility:hidden;" class="text-primary text-white"> abc </label><br>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</section>
+
+<section class="features1 cid-s2gQKxSTuL" id="features1-11">
+
+    <div class="container">
+        <div class="media-container-row">
+
+            <div class="card p-3 col-12 col-md-6">
+                <div class="card-img pb-3">
+                    <a href="@Url.Action("Manager","Login")"><span class="mbr-iconfont mbri-smile-face"></span></a>
+                </div>
+                <div class="card-box">
+                    <h4 class="card-title py-3 mbr-fonts-style display-5">Manager</h4>
+                </div>
+            </div>
+
+            <div class="card p-3 col-12 col-md-6">
+                <div class="card-img pb-3">
+                    <a href="@Url.Action("Chef","Login")"><span class="mbr-iconfont mbri-smile-face"></span></a>
+                </div>
+                <div class="card-box">
+                    <h4 class="card-title py-3 mbr-fonts-style display-5">
+                        Chef
+                    </h4>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+
+
