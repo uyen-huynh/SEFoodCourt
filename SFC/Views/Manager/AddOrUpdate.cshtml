@@ -7,7 +7,7 @@
 
     <div class="form-item">
         @using (Html.BeginForm("AddOrUpdate", "Manager", FormMethod.Post, new { onsubmit = "return SubmitForm(this)" }))
-        {            
+        {
             <div>
                 @Html.LabelFor(b => b.name)
                 @Html.TextBoxFor(b => b.name, new { @class = "form-length form-control" })
@@ -18,6 +18,12 @@
                 @Html.LabelFor(b => b.price)
                 @Html.TextBoxFor(b => b.price, new { @Value = (Model.price == 0) ? "" : Model.price.ToString(), @class = "form-length form-control" })
                 @Html.ValidationMessageFor(b => b.price, "", new { @style = "color:red" })
+            </div>
+            <br />
+            <div>
+                @Html.LabelFor(b => b.quantity)
+                @Html.TextBoxFor(b => b.quantity, new { @Value = (Model.vendorIDService == 0) ? "" : Model.quantity.ToString(), @class = "form-length form-control" })
+                
             </div>
             <br />
             <div>

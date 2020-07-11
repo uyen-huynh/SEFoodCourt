@@ -17,6 +17,7 @@ namespace SFC.Models
         [Required(ErrorMessage = "Price required")]
         [DisplayName("Food Price")]
         public long price { get; set; }
+        [DisplayName("Quantity")]
         public int quantity { get; set; }
         [Required(ErrorMessage = "Image Path required")]
         [DisplayName("Food Image")]

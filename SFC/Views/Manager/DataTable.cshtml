@@ -10,7 +10,7 @@
     <div class="container-fluid">
         @*<h1 class="mt-4">Menu</h1>*@
         <ol class="breadcrumb mb-4"  style="margin-top: 10px">
-            <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="~/Manager/DashBoard">Dashboard</a></li>
             <li class="breadcrumb-item active">Menu</li>
         </ol>
         @*<div class="card mb-4">
@@ -33,6 +33,7 @@
                             <tr>
                                 <th>Name</th>
                                 <th>Price</th>
+                                <th>Quantity</th>
                                 <th>ImagePath</th>
                                 <th>Vendor Service</th>
                                 <th>Type</th>
@@ -67,12 +68,13 @@
                 "columns": [
                     { "data": "name" },
                     { "data": "price" },
+                    { "data": "quantity" },
                     { "data": "imageSrc" },
                     { "data": "vendorIDService" },
                     { "data": "type" },
                     { "data": "description" },
                     { "data": "id", "render": function (data) {
-                        return "<a class='btn btn-outline-dark' style='margin-right: 2px' onclick=PopUpForm('@Url.Action("AddOrUpdate","Manager")/"+ data +"')><i class='fas fa-edit'></i> Edit</a><a class='btn btn-outline-dark' onclick=Delete("+data+")> <i class='fas fa-trash'></i> Delete</a>";
+                        return "<a class='btn btn-outline-dark' style='margin-right: 2px' onclick=PopUpForm('@Url.Action("AddOrUpdate","Manager")/"+ data +"')><i class='fas fa-edit'></i> Update</a><a class='btn btn-outline-dark' onclick=Delete("+data+")> <i class='fas fa-trash'></i> Delete</a>";
                         }
                     }
                 ],
