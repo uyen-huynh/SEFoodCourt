@@ -2,8 +2,11 @@
   "ExpandedNodes": [
     "",
     "\\SFC",
-    "\\SFC\\Models"
+    "\\SFC\\Models",
+    "\\SFC\\M_Content",
+    "\\SFC\\Views",
+    "\\SFC\\Views\\Manager"
   ],
-  "SelectedNode": "\\SFC\\Models\\AccountService.cs",
+  "SelectedNode": "\\SFC\\Views\\Manager\\DataTable.cshtml",
   "PreviewInSolutionExplorer": false
 }

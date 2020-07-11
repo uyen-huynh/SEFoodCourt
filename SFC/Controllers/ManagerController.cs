@@ -91,7 +91,7 @@ namespace SFC.Controllers
         [HttpGet]
         public ActionResult Report()
         {
-            if (Session["vendorID"] != null)
+            if (Session["vendorID"] == null)
             {
                 return RedirectToAction("DashBoard", "Manager");
             }
