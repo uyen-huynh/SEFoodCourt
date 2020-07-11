@@ -92,6 +92,18 @@ namespace SFC.Models
                 throw new Exception("Your user name's length < 8");
             }
 
+            var regexItem = new Regex("^[A-Za-z0-9_-]*$");
+            if (!regexItem.IsMatch(username))
+            {
+                throw new Exception("You user name have special character");
+            }
+            if (!regexItem.IsMatch(password))
+            {
+                throw new Exception("You password have special character");
+            }
+
+            if (!accountDict.ContainsKey(username))
+                throw new Exception("Your account does not exist !");
             // Check username
             if (accountDict != null)
                 if (accountDict.ContainsKey(username))
