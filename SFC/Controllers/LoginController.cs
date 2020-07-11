@@ -49,17 +49,19 @@ namespace SFC.Controllers
         }
 
         [HttpPost]
-        public async System.Threading.Tasks.Task<string> SignUp(string username, string password, string name, string birthYear, string email)
+        public async System.Threading.Tasks.Task<JsonResult> SignUp(string username, string password, string name, string birthYear, string email)
         {
+            string result = "Success";
             try
             {
                 bool check = await AccountService.CheckSignUp(username, password, name, birthYear, email);
-                return "1";
             }
             catch (Exception e)
             {
-                return "0";
+                if (e.Message != null)
+                    result = e.Message;
             }
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
     }
