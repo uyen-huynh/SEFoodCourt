@@ -1,17 +1,17 @@
 ﻿<Properties StartupConfiguration="{41374645-892E-4345-9720-5A413DA1A063}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="SFC/Controllers/LoginController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="SFC/Views/Home/Index.cshtml">
     <Files>
       <File FileName="SFC/Views/Login/Signup.cshtml" Line="38" Column="23" />
-      <File FileName="SFC/Controllers/LoginController.cs" Line="64" Column="63" />
-      <File FileName="SFC/Models/AccountService.cs" Line="89" Column="14" />
-      <File FileName="SFC/Views/Login/Index.cshtml" Line="125" Column="34" />
-      <File FileName="SFC/Views/Home/Index.cshtml" Line="1" Column="1" />
-      <File FileName="SFC/Views/Shared/_Layout.cshtml" Line="1" Column="1" />
-      <File FileName="SFC/Models/Menu.cs" Line="1" Column="1" />
+      <File FileName="SFC/Controllers/LoginController.cs" />
+      <File FileName="SFC/Models/AccountService.cs" />
+      <File FileName="SFC/Views/Login/Index.cshtml" />
+      <File FileName="SFC/Views/Home/Index.cshtml" Line="57" Column="41" />
+      <File FileName="SFC/Views/Shared/_Layout.cshtml" />
+      <File FileName="SFC/Models/Menu.cs" />
       <File FileName="SFC/Controllers/ManagerController.cs" Line="1" Column="1" />
       <File FileName="SFC/Views/Manager/DataTable.cshtml" Line="1" Column="1" />
-      <File FileName="SFC/Views/Manager/Login.cshtml" Line="18" Column="21" />
-      <File FileName="SFC/Views/Shared/_M_Layout.cshtml" Line="1" Column="1" />
+      <File FileName="SFC/Views/Manager/Login.cshtml" />
+      <File FileName="SFC/Views/Shared/_M_Layout.cshtml" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -26,12 +26,12 @@
                   <Node name="css" expanded="True" />
                 </Node>
               </Node>
-              <Node name="Controllers" expanded="True">
-                <Node name="LoginController.cs" selected="True" />
-              </Node>
+              <Node name="Controllers" expanded="True" />
               <Node name="Models" expanded="True" />
               <Node name="Views" expanded="True">
-                <Node name="Home" expanded="True" />
+                <Node name="Home" expanded="True">
+                  <Node name="Index.cshtml" selected="True" />
+                </Node>
                 <Node name="Login" expanded="True" />
                 <Node name="Manager" expanded="True" />
                 <Node name="Payment" expanded="True" />
