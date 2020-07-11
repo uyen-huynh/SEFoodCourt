@@ -29,6 +29,13 @@ namespace SFC
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Login", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "Manager",
+                url: "{Manager}/{action}/{id}",
+                defaults: new { controller = "Manager", action = "Idnex", id = UrlParameter.Optional }
+            );
+
         }
     }
 }
