@@ -1,15 +1,17 @@
 ﻿<Properties StartupConfiguration="{41374645-892E-4345-9720-5A413DA1A063}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="SFC/Views/Login/Signup.cshtml">
+  <MonoDevelop.Ide.Workbench ActiveDocument="SFC/Controllers/LoginController.cs">
     <Files>
-      <File FileName="SFC/Views/Home/Index.cshtml" Line="60" Column="59" IsPinned="True" />
-      <File FileName="SFC/Views/Login/Index.cshtml" Line="9" Column="28" />
-      <File FileName="SFC/Views/Login/Signup.cshtml" Line="38" Column="18" />
-      <File FileName="SFC/Controllers/LoginController.cs" Line="61" Column="28" />
-      <File FileName="SFC/Models/AccountService.cs" Line="72" Column="61" />
-      <File FileName="SFC/Views/Home/Cart.cshtml" Line="59" Column="11" />
-      <File FileName="SFC/Models/CustomerAccount.cs" Line="32" Column="6" />
-      <File FileName="SFC/Controllers/HomeController.cs" Line="1" Column="1" />
-      <File FileName="SFC/Views/Home/AboutUs.cshtml" Line="1" Column="1" />
+      <File FileName="SFC/Views/Login/Signup.cshtml" Line="38" Column="23" />
+      <File FileName="SFC/Controllers/LoginController.cs" Line="64" Column="63" />
+      <File FileName="SFC/Models/AccountService.cs" Line="89" Column="14" />
+      <File FileName="SFC/Views/Login/Index.cshtml" Line="125" Column="34" />
+      <File FileName="SFC/Views/Home/Index.cshtml" Line="1" Column="1" />
+      <File FileName="SFC/Views/Shared/_Layout.cshtml" Line="1" Column="1" />
+      <File FileName="SFC/Models/Menu.cs" Line="1" Column="1" />
+      <File FileName="SFC/Controllers/ManagerController.cs" Line="1" Column="1" />
+      <File FileName="SFC/Views/Manager/DataTable.cshtml" Line="1" Column="1" />
+      <File FileName="SFC/Views/Manager/Login.cshtml" Line="18" Column="21" />
+      <File FileName="SFC/Views/Shared/_M_Layout.cshtml" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -24,22 +26,20 @@
                   <Node name="css" expanded="True" />
                 </Node>
               </Node>
-              <Node name="Controllers" expanded="True" />
+              <Node name="Controllers" expanded="True">
+                <Node name="LoginController.cs" selected="True" />
+              </Node>
               <Node name="Models" expanded="True" />
               <Node name="Views" expanded="True">
                 <Node name="Home" expanded="True" />
-                <Node name="Login" expanded="True">
-                  <Node name="Signup.cshtml" selected="True" />
-                </Node>
+                <Node name="Login" expanded="True" />
+                <Node name="Manager" expanded="True" />
                 <Node name="Payment" expanded="True" />
                 <Node name="Shared" expanded="True" />
               </Node>
             </Node>
           </Node>
         </State>
-      </Pad>
-      <Pad Id="MonoDevelop.Debugger.WatchPad">
-        <State />
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>

@@ -30,11 +30,15 @@
             },
             dataType: 'json',
             success: function (result) {
-                console.log(result);
-                if (result == "1")
-                    alert("Create Account Successfully :> Let's Login");
+
+                if (result != "Success") {
+                    document.getElementById("msg").innerHTML = '\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + result + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0';
+                    document.getElementById("msg").style.visibility = 'visible';
+                }
                 else {
-                    alert("Create Account Fail! Please choose another username!");
+                    alert("Create Account Successfully :> Let's Login");
+                    window.location.href = "@Url.Action("Index","Login")";
+                    document.getElementById("msg").style.visibility = 'hidden';
                 }
             }
         })
@@ -114,34 +118,6 @@
 
 </section>
 
-<section class="features1 cid-s2gQKxSTuL" id="features1-11">
 
-    <div class="container">
-        <div class="media-container-row">
-
-            <div class="card p-3 col-12 col-md-6">
-                <div class="card-img pb-3">
-                    <a href="@Url.Action("Manager","Login")"><span class="mbr-iconfont mbri-smile-face"></span></a>
-                </div>
-                <div class="card-box">
-                    <h4 class="card-title py-3 mbr-fonts-style display-5">Manager</h4>
-                </div>
-            </div>
-
-            <div class="card p-3 col-12 col-md-6">
-                <div class="card-img pb-3">
-                    <a href="@Url.Action("Chef","Login")"><span class="mbr-iconfont mbri-smile-face"></span></a>
-                </div>
-                <div class="card-box">
-                    <h4 class="card-title py-3 mbr-fonts-style display-5">
-                        Chef
-                    </h4>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-</section>
 
 
