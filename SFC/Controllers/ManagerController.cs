@@ -18,7 +18,7 @@ namespace SFC.Controllers
             return View();
         }
         public ActionResult Table()
-        {
+        {          
             List<Food> menu = new List<Food>();
             try
             {
@@ -91,6 +91,10 @@ namespace SFC.Controllers
         [HttpGet]
         public ActionResult Report()
         {
+            if (Session["vendorID"] != null)
+            {
+                return RedirectToAction("DashBoard", "Manager");
+            }
             return View();
         }
 
