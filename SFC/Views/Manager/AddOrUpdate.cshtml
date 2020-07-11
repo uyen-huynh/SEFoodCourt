@@ -1,0 +1,52 @@
+﻿@model SFC.Models.Food
+
+@{
+    Layout = null;
+}    
+       
+
+    <div class="form-item">
+        @using (Html.BeginForm("AddOrUpdate", "Manager", FormMethod.Post, new { onsubmit = "return SubmitForm(this)" }))
+        {            
+            <div>
+                @Html.LabelFor(b => b.name)
+                @Html.TextBoxFor(b => b.name, new { @class = "form-length form-control" })
+                @Html.ValidationMessageFor(b => b.name, "", new { @style = "color:red" })
+            </div>
+            <br />
+            <div>
+                @Html.LabelFor(b => b.price)
+                @Html.TextBoxFor(b => b.price, new { @Value = (Model.price == 0) ? "" : Model.price.ToString(), @class = "form-length form-control" })
+                @Html.ValidationMessageFor(b => b.price, "", new { @style = "color:red" })
+            </div>
+            <br />
+            <div>
+                @Html.LabelFor(b => b.vendorIDService)
+                @Html.TextBoxFor(b => b.vendorIDService, new { @Value = (Model.vendorIDService == 0) ? "" : Model.vendorIDService.ToString(), @class = "form-length form-control" })
+                @Html.ValidationMessageFor(b => b.vendorIDService, "", new { @style = "color:red" })
+            </div>
+            <br />
+            <div>
+                @Html.LabelFor(b => b.imageSrc)
+                @Html.TextBoxFor(b => b.imageSrc, new { @class = "form-length form-control" })
+                @Html.ValidationMessageFor(b => b.imageSrc, "", new { @style = "color:red" })
+            </div>
+            <br />
+            <div>
+                @Html.LabelFor(b => b.type)
+                @Html.TextBoxFor(b => b.type, new { @class = "form-length form-control" })
+                @Html.ValidationMessageFor(b => b.type, "", new { @style = "color:red" })
+            </div>
+            <br />
+            <div>
+                @Html.LabelFor(b => b.description)
+                @Html.TextBoxFor(b => b.description, new { @class = "form-length form-control" })
+                @Html.ValidationMessageFor(b => b.description, "", new { @style = "color:red" })
+            </div>
+            <br />
+            <div class="btn-wrapper">
+                <button type="submit" class="btn btn-outline-dark">Add</button>
+            </div>
+        }
+    </div>
+

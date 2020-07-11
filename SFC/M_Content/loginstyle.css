@@ -1,0 +1,9 @@
+﻿
+
+#login .container #login-row #login-column #login-box {
+    margin-top: 80px;
+    max-width: 600px;
+    max-height: 700px;
+    border: 1px solid #489aa9;
+    background-color: #acbfb1 !important;
+}

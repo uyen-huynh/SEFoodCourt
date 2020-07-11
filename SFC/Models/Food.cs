@@ -2,21 +2,32 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
-
 namespace SFC.Models
 {
     public class Food
     {
         // Attribute
         public int id { get; set; }
-        public String name { get; set; }
+        [Required(ErrorMessage = "Name required")]
+        [DisplayName("Food Name")]
+        public string name { get; set; }
+        [Required(ErrorMessage = "Price required")]
+        [DisplayName("Food Price")]
         public long price { get; set; }
         public int quantity { get; set; }
+        [Required(ErrorMessage = "Image Path required")]
+        [DisplayName("Food Image")]
         public string imageSrc { get; set; }
+        [Required(ErrorMessage = "Vendor ID Required")]
+        [DisplayName("Vendor ID")]
         public int vendorIDService { get; set; }
-        public String type { get; set; }
-        public String description { get; set; }
+        [DisplayName("Type")]
+        public string type { get; set; }
+        [DisplayName("Description")]
+        public string description { get; set; }
 
         // Method
         public Food()

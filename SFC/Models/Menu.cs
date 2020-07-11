@@ -9,7 +9,7 @@ namespace SFC.Models
     {
         private static Menu instance;
         public Dictionary<int, Food> foodList { get; set; }
-
+        public static int maxId = 0;
         // Method
         private Menu()
         {
@@ -28,7 +28,10 @@ namespace SFC.Models
             if (res != null)
             {
                 foreach (var food in res)
+                {
                     foodList.Add(food.id, food);
+                    maxId = (food.id > maxId) ? food.id : maxId;
+                }
             }
         }
 
@@ -72,12 +75,13 @@ namespace SFC.Models
 
         public async System.Threading.Tasks.Task addFood(Food food)
         {
-            if (foodList.ContainsKey(food.id))
+            if (food.id != 0)
             {
                 await this.changeQuantity(food.id, foodList[food.id].quantity + food.quantity);
             }
             else
             {
+                food.id = ++maxId;
                 // Update Database
                 try
                 {
