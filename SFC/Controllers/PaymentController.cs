@@ -16,6 +16,7 @@ using FireSharp.Extensions;
 using System.Web.Script.Serialization;
 using Microsoft.Ajax.Utilities;
 using RestSharp;
+using Org.BouncyCastle.Ocsp;
 
 namespace SFC.Controllers
 {
@@ -36,7 +37,7 @@ namespace SFC.Controllers
                 order = (Order)TempData["Order"];
                 TempData.Keep();
             }
-            
+            order.totalCost = 30000;
             return View(order);
         }
 
@@ -73,7 +74,16 @@ namespace SFC.Controllers
 
         void notifyPaymentObservers()
         {
+            order.makeOrder();
+        }
 
+        [HttpPost]
+        public void confirmOrder(string request)
+        {
+            order = (Order) TempData["Order"];
+            TempData.Keep();
+            order.request = request;
+            TempData["confirmed"] = true;
         }
 
         [HttpPost]
@@ -84,9 +94,11 @@ namespace SFC.Controllers
             {
                 order.paid = true;
                 OrderList.orders[order.id] = order;
-                TempData["Order"] = order;
+                TempData["Order"] = null;
+                notifyPaymentObservers();
             }
             TempData.Keep();
+            
             return Json(new { isPaid = order.paid});
         }
 
@@ -108,6 +120,7 @@ namespace SFC.Controllers
             }
             
         }
+
 
     }
     

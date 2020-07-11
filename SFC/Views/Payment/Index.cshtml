@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Purchase";
     Layout = "~/Views/Payment/Layout.cshtml";
-    var order = Model;
+
 }
     <script>
     if (document.readyState == 'loading') {
@@ -31,8 +31,9 @@
             var btnStep3 = document.getElementById("step3")
             btnStep3.addEventListener('click', checkOrderStep3)
 
-            var btnRepay = document.getElementsByName("btn-repay")
+            var btnRepay = document.getElementsByName("btn-repay")[0]
             btnRepay.addEventListener('click', repayClicked)
+
         }
 
         function repayClicked(event) {
@@ -43,7 +44,7 @@
         function checkOrderStep3(event) {
             var notifyImg = document.getElementsByName('notify-img')[0]
             var des = document.getElementById("step4")
-            if ('@(Model.totalCost==0)' == "False") {
+            if ('@(Model.totalCost == 0)' == "False") {
                 var count = 0;
                 var timer = setInterval(function () {
                     count++;
@@ -74,7 +75,7 @@
                 notifyImg.src = "~/assets/payassets/images/noqrcode.png?random=" + new Date().getTime()
                 notifyImg.setAttribute("width", "350")
             }
-        
+
         }
 
         function confirmOrder(event) {
@@ -84,10 +85,20 @@
                 alert('No no no, go to order first babe <3')
             }
             else {
+                var foodNote = document.getElementsByName('food-note')[0]
+                console.log(foodNote.value)
+
+                $.ajax({
+                    type: 'post',
+                    url: "@Url.Action("confirmOrder")",
+                    data: {
+                        'request': foodNote.value
+                    }
+                })
                 var des = document.getElementById('step2')
                 des.click()
-            }
         }
+    }
 
         function payWithWallet(event) {
             var button = event.target
@@ -96,11 +107,14 @@
                 alert('No no no, go to order first babe <3')
             }
             else {
+                var confirmed = '@((TempData["confirmed"] == null))'
+                if (confirmed == 'False') alert('Are you sure about the order?')
+
                 $.ajax({
                     type: 'post',
                     url: "@Url.Action("RequestPayment")",
                     data: {
-                        'nameWallet' : "momo" ,
+                    'nameWallet' : "momo" ,
                     },
                     success: function (result) {
                         JSON.stringify(result)
@@ -114,15 +128,16 @@
                     }
                 })
             }
-    }
+        }
 
         function openPaymentGateway(event) {
             var button = event.target
             var link = button.getAttribute("href")
             window.open(link, "_blank")
             setTimeout(function () {
+                
                 var notifyImg = document.getElementsByName('notify-img')[0]
-                notifyImg.src = "/assets/payassets/images/successful.png?random=" + new Date().getTime()
+                notifyImg.src = "/assets/payassets/images/failed.png?random=" + new Date().getTime()
                 notifyImg.setAttribute("width", "100%")
                 var des = document.getElementById("step4")
                 des.click()
@@ -154,7 +169,7 @@
     </div>
     <div class="col-lg-8">
         <article id='tabs-1'>
-            <div class="row"  style="padding-left: 15px;padding-bottom: 20px;">
+            <div class="row" style="padding-left: 15px;padding-bottom: 20px;">
                 <table class="table" cellspacing="0">
                     @{
                         var totalCost = 0;
@@ -197,7 +212,23 @@
                 </table>
 
             </div>
-            <div class="row"  style="padding-left: 15px;padding-bottom: 20px;">
+            <div class="row">
+                <table class="table">
+                    <thead>
+                    <th class="offset-6" style="display:inline;font-size: 15px;font-weight: 400;"><img src="~/assets/payassets/images/contract.png " width="30px"> Note</th>
+                    </thead>
+
+                </table>
+
+                <div class="col-lg-11 col-12 offset-lg-1 off-md-1">
+                    <div class="wrap-input100 validate-input" data-validate="Please enter your message">
+                        <textarea class="input100" name="food-note" placeholder="You can send the request to the chef to enjoy the dish with your own taste. "></textarea>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="row" style="padding-left: 15px;padding-bottom: 20px;">
                 <div class="col-lg-10 offset-lg-1 step1">
                     <section class="tabs-step">
                         <h4>Confirm Your Order</h4>
@@ -212,7 +243,7 @@
                 <div class="col-lg-8 col-md-10 col-sm-9 col-8 offset-lg-1 step1">
                     <button name="next-button " style="float: left; " class="btn btn-primary main-button ">CANCEL</button>
                 </div>
-               
+
                 <div class=" col-lg-2 col-md-2 col-sm-2 col-2 offset-lg-1 step1" align-item="right ">
                     <button name="btn-confirm" class="btn btn-primary main-button" style="display: block; float: right; ">CONFIRM</button>
                 </div>
