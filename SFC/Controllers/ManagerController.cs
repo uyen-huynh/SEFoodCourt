@@ -93,7 +93,7 @@ namespace SFC.Controllers
         {
             if (Session["vendorID"] == null)
             {
-                return RedirectToAction("DashBoard", "Manager");
+                return RedirectToAction("Index", "Manager");
             }
             return View();
         }
@@ -128,12 +128,7 @@ namespace SFC.Controllers
         }
 
         public ActionResult Index()
-        {
-            if (Session["vendorID"] != null)
-            {
-                return RedirectToAction("DashBoard", "Manager");
-            }
-
+        {           
             return View();
         }
         public ActionResult Logout()
