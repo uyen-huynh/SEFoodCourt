@@ -30,13 +30,14 @@ namespace SFC.Models
             return Menu.getMenu().foodList[foodID];
         }
 
-        public void addItemToCart(int foodId, int quantity)
+        public bool addItemToCart(int foodId, int quantity)
         {
-            if (quantity <= 0) return;
-            if (!Menu.getMenu().checkSufficient(foodId, quantity)) return;
+            if (quantity <= 0) return false;
+            if (!Menu.getMenu().checkSufficient(foodId, quantity)) return false;
 
             if (items.ContainsKey(foodId))
             {
+                if (!Menu.getMenu().checkSufficient(foodId, quantity + items[foodId])) return false;
                 items[foodId] += quantity;
             }
             else
@@ -44,7 +45,7 @@ namespace SFC.Models
                 items.Add(foodId, quantity);
             }
             totalCost += quantity * Menu.getMenu().foodList[foodId].price;
-            return;
+            return true;
         }
 
         public void removeCartItem(int foodId)

@@ -62,16 +62,14 @@ namespace SFC.Controllers
                 TempData.Keep();
             }
             return View(order);
-
-            return View(order);
         }
 
         [HttpPost]
-        public void AddItemToCart(int id, int quantity)
+        public bool AddItemToCart(int id, int quantity)
         {
             order = (Order)TempData["Order"];
             TempData.Keep();
-            order.addItemToCart(id, quantity);
+            return order.addItemToCart(id, quantity);
         }
 
         [HttpPost]

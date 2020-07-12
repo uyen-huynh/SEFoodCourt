@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var name = SFC.Models.AccountService.current.name;
+    if (name == null) { name = "Login"; }
+}
+
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -74,7 +79,7 @@
                         <span class="mbri-shopping-cart mbr-iconfont mbr-iconfont-btn"></span>
                         Cart
                     </a> <a class="btn btn-sm btn-primary display-7" href="/login">
-                        <span class="mbri-smile-face mbr-iconfont mbr-iconfont-btn"></span>Login
+                        <span class="mbri-smile-face mbr-iconfont mbr-iconfont-btn"></span>@name
                     </a>
                 </div>
             </div>

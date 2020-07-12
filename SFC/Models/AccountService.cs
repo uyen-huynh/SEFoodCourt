@@ -22,6 +22,10 @@ namespace SFC.Models
         {
             current = new CustomerAccount();
         }
+        public string getCurrentName()
+        {
+            return AccountService.current.name;
+        }
 
         // Attribute
         private static readonly string Salt = "x41#";
@@ -102,8 +106,6 @@ namespace SFC.Models
                 throw new Exception("Your password have special character");
             }
 
-            if (!accountDict.ContainsKey(username))
-                throw new Exception("Your account does not exist !");
             // Check username
             if (accountDict != null)
                 if (accountDict.ContainsKey(username))

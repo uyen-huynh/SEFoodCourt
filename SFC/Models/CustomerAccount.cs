@@ -11,7 +11,9 @@ namespace SFC.Models
         public string birthYear { get; set; }
         public string email { get; set; }
 
-        public CustomerAccount() { }
+        public CustomerAccount() {
+            this.username = "Login";
+        }
         public CustomerAccount(string username, string plainPassword, string name, string birthYear, string email)
         {
             this.username = username;
