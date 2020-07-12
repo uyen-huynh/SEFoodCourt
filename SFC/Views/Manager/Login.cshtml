@@ -11,7 +11,6 @@
 <script src="~/M_Scripts/dataTable/datatables-demo.js"></script>
 
 <script>
-
     // Check key "Enter" in textbox password
     function runScript(e) {
         if (e.keyCode == 13) {
@@ -23,7 +22,6 @@
    {
        var inputUser = document.getElementById("username").value
        var inputPass = document.getElementById("password").value
-
         $.ajax({
             type: "post",
             url: "@Url.Action("CheckValidUser")",
@@ -32,7 +30,6 @@
                 'password': inputPass,
             },
             success: function (result) {
-
                 if (result != "Success") {
                     document.getElementById("msg").innerHTML = '\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + result + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0';
                     document.getElementById("msg").style.visibility = 'visible';
@@ -48,7 +45,6 @@
 
 @*<section class="engine"><a href="https://mobirise.info/x">css templates</a></section>
     <section class="mbr-section content5 cid-s2gPyz5iF6" id="content5-x">
-
         <div class="container">
             <div class="media-container-row">
                 <div class="title col-12 col-md-8">
@@ -68,53 +64,49 @@
             </div>
         </div>
     </div>
-    </section>
-    <!---Formbuilder Form--->
-    <div id="login">
-        <h3 class="text-center text-info pt-5">Login form</h3>
-        <div class="container">
-            <div id="login-row" class="row justify-content-center align-items-center">
-                <div id="login-column" class="col-md-7"style="background-color:white">
-                    <div id="login-box" class="col-md-12">
-                        <form id="login-form" class="form" action="" method="post" style="background-color:#65b6cc">
-                            <br />
-                            <h3 class="text-center text-white">Login</h3>
+</section>
+<!---Formbuilder Form--->
+<div id="login">
+    <h3 class="text-center text-info pt-5">Login form</h3>
+    <div class="container">
+        <div id="login-row" class="row justify-content-center align-items-center">
+            <div id="login-column" class="col-md-7" style="background-color:white">
+                <div id="login-box" class="col-md-12">
+                    <form id="login-form" class="form" action="" method="post" style="background-color:#65b6cc">
+                        <br />
+                        <h3 class="text-center text-white">Login</h3>
 
-                            <div class="form-group">
-                                <label for="username" class="text-white">Username:</label><br>
-                                <input type="text" name="username" id="username" class="form-control">
-                            </div>
+                        <div class="form-group">
+                            <label for="username" class="text-white">Username:</label><br>
+                            <input type="text" name="username" id="username" class="form-control">
+                        </div>
 
-                            <div class="form-group">
-                                <label for="password" class="text-white">Password:</label><br>
-                                <input type="password" name="password" id="password" onkeypress="return runScript(event)" class="form-control">
-                            </div>
+                        <div class="form-group">
+                            <label for="password" class="text-white">Password:</label><br>
+                            <input type="password" name="password" id="password" onkeypress="return runScript(event)" class="form-control">
+                        </div>
 
-                            <div class="form-group">
-                                <label for="remember" class="text-white">Remember me</label>
-                                <span><input id="remember-me" name="remember-me" type="checkbox"></span>
-                            </div>
+                        <div class="form-group">
+                            <label for="remember" class="text-white">Remember me</label>
+                            <span><input id="remember-me" name="remember-me" type="checkbox"></span>
+                        </div>
 
-                            <div class="justify-content-sm-center text-center">
-                                <input type="button" name="submit" class="btn btn-primary btn-md" onclick=login() style="background-color:#016485" value="Submit">
-                            </div>
+                        <div class="justify-content-sm-center text-center">
+                            <input type="button" name="submit" class="btn btn-primary btn-md" onclick=login() style="background-color:#016485" value="Submit">
+                        </div>
 
-                            @*<div id="register-link" class="text-right">
+                        @*<div id="register-link" class="text-right">
                                 <a href="#" class="text-info text-white">Register here</a><br /><br />
                             </div>*@
 
-                            <div class=" text-center ">
-                                <label for="msg" id="msg" style=" border:1px solid #550519; background-color:#b20202; visibility:hidden;" class="text-primary text-white"> abc </label><br>
-                            </div>
+                        <div class=" text-center ">
+                            <label for="msg" id="msg" style=" border:1px solid #550519; background-color:#b20202; visibility:hidden;" class="text-primary text-white"> abc </label><br>
+                        </div>
 
-                        </form>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-
-
-
-
+</div>
 
