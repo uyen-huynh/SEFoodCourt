@@ -1,6 +1,8 @@
 ﻿@using SFC.Models
 @model Menu
-@{ ViewBag.Title = "Home Page"; }
+@{
+    ViewBag.Title = "Home Page";
+}
 
 <script>
     if (document.readyState == 'loading') {
@@ -136,7 +138,7 @@
             }
             @foreach (var item in Model.getListFood().Values)
             {
-                if (item.quantity < 30 && item.quantity > 0 && count++<=4)
+                if (item.quantity < 30 && item.quantity > 0 && count++ <= 4)
                 {
                     var textBoxName = "hotTextBox" + @item.id.ToString();
                     <div class="card col-12 col-md-6 p-3 col-lg-3 align-center">
@@ -253,5 +255,10 @@
     </div>
 
 </section>
+
+
+<!-- Replace the value of the key parameter with your own API key. -->
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMIJMU6Wjq94ydprDjFo-MWEgB8BFoH0o&callback=initMap"></script>
 
 <div id="snackbar">3NUT</div>
