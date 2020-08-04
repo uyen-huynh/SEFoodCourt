@@ -11,6 +11,8 @@ namespace SFC.Models
     {
         // Attribute
         public Dictionary<int, int> items;
+        public string username { get; set; }
+        public List<Food> foods { get; set; } 
         public int id { get; set; }
         public long totalCost = 0;
         public int numberOfCompleted { get; set; }
@@ -23,6 +25,7 @@ namespace SFC.Models
         {
             id = OrderList.getNewID();
             items = new Dictionary<int, int>();
+            foods = new List<Food>();
         }
 
         public Food getItem(int foodID)
