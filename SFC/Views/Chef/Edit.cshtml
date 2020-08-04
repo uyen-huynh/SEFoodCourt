@@ -1,0 +1,92 @@
+@model SFC.Models.Order
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutChef.cshtml";
+}
+
+<section class="mbr-section content5 cid-s2h0Bx5c2F" id="content5-1h">
+    <div class="container">
+        <div class="media-container-row">
+            <div class="title col-12 col-md-8">
+                <h2 class="align-center mbr-bold mbr-white pb-3 mbr-fonts-style display-1">Order infomation</h2>
+                <h3 class="mbr-section-subtitle align-center mbr-light mbr-white pb-3 mbr-fonts-style display-5">
+                    Chef checks the order information before marking the completion
+                </h3>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            Order ID:
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.id, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.id, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            Customer name:
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.username, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.username, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            Number of completed food:
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.numberOfCompleted, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.numberOfCompleted, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            Foods ordered:
+            <div class="col-md-10">
+                <table>
+                    <tr><th style="font-weight:normal; text-align:center">Food ID</th><th style="font-weight:normal; text-align:center">Food Name</th><th style="font-weight:normal; text-align:center">Quantity</th></tr>
+                    @for (int i = 0; i < Model.foods.Count(); i++)
+                    {
+                        if (Model.foods[i].quantity != 0)
+                        {
+                            <tr>
+                                <th>
+                                    @Html.EditorFor(model => model.foods[i].id, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.foods[i].id, "", new { @class = "text-danger" })
+                                </th>
+                                <th style="font-weight:normal">
+                                    @Html.DisplayFor(Model => Model.foods[i].name)
+                                </th>
+                                <th>
+                                    @Html.EditorFor(model => model.foods[i].quantity, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.foods[i].quantity, "", new { @class = "text-danger" })
+                                </th>
+                            </tr>
+                        }
+                    }
+                </table>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Complete" class="btn btn-secondary" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
