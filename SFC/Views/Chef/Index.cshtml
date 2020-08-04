@@ -1,8 +1,78 @@
-
+@model IEnumerable<SFC.Models.Order>
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Payment/Layout.cshtml";
+    Layout = "~/Views/Shared/_LayoutChef.cshtml";
 }
 
-<h2>Index</h2>
+<section class="mbr-section content5 cid-s2h0Bx5c2F" id="content5-1h">
+    <div class="container">
+        <div class="media-container-row">
+            <div class="title col-12 col-md-8">
+                <h2 class="align-center mbr-bold mbr-white pb-3 mbr-fonts-style display-1">List orders</h2>
+                <h3 class="mbr-section-subtitle align-center mbr-light mbr-white pb-3 mbr-fonts-style display-5">
+                    List of orders to be processed
+                </h3>
+
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="mbr-section content8 cid-s2h0HOricl" id="content8-1j">
+    <div class="container">
+        <div class="media-container-row title">
+            <div class="col-12 col-md-8">
+                <div class="mbr-section-btn align-center">
+                    <a class="btn btn-primary display-4" @Html.ActionLink("List Orders", "Index", "Chef")></a>
+                    <a class="btn btn-black-outline display-4" @Html.ActionLink("Completed Order", "Complete", "Chef")></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@foreach (var item in Model)
+{
+    if (item != null)
+    {
+        <section class="mbr-section info1 cid-s4qj9HvLC4" id="info1-28">
+            <div class="container">
+                <div class="row justify-content-center content-row">
+                    <div class="media-container-column title col-12 col-lg-7 col-md-6">
+                        <h3 class="mbr-section-subtitle align-left mbr-light pb-3 mbr-fonts-style display-2">
+                            <strong># @Html.DisplayFor(Model => item.id)</strong>
+                        </h3>
+                        <h2 class="align-left mbr-bold mbr-fonts-style display-5">
+                            Customer: <span style="font-weight: normal;">@Html.DisplayFor(Model => item.username)</span><br />Food:<br />
+                            <table>
+                                @for (int i = 0; i < item.foods.Count(); i++)
+                                {
+                                    if (item.foods[i].quantity != 0)
+                                    {
+                                        <tr>
+                                            <th style="font-weight: normal;">&emsp; &emsp; &ensp; @Html.DisplayFor(Model => item.foods[i].name)</th>
+                                            <th style="font-weight: normal;">&nbsp; x @Html.DisplayFor(Model => item.foods[i].quantity)</th>
+                                        </tr>
+                                    }
+                                }
+                            </table>
+                    </div>
+                    <div class="media-container-column col-12 col-lg-3 col-md-4">
+                        <div class="mbr-section-btn align-right py-4">
+                            <a class="btn btn-primary display-4"
+                               data-toggle="modal"
+                               data-target="#exampleModal"
+                               onclick="location.href='@Url.Action("Edit", "Chef", new { id = item.id, food = item.foods })'">
+                                Complete
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+    else { continue; }
+}
+
 
