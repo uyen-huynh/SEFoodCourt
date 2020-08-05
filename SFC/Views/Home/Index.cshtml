@@ -12,27 +12,36 @@
     }
     function ready() {
 
-        var addToCartButtons = document.getElementsByName('Addtocart')
+        var addToCartButtons = document.getElementsByName('Add-to-cart')
         for (var i = 0; i < addToCartButtons.length; i++) {
             var button = addToCartButtons[i]
             button.addEventListener('click', addToCartClicked)
         }
+        
 
     }
+
+
     function addToCartClicked(event) {
         var buttonClicked = event.target
-        var itemGroup = buttonClicked.parentElement.parentElement
-        var itemID = itemGroup.children[0].innerHTML
-        var quantityItem = itemGroup.children[1].value
-
+        console.log(buttonClicked)
+        var itemGroup = buttonClicked.parentElement.parentElement.parentElement.children[0]
+        if (buttonClicked.nodeName == 'SPAN') {
+            itemGroup = buttonClicked.parentElement.parentElement.parentElement.parentElement.children[0]
+        }
+        
+        console.log(itemGroup)
+        var itemID = itemGroup.children[0].innerHTML       
+        var quantityItem = parseInt(itemGroup.children[2].value)
+        
         $.ajax({
             type: 'post',
-            url: "@Url.Action("AddItemToCart")",
+            url: '@Url.Action("AddItemToCart")',
             data: {
                 'id': itemID,
                 'quantity': quantityItem,
             },
-            success: alert('Add to cart sucessfully')
+            success: function (response) { showSnackBar(); }
         })
     }
 
@@ -159,6 +168,7 @@
                                 <div class="cart-add">
 
                                     <div class="btn-group">
+                                        <p hidden> @item.id</p>
                                         <button type="button" class="btnUpDown" onclick="downClick('@textBoxName')" runat="server">-</button>
                                         &nbsp;
                                         <input name="item-quantity" id="@textBoxName" type="text" value="1" style="max-width:100px" class="textUpDown" runat="server" min='1' max="@item.quantity">
@@ -166,10 +176,12 @@
                                         <button type="button" value="+" class="btnUpDown" onclick="upClick('@textBoxName','@item.quantity')" runat="server">+</button>
                                     </div>
 
-                                    <div class="mbr-section-btn align-center">
-                                        <button class="btn btn-primary-outline display-4" type="submit" name="Add-to-cart" onclick="clickOrder('@item.id','@textBoxName')">
-                                            <span class="mbri-cart-add mbr-iconfont mbr-iconfont-btn"></span>
-                                        </button>
+                                    <div class="btn-group">
+                                        <div class="mbr-section-btn align-center">
+                                            <button class="btn btn-primary-outline display-4" type="submit" name="Add-to-cart">
+                                                <span class="mbri-cart-add mbr-iconfont mbr-iconfont-btn"></span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -231,6 +243,7 @@
                                     <!--Btn-->
                                     <div class="cart-add">
                                         <div class="btn-group">
+                                            <p hidden>@item.id</p>
                                             <button type="button" class="btnUpDown" onclick="downClick('@textBoxName')" runat="server">-</button>
                                             &nbsp;
                                             <input name="item-quantity" id="@textBoxName" type="text" value="1" style="max-width:100px" class="textUpDown" runat="server" min='1' max="@item.quantity">
@@ -239,7 +252,7 @@
                                         </div>
                                         <div class="btn-group">
                                             <div class="mbr-section-btn align-center">
-                                                <button class="btn btn-primary-outline display-4" type="submit" name="Add-to-cart" onclick="clickOrder('@item.id','@textBoxName')">
+                                                <button class="btn btn-primary-outline display-4" type="submit" name="Add-to-cart" >
                                                     <span class="mbri-cart-add mbr-iconfont mbr-iconfont-btn"></span>
                                                 </button>
                                             </div>

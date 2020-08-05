@@ -87,6 +87,7 @@ namespace SFC.Models
         }
         public static async Task<bool> CheckSignUp(string username, string password, string name, string birthYear, string email)
         {
+<<<<<<< HEAD
             if (password.Length < 8)
             {
                 throw new Exception("Your password's length < 8");
@@ -106,6 +107,8 @@ namespace SFC.Models
                 throw new Exception("Your password have special character");
             }
 
+=======
+>>>>>>> login
             // Check username
             if (accountDict != null)
                 if (accountDict.ContainsKey(username))
