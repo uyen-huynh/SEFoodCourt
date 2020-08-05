@@ -19,6 +19,7 @@ namespace SFC.Models
         public bool paid { get; set; }
         public String time { get; set; }
         public String request { get; set; }
+        public int idService { get; set; }
 
         // Method
         public Order()

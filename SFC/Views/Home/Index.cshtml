@@ -41,7 +41,12 @@
                 'id': itemID,
                 'quantity': quantityItem,
             },
-            success: function (response) { showSnackBar(); }
+            success: function (response) {
+                if (response == "True")
+                    showSnackBar("Add to cart successfully");
+                else
+                    showSnackBar("Sorry :< The quantity in the cart exceeds the quantity in stock");
+            }
         })
     }
 
