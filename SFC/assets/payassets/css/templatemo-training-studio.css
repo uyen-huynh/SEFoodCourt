@@ -51,9 +51,7 @@ h1,
 h2,
 h3,
 h4,
-h5,
 h6,
-p,
 blockquote,
 div pre,
 a,
@@ -165,7 +163,6 @@ h1,
 h2,
 h3,
 h4,
-h5,
 h6 {
     margin-top: 0px;
     margin-bottom: 0px;
@@ -175,11 +172,7 @@ ul {
     margin-bottom: 0px;
 }
 
-p {
-    font-size: 14px;
-    line-height: 25px;
-    color: #7a7a7a;
-}
+
 
 
 /* 
@@ -821,6 +814,7 @@ subscribe
     background-repeat: no-repeat;
     background-size: cover;
     text-align: center;
+    margin-top: -30px;
     background-color: rgba(17, 165, 190, 0.87);
 }
 

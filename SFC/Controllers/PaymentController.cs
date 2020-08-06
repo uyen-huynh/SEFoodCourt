@@ -30,6 +30,7 @@ namespace SFC.Controllers
             if (TempData["Order"] == null)
             {
                 order = new Order();
+                order.id = OrderList.orders.Count();
                 TempData["Order"] = order;
             }
             else
@@ -37,7 +38,6 @@ namespace SFC.Controllers
                 order = (Order)TempData["Order"];
                 TempData.Keep();
             }
-            order.totalCost = 30000;
             return View(order);
         }
 
@@ -72,9 +72,17 @@ namespace SFC.Controllers
             return Json(new { responseUrl = url, qrCode = qrcode});
         }
 
-        void notifyPaymentObservers()
+        async System.Threading.Tasks.Task notifyPaymentObservers()
         {
-            order.makeOrder();
+            try
+            {
+                await DatabaseService.DBWrite<Order>(order, "Order/" + order.id.ToString());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Execute fail: " + e.Message.ToString());
+            }
+            await order.makeOrder();
         }
 
         [HttpPost]
@@ -87,19 +95,20 @@ namespace SFC.Controllers
         }
 
         [HttpPost]
-        public JsonResult checkPaid()
+        public JsonResult CheckPaid()
         {
-            order = (Order)TempData["Order"];       
-            if (OrderList.orders.ContainsKey(order.id))
+            order = (Order)TempData["Order"];
+            bool paid = false;
+            if (order != null && OrderList.orders.ContainsKey(order.id))
             {
-                order.paid = true;
+                order.paid = paid = true;
                 OrderList.orders[order.id] = order;
-                TempData["Order"] = null;
-                notifyPaymentObservers();
+                TempData.Remove("Order");
+                _ = notifyPaymentObservers();
             }
             TempData.Keep();
             
-            return Json(new { isPaid = order.paid});
+            return Json(new { isPaid = paid});
         }
 
         
@@ -156,8 +165,8 @@ namespace SFC.Controllers
             string accessKey = "F8BBA842ECF85";
             string amount = totalCost.ToString();
             string orderInfo = this.orderInfo;
-            string returnUrl = "http://522a0f73086c.ngrok.io/Payment/HandleResultPayment/";
-            string notifyUrl = "http://522a0f73086c.ngrok.io/Payment/HandleIPN";
+            string returnUrl = "http://8ca7f6afdac4.ngrok.io/Payment/HandleResultPayment/";
+            string notifyUrl = "http://8ca7f6afdac4.ngrok.io/Payment/HandleIPN";
             string secretKey = "K951B6PE1waDMi640xX08PD3vg6EkVlz";
             string extraData = "email=uyenhuynh@gmail.com";
 

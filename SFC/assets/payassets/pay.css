@@ -195,3 +195,32 @@ textarea:focus,
 input:focus {
     outline: none;
 }
+
+section#our-classes {
+    background-color: white;
+}
+.step1 th {
+    background-color: #17a3b8d8;
+    color: #fff;
+}
+.step1 td {
+    background-color: #17a3b8d8;
+    color: #fff;
+    font-weight:bold;
+    border-top-width:thick;
+}
+.table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
+    background-color: #17a3b8d8;
+    color: #fff;
+}
+.tabs-step {
+    background-color:#fff;
+}
+button.btn.btn-primary.main-button {
+    margin-left: 0px;
+}
+.tabs-step p {
+    margin-bottom:0px;
+}
