@@ -5,12 +5,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
-<script src="https://sandbox.zalopay.com.vn/qrcode/public/js/zalopay.js?ver=1494921725335" type="text/javascript"></script>
-<script>
-    ZaloPay.ready(() => {
-        console.log("ZaloPayBridge is ready");
-    });
-</script>
 <script>
     if (document.readyState == 'loading') {
         document.addEventListener('DOMContentLoaded', ready)
@@ -112,6 +106,7 @@
 
         function payWithWallet(event) {
             var button = event.target
+            var nameWallet = button.parentElement.childNodes[1].innerText
             var totalCost = parseInt(document.getElementsByName('total-cost')[0].innerText.replace('$', ''))
             if (totalCost == '0') {
                 alert('No dishes in your cart. Let order first')
@@ -124,12 +119,13 @@
                     type: 'post',
                     url: "@Url.Action("RequestPayment")",
                     data: {
-                    'nameWallet' : "momo" ,
+                        'nameWallet': nameWallet,
                     },
                     success: function (result) {
                         JSON.stringify(result)
                         var img = document.getElementsByName("qrcode-img")[0]
                         img.src = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + result["qrCode"];
+                        img.setAttribute("width", "150")
                         var btnOpenGateway = document.getElementsByName("btn-payment-gateway")[0]
                         btnOpenGateway.setAttribute("href", result['responseUrl'])
                         var des = document.getElementById("step3")
@@ -345,7 +341,7 @@
 
                     <div class="row " style="padding-left: 15px;padding-bottom: 20px;">
                         <div class="col-lg-6 col-md-6 col-sm-6 col-10 offset-lg-1 step1 ">
-                            <button name="btn-payment-gateway" class="btn btn-primary main-button" type="button" href="#">OPEN MOMO GATEWAY</button>
+                            <button name="btn-payment-gateway" class="btn btn-primary main-button" type="button" href="#">OPEN PAYMENT GATEWAY</button>
                         </div>
                     </div>
 

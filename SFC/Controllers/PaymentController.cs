@@ -17,6 +17,10 @@ using System.Web.Script.Serialization;
 using Microsoft.Ajax.Utilities;
 using RestSharp;
 using Org.BouncyCastle.Ocsp;
+using System.Threading.Tasks;
+using ZaloPay.Helper;
+using ZaloPay.Helper.Crypto;
+using Newtonsoft.Json;
 
 namespace SFC.Controllers
 {
@@ -61,15 +65,16 @@ namespace SFC.Controllers
         {
             order = (Order)TempData["Order"];
             TempData.Keep();
-            wallet = new MomoWallet(order.totalCost, order.id.ToString());
+            if (nameWallet == "Momo")
+            {
+                wallet = new MomoWallet(order.totalCost, order.id.ToString());
+            }
+            else
+            {
+                wallet = new ZaloPayWallet(order.totalCost, order.id.ToString());
+            }
             wallet.sendPaymentRequest();
-            
-
-            JObject jmessage = JObject.Parse(wallet.getJsonResponse());
-
-            string url = jmessage.GetValue("payUrl").ToString();
-            string qrcode = jmessage.GetValue("qrCodeUrl").ToString();
-            return Json(new { responseUrl = url, qrCode = qrcode});
+            return Json(new { responseUrl = wallet.getPayUrl(), qrCode = wallet.getQRUrl() });
         }
 
         async System.Threading.Tasks.Task notifyPaymentObservers()
@@ -130,6 +135,25 @@ namespace SFC.Controllers
             
         }
 
+        [HttpPost]
+        public void ZaloCallBack()
+        {
+            Wallet wallet = new ZaloPayWallet(0, "0");
+            using (Stream IPNReceive = Request.InputStream)
+            {
+                wallet.handleIPN(IPNReceive);
+                JObject jmessage = JObject.Parse(wallet.getJsonIPN());
+                
+                var ipnJson = JsonConvert.DeserializeObject<Dictionary<string, object>>(wallet.getJsonIPN());
+
+
+                var data = JsonConvert.DeserializeObject<Dictionary<string, object>>(ipnJson["data"].ToString());
+                var orderId = Int32.Parse(data["item"].ToString());
+                OrderList.orders.Add(orderId, null);
+            }
+
+        }
+
 
     }
     
@@ -139,6 +163,8 @@ namespace SFC.Controllers
         string getJsonResponse();
         void handleIPN(Stream IPNReceiver);
         string getJsonIPN();
+        string getPayUrl();
+        string getQRUrl();
     }
 
     public class MomoWallet : Wallet
@@ -147,6 +173,8 @@ namespace SFC.Controllers
         string orderInfo;
         string jsonResponse;
         string jsonIPN;
+        string payUrl;
+        string qrUrl;
 
         public MomoWallet(long totalCost, string orderInfo)
         {
@@ -165,8 +193,8 @@ namespace SFC.Controllers
             string accessKey = "F8BBA842ECF85";
             string amount = totalCost.ToString();
             string orderInfo = this.orderInfo;
-            string returnUrl = "http://8ca7f6afdac4.ngrok.io/Payment/HandleResultPayment/";
-            string notifyUrl = "http://8ca7f6afdac4.ngrok.io/Payment/HandleIPN";
+            string returnUrl = "http://7b9f76d3bd99.ngrok.io/Payment/HandleResultPayment/";
+            string notifyUrl = " http://7b9f76d3bd99.ngrok.io/Payment/HandleIPN";
             string secretKey = "K951B6PE1waDMi640xX08PD3vg6EkVlz";
             string extraData = "email=uyenhuynh@gmail.com";
 
@@ -232,6 +260,9 @@ namespace SFC.Controllers
                     {
                         jsonResponse += temp;
                     }
+                    JObject jmessage = JObject.Parse(jsonResponse);
+
+                    qrUrl = payUrl = jmessage.GetValue("payUrl").ToString();                 
                 }
             }
             catch (WebException e)
@@ -269,8 +300,101 @@ namespace SFC.Controllers
             return jsonIPN;
         }
 
-            
+        public string getPayUrl()
+        {
+            return payUrl;
+        }
 
-     
+        public string getQRUrl()
+        {
+            return qrUrl;
+        }
+
+
+    }
+
+    public class ZaloPayWallet : Wallet
+    {
+        long totalCost;
+        string orderInfo;
+        string jsonResponse;
+        string jsonIPN;
+        string payUrl;
+        string qrUrl;
+        static string appid = "12470";
+        static string key1 = "QayexiqlF2d2ch91P2oxs9XugMW8F6wQ";
+
+        public ZaloPayWallet(long totalCost, string orderInfo)
+        {
+            this.totalCost = totalCost;
+            this.orderInfo = orderInfo;
+
+        }
+
+        // Http Request to Momo Server
+        public void sendPaymentRequest()
+        {
+            var reqtime = Utils.GetTimeStamp().ToString();
+            var transid = Guid.NewGuid().ToString();
+            var embeddata = new {};
+            var order = new Dictionary<string, string>();
+
+            order.Add("appid", appid);
+            order.Add("appuser", "demo");
+            order.Add("apptime", Utils.GetTimeStamp().ToString());
+            order.Add("amount", totalCost.ToString());
+            order.Add("apptransid", DateTime.Now.ToString("yyMMdd") + "_" + transid);
+            order.Add("embeddata", JsonConvert.SerializeObject(embeddata));
+            order.Add("item", orderInfo);
+            order.Add("description", "Smart Food Court ZaloPay demo");
+            order.Add("bankcode", "zalopayapp");
+
+            var data = appid + "|" + order["apptransid"] + "|" + order["appuser"] + "|" + order["amount"] + "|"
+                + order["apptime"] + "|" + order["embeddata"] + "|" + order["item"];
+            order.Add("mac", HmacHelper.Compute(ZaloPayHMAC.HMACSHA256, key1, data));
+
+            var orderJSON = Encoding.ASCII.GetBytes(JsonConvert.SerializeObject(order));
+
+            Dictionary<string, string> param = new Dictionary<string, string>();
+            param.Add("appid", appid);
+            param.Add("reqtime", reqtime);
+            param.Add("mac", HmacHelper.Compute(ZaloPayHMAC.HMACSHA256, key1, appid + "|" + reqtime));
+
+            payUrl = qrUrl = "https://sbgateway.zalopay.vn/openinapp?order=" + Convert.ToBase64String(orderJSON);
+        }
+
+        public string getJsonResponse()
+        {
+            return jsonResponse;
+        }
+
+        // Receive IPN from ZaloPay Server
+        public void handleIPN(Stream IPNReceive)
+        {
+            using (StreamReader reader = new StreamReader(IPNReceive, Encoding.ASCII))
+            {
+                string temp = null;
+                while ((temp = reader.ReadLine()) != null)
+                {
+                    jsonIPN += temp;
+                }
+            }
+            // var dataJson = JsonConvert.DeserializeObject<Dictionary<string, object>>(jsonIPN);
+        }
+
+        public string getJsonIPN()
+        {
+            return jsonIPN;
+        }
+
+        public string getPayUrl()
+        {
+            return payUrl;
+        }
+
+        public string getQRUrl()
+        {
+            return qrUrl;
+        }
     }
 }
