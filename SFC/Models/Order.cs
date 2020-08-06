@@ -11,7 +11,6 @@ namespace SFC.Models
     {
         // Attribute
         public Dictionary<int, int> items;
-        public string username { get; set; }
         public List<Food> foods { get; set; } 
         public int id { get; set; }
         public long totalCost = 0;
@@ -20,6 +19,7 @@ namespace SFC.Models
         public String time { get; set; }
         public String request { get; set; }
         public int idService { get; set; }
+        public String username { get; set; }
 
         // Method
         public Order()
@@ -82,6 +82,18 @@ namespace SFC.Models
              * Ham gi do do cua thanh toan
              */
             // Thanh toan xong se chay dong nay
+
+            foreach (var item in items)
+            {
+                Food food = Menu.getMenu().foodList[item.Key];
+                Menu.getMenu().getListFood()[item.Key].quantity -= item.Value;
+                _ = DatabaseService.DBUpdate<Food>(Menu.getMenu().foodList[item.Key], "Menu/" + item.Key.ToString());
+                if (food.quantity == item.Value)
+                {
+                    Menu.getMenu().foodList.Remove(item.Key);
+                }               
+            }
+            
 
             time = DateTime.Now.ToString("h:mm:ss tt");
             await OrderService.Process(id, items, request);

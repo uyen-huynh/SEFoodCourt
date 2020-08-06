@@ -79,6 +79,7 @@ namespace SFC.Controllers
 
         async System.Threading.Tasks.Task notifyPaymentObservers()
         {
+            _ = order.makeOrder();
             try
             {
                 await DatabaseService.DBWrite<Order>(order, "Order/" + order.id.ToString());
@@ -87,7 +88,7 @@ namespace SFC.Controllers
             {
                 Console.WriteLine("Execute fail: " + e.Message.ToString());
             }
-            await order.makeOrder();
+            
         }
 
         [HttpPost]
@@ -108,6 +109,7 @@ namespace SFC.Controllers
             {
                 order.paid = paid = true;
                 OrderList.orders[order.id] = order;
+                order.username = AccountService.current.username;
                 TempData.Remove("Order");
                 _ = notifyPaymentObservers();
             }
@@ -194,7 +196,7 @@ namespace SFC.Controllers
             string amount = totalCost.ToString();
             string orderInfo = this.orderInfo;
             string returnUrl = "http://7b9f76d3bd99.ngrok.io/Payment/HandleResultPayment/";
-            string notifyUrl = " http://7b9f76d3bd99.ngrok.io/Payment/HandleIPN";
+            string notifyUrl = "http://7b9f76d3bd99.ngrok.io/Payment/HandleIPN";
             string secretKey = "K951B6PE1waDMi640xX08PD3vg6EkVlz";
             string extraData = "email=uyenhuynh@gmail.com";
 
@@ -261,8 +263,8 @@ namespace SFC.Controllers
                         jsonResponse += temp;
                     }
                     JObject jmessage = JObject.Parse(jsonResponse);
-
-                    qrUrl = payUrl = jmessage.GetValue("payUrl").ToString();                 
+                    payUrl = jmessage.GetValue("payUrl").ToString();
+                    qrUrl = jmessage.GetValue("qrCodeUrl").ToString();                 
                 }
             }
             catch (WebException e)
