@@ -11,7 +11,7 @@ namespace SFC.Controllers
     {
         // GET: Manager
 
-        public ActionResult DataTable()
+        public ActionResult OrderTable()
         {
             if (Session["vendorID"] == null)
             {
@@ -21,7 +21,33 @@ namespace SFC.Controllers
             ViewData["vendorID"] = id;
             return View();
         }
-        public ActionResult Table()
+        public ActionResult OrderData()
+        {
+            List<Order> orders = new List<Order>();
+            try
+            {
+                orders = DatabaseService.DBGetList<Order>("Order/");
+                orders.RemoveAll(x => x == null);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Execute fail: " + e.Message.ToString());
+            }
+            //return View(listFood);                        
+            return Json(new { data = orders }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult MenuTable()
+        {
+            if (Session["vendorID"] == null)
+            {
+                return RedirectToAction("Index", "Manager");
+            }
+            int id = (int)Session["vendorID"];
+            ViewData["vendorID"] = id;
+            return View();
+        }
+        public ActionResult MenuData()
         {          
             List<Food> menu = new List<Food>();
             try

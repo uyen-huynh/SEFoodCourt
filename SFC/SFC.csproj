@@ -527,7 +527,7 @@
     <Content Include="Views\Payment\HandleResultPayment.cshtml" />
     <Content Include="Views\Payment\Layout.cshtml" />
     <Content Include="Views\Manager\AddOrUpdate.cshtml" />
-    <Content Include="Views\Manager\DataTable.cshtml" />
+    <Content Include="Views\Manager\MenuTable.cshtml" />
     <Content Include="Views\Manager\Report.cshtml" />
     <Content Include="Views\Manager\Login.cshtml" />
     <Content Include="Views\Manager\DashBoard.cshtml" />

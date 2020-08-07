@@ -422,17 +422,6 @@ E:/test/SFC/SFC/obj/Debug/SFC.pdb
 /Users/user/Desktop/Test/SEFoodCourt/SFC/obj/Debug/SFC.csproj.CopyComplete
 /Users/user/Desktop/Test/SEFoodCourt/SFC/obj/Debug/SFC.dll
 /Users/user/Desktop/Test/SEFoodCourt/SFC/obj/Debug/SFC.pdb
-D:/assignment/SEFoodCourt/SEFoodCourt/SFC/bin/roslyn/Microsoft.CodeAnalysis.CSharp.dll
-D:/assignment/SEFoodCourt/SEFoodCourt/SFC/bin/roslyn/Microsoft.CodeAnalysis.dll
-D:/assignment/SEFoodCourt/SEFoodCourt/SFC/bin/roslyn/Microsoft.CodeAnalysis.VisualBasic.dll
-D:/assignment/SEFoodCourt/SEFoodCourt/SFC/bin/roslyn/Microsoft.DiaSymReader.Native.amd64.dll
-D:/assignment/SEFoodCourt/SEFoodCourt/SFC/bin/roslyn/System.Collections.Immutable.dll
-D:/assignment/SEFoodCourt/SEFoodCourt/SFC/bin/roslyn/System.IO.FileSystem.dll
-D:/assignment/SEFoodCourt/SEFoodCourt/SFC/bin/roslyn/System.IO.FileSystem.Primitives.dll
-D:/assignment/SEFoodCourt/SEFoodCourt/SFC/bin/roslyn/System.Reflection.Metadata.dll
-D:/assignment/SEFoodCourt/SEFoodCourt/SFC/bin/roslyn/System.Security.Cryptography.Primitives.dll
-D:/assignment/SEFoodCourt/SEFoodCourt/SFC/bin/roslyn/System.ValueTuple.dll
-D:/assignment/SEFoodCourt/SEFoodCourt/SFC/bin/roslyn/VBCSCompiler.exe
 C:/Users/Admin/source/repos/uyenhuynhuyen/SEFoodCourt/SFC/bin/SFC.dll.config
 C:/Users/Admin/source/repos/uyenhuynhuyen/SEFoodCourt/SFC/bin/SFC.dll
 C:/Users/Admin/source/repos/uyenhuynhuyen/SEFoodCourt/SFC/bin/SFC.pdb
@@ -1176,3 +1165,4 @@ D:\assignment\SEFoodCourt\SEFoodCourt\SFC\bin\WebMatrix.Data.xml
 D:\assignment\SEFoodCourt\SEFoodCourt\SFC\bin\WebMatrix.WebData.xml
 D:\assignment\SEFoodCourt\SEFoodCourt\SFC\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 D:\assignment\SEFoodCourt\SEFoodCourt\SFC\obj\Debug\SFC.csproj.CopyComplete
+D:\assignment\SEFoodCourt\SEFoodCourt\SFC\obj\Debug\SFC.csprojAssemblyReference.cache

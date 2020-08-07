@@ -10,7 +10,7 @@ namespace SFC.Models
     public class Order
     {
         // Attribute
-        public Dictionary<int, int> items;
+        public Dictionary<string, int> items;
         public List<Food> foods { get; set; } 
         public int id { get; set; }
         public long totalCost = 0;
@@ -25,7 +25,7 @@ namespace SFC.Models
         public Order()
         {
             id = OrderList.getNewID();
-            items = new Dictionary<int, int>();
+            items = new Dictionary<string, int>();
             foods = new List<Food>();
         }
 
@@ -39,14 +39,14 @@ namespace SFC.Models
             if (quantity <= 0) return false;
             if (!Menu.getMenu().checkSufficient(foodId, quantity)) return false;
 
-            if (items.ContainsKey(foodId))
+            if (items.ContainsKey(foodId.ToString()))
             {
-                if (!Menu.getMenu().checkSufficient(foodId, quantity + items[foodId])) return false;
-                items[foodId] += quantity;
+                if (!Menu.getMenu().checkSufficient(foodId, quantity + items[foodId.ToString()])) return false;
+                items[foodId.ToString()] += quantity;
             }
             else
             {
-                items.Add(foodId, quantity);
+                items.Add(foodId.ToString(), quantity);
             }
             totalCost += quantity * Menu.getMenu().foodList[foodId].price;
             return true;
@@ -54,8 +54,8 @@ namespace SFC.Models
 
         public void removeCartItem(int foodId)
         {
-            totalCost -= items[foodId] * Menu.getMenu().foodList[foodId].price;
-            items.Remove(foodId);
+            totalCost -= items[foodId.ToString()] * Menu.getMenu().foodList[foodId].price;
+            items.Remove(foodId.ToString());
             return;
         }
 
@@ -64,10 +64,10 @@ namespace SFC.Models
             if (quantity < 0) return;
             if (!Menu.getMenu().checkSufficient(foodId, quantity)) return;
 
-            if (items.ContainsKey(foodId))
+            if (items.ContainsKey(foodId.ToString()))
             {
-                totalCost += (quantity - items[foodId]) * Menu.getMenu().foodList[foodId].price;
-                items[foodId] = quantity;
+                totalCost += (quantity - items[foodId.ToString()]) * Menu.getMenu().foodList[foodId].price;
+                items[foodId.ToString()] = quantity;
             }
             return;
         }
@@ -85,12 +85,12 @@ namespace SFC.Models
 
             foreach (var item in items)
             {
-                Food food = Menu.getMenu().foodList[item.Key];
-                Menu.getMenu().getListFood()[item.Key].quantity -= item.Value;
-                _ = DatabaseService.DBUpdate<Food>(Menu.getMenu().foodList[item.Key], "Menu/" + item.Key.ToString());
+                Food food = Menu.getMenu().foodList[Int32.Parse(item.Key)];
+                Menu.getMenu().getListFood()[Int32.Parse(item.Key)].quantity -= item.Value;
+                _ = DatabaseService.DBUpdate<Food>(Menu.getMenu().foodList[Int32.Parse(item.Key)], "Menu/" + item.Key.ToString());
                 if (food.quantity == item.Value)
                 {
-                    Menu.getMenu().foodList.Remove(item.Key);
+                    Menu.getMenu().foodList.Remove(Int32.Parse(item.Key));
                 }               
             }
             

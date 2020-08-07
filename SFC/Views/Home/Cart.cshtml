@@ -136,7 +136,7 @@
             foreach (var item in Model.items)
             {
 
-                var dbItem = Model.getItem(item.Key);
+                var dbItem = Model.getItem(Int32.Parse(item.Key));
                 <div class="row " style="display: flex;">
                     <div class="col-md-4 col-4 cart-column ">
                         <div class="row" style="padding-left:15px;">

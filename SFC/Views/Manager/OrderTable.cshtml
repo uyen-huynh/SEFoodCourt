@@ -11,7 +11,7 @@
         @*<h1 class="mt-4">Menu</h1>*@
         <ol class="breadcrumb mb-4" style="margin-top: 10px">
             <li class="breadcrumb-item"><a href="~/Manager/DashBoard">Dashboard</a></li>
-            <li class="breadcrumb-item active">Order</li>
+            <li class="breadcrumb-item active">Orders</li>
         </ol>
         @*<div class="card mb-4">
                 <div class="card-body">
@@ -26,18 +26,14 @@
                 Order
             </div>
             <div class="card-body">
-                <a class="btn btn-outline-dark" style="margin-bottom: 10px" onclick="PopUpForm('@Url.Action("AddOrUpdate", "Manager")')"><i class="fas fa-plus" style="margin-right: 5px"></i>Add new</a>
+                @*<a class="btn btn-outline-dark" style="margin-bottom: 10px" onclick="PopUpForm('@Url.Action("AddOrUpdate", "Manager")')"><i class="fas fa-plus" style="margin-right: 5px"></i>Add new</a>*@
                 <div class="table-responsive">
-                    <table class="table table-bordered display_table" id="dataTable" style="width: 100%" cellspacing="0">
+                    <table class="table table-bordered display_table" id="orderTable" style="width: 100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>Price</th>
-                                <th>Quantity</th>
-                                <th>ImagePath</th>
-                                <th>Vendor Service</th>
-                                <th>Type</th>
-                                <th>Description</th>
+                                <th>ID Order</th>
+                                <th>Time</th>
+                                <th>Food</th>                                
                                 <th></th>
                             </tr>
                         </thead>
@@ -62,35 +58,31 @@
     <script>
         var popUp;
         $(document).ready(function () {
-            $("#dataTable").DataTable({
+            $("#orderTable").DataTable({
                 "ajax": {
-                    "url": "/Manager/OrdersTable",
+                    "url": "/Manager/OrderData",
                     "type": "GET",
                     "datatype": "json"
                 },
                 "autoWidth": false,
                 "columns": [
-                    { "data": "name", "width": "15%" },
-                    { "data": "price", "width": "10%" },
-                    { "data": "quantity", "width": "12%" },
-                    { "data": "imageSrc", "width": "15%"},
-                    { "data": "vendorIDService", "width": "11%"},
-                    { "data": "type", "width": "10%" },
-                    { "data": "description", "width": "15%" },
+                    { "data": "id", "width": "15%" },
+                    { "data": "time", "width": "15%" },
+                    { "data": "foods[,]", "width": "50%" },                    
                     { "data": "id", "render": function (data) {
-                        return "<a class='btn btn-outline-dark' style='width: 103px; margin-bottom: 5px' onclick=PopUpForm('@Url.Action("AddOrUpdate","Manager")/" + data +"')><i class='fas fa-edit'></i> Update</a><a class='btn btn-outline-dark' style='width: 103px' onclick=Delete("+data+")> <i class='fas fa-trash'></i> Delete</a>";
+                        return "<a class='btn btn-outline-dark' style='width: 103px' onclick=Delete("+data+")> <i class='fas fa-trash'></i> Delete</a>";
                         }
                     }
                 ],
 
-                "rowCallback": function (row, data) {
+                @*"rowCallback": function (row, data) {
                     if (data['vendorIDService'] != @vendorID) {
                         $(row).hide();
                     }
-                },
+                },*@
                 "info": false,
                 "language": {
-                    "emptyTable": "There's no food in menu, please add food to menu"
+                    "emptyTable": "There's no order so far!"
                 }
             });
         });

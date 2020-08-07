@@ -195,8 +195,8 @@ namespace SFC.Controllers
             string accessKey = "F8BBA842ECF85";
             string amount = totalCost.ToString();
             string orderInfo = this.orderInfo;
-            string returnUrl = "http://7b9f76d3bd99.ngrok.io/Payment/HandleResultPayment/";
-            string notifyUrl = "http://7b9f76d3bd99.ngrok.io/Payment/HandleIPN";
+            string returnUrl = "http://a0fddb494d35.ngrok.io/Payment/HandleResultPayment/";
+            string notifyUrl = "http://a0fddb494d35.ngrok.io/Payment/HandleIPN";
             string secretKey = "K951B6PE1waDMi640xX08PD3vg6EkVlz";
             string extraData = "email=uyenhuynh@gmail.com";
 
