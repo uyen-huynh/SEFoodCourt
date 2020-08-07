@@ -1,7 +1,7 @@
 ﻿@using SFC.Models;
 @model List<Food>
 @{
-    ViewBag.Title = "DataTable";
+    ViewBag.Title = "OrderTable";
     Layout = "~/Views/Shared/_M_Layout_Logined.cshtml";
     var vendorID = ViewData["vendorID"];
 }
@@ -9,29 +9,29 @@
 <main>
     <div class="container-fluid">
         @*<h1 class="mt-4">Menu</h1>*@
-        <ol class="breadcrumb mb-4"  style="margin-top: 10px">
+        <ol class="breadcrumb mb-4" style="margin-top: 10px">
             <li class="breadcrumb-item"><a href="~/Manager/DashBoard">Dashboard</a></li>
-            <li class="breadcrumb-item active">Menu</li>
+            <li class="breadcrumb-item active">Order</li>
         </ol>
         @*<div class="card mb-4">
-            <div class="card-body">
-                DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the
-                <a target="_blank" href="https://datatables.net/">official DataTables documentation</a>
-                .
-            </div>
-        </div>*@
+                <div class="card-body">
+                    DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the
+                    <a target="_blank" href="https://datatables.net/">official DataTables documentation</a>
+                    .
+                </div>
+            </div>*@
         <div class="card mb-4">
             <div class="card-header">
                 <i class="fas fa-table mr-1"></i>
-                Menu
+                Order
             </div>
             <div class="card-body">
                 <a class="btn btn-outline-dark" style="margin-bottom: 10px" onclick="PopUpForm('@Url.Action("AddOrUpdate", "Manager")')"><i class="fas fa-plus" style="margin-right: 5px"></i>Add new</a>
                 <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" style="table-layout: fixed">
+                    <table class="table table-bordered display_table" id="dataTable" style="width: 100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>Name</th>
+                                <th>ID</th>
                                 <th>Price</th>
                                 <th>Quantity</th>
                                 <th>ImagePath</th>
@@ -40,7 +40,7 @@
                                 <th>Description</th>
                                 <th></th>
                             </tr>
-                        </thead>                        
+                        </thead>
                     </table>
                 </div>
             </div>
@@ -54,17 +54,21 @@
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
 <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
 <script src="~/M_Scripts/dataTable/datatables-demo.js"></script>
-
+<link href="https://cdn.datatables.net/fixedcolumns/3.2.2/css/fixedColumns.dataTables.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/fixedheader/3.1.2/css/fixedHeader.dataTables.min.css" rel="stylesheet" />
 @section scripts {
+    <script src="https://cdn.datatables.net/fixedcolumns/3.2.2/js/dataTables.fixedColumns.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedheader/3.1.2/js/dataTables.fixedHeader.min.js"></script>
     <script>
         var popUp;
         $(document).ready(function () {
             $("#dataTable").DataTable({
                 "ajax": {
-                    "url": "/Manager/Table",
+                    "url": "/Manager/OrdersTable",
                     "type": "GET",
                     "datatype": "json"
                 },
+                "autoWidth": false,
                 "columns": [
                     { "data": "name", "width": "15%" },
                     { "data": "price", "width": "10%" },
@@ -78,7 +82,7 @@
                         }
                     }
                 ],
-                "autoWidth": false,
+
                 "rowCallback": function (row, data) {
                     if (data['vendorIDService'] != @vendorID) {
                         $(row).hide();
@@ -149,5 +153,5 @@
                 })
             }
         }
-    </script>    
+    </script>
 }

@@ -13,6 +13,10 @@ namespace SFC.Controllers
 
         public ActionResult DataTable()
         {
+            if (Session["vendorID"] == null)
+            {
+                return RedirectToAction("Index", "Manager");
+            }
             int id = (int)Session["vendorID"];
             ViewData["vendorID"] = id;
             return View();
@@ -133,8 +137,42 @@ namespace SFC.Controllers
         }
         public ActionResult Logout()
         {
-            Session.Clear();
+            Session.Abandon();
+            Session.Clear();            
             return RedirectToAction("Index", "Manager");
+        }
+
+        public ActionResult ProfileVendorOwner()
+        {
+            if (Session["vendorID"] == null)
+            {
+                return RedirectToAction("Index", "Manager");
+            }
+
+            int id = (int)Session["vendorID"];
+            
+
+            List<ManagerAccount> vendors = new List<ManagerAccount>();
+            try
+            {
+                vendors = DatabaseService.DBGetList<ManagerAccount>("Account/VendorOwner");
+                vendors.RemoveAll(x => x == null);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Execute fail: " + e.Message.ToString());
+            }
+            ManagerAccount f = null;
+            for (int i = 0; i < vendors.Count; ++i)
+            {
+                ManagerAccount account = vendors.ElementAt(i);
+                if (account.id == id)
+                {
+                    f = account;
+                }
+            }
+            ViewData["vendor"] = f;
+            return View();
         }
     }
 }

@@ -213,6 +213,10 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ManagerController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
+    <Compile Include="Controllers\ZaloPayHelper\Crypto\HmacHelper.cs" />
+    <Compile Include="Controllers\ZaloPayHelper\Crypto\RSAHelper.cs" />
+    <Compile Include="Controllers\ZaloPayHelper\HttpHelper.cs" />
+    <Compile Include="Controllers\ZaloPayHelper\Utils.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -468,6 +472,8 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Login\Signup.cshtml" />
+    <Content Include="Views\Manager\OrderTable.cshtml" />
+    <Content Include="Views\Manager\ProfileVendorOwner.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
