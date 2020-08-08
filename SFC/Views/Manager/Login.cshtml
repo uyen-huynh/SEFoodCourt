@@ -35,7 +35,7 @@
                     document.getElementById("msg").style.visibility = 'visible';
                 }
                 else {
-                    window.location.href = "@Url.Action("DataTable","Manager")";
+                    window.location.href = "@Url.Action("DashBoard","Manager")";
                     document.getElementById("msg").style.visibility = 'hidden';
                 }
             }
@@ -67,10 +67,10 @@
 </section>
 <!---Formbuilder Form--->
 <div id="login">
-    <h3 class="text-center text-info pt-5">Login form</h3>
+    @*<h3 class="text-center text-info pt-5">Login form</h3>*@
     <div class="container">
         <div id="login-row" class="row justify-content-center align-items-center">
-            <div id="login-column" class="col-md-7" style="background-color:white">
+            <div id="login-column" class="col-md-7" style="background-color:white; margin-top: -20px">
                 <div id="login-box" class="col-md-12">
                     <form id="login-form" class="form" action="" method="post" style="background-color:#65b6cc">
                         <br />

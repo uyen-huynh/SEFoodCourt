@@ -1,0 +1,121 @@
+﻿@using SFC.Models;
+@model ManagerAccount
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_M_Layout_Logined.cshtml";
+    var vendor = (ManagerAccount)ViewData["vendor"];
+}
+
+<main>
+    <div class="container-fluid">
+        <ol class="breadcrumb mb-4" style="margin-top: 10px">
+            <li class="breadcrumb-item"><a href="~/Manager/DashBoard">Dashboard</a></li>
+            <li class="breadcrumb-item active">Profile</li>
+        </ol>
+    </div>
+    <div class="container bootstrap snippet">
+        <div class="panel-body inf-content">
+            <div class="row">
+                @*<div class="col-md-4">
+                        <img alt="" style="width:600px;" title="" class="img-circle img-thumbnail isTooltip" src="https://bootdey.com/img/Content/avatar/avatar7.png" data-original-title="Usuario">
+                        <ul title="Ratings" class="list-inline ratings text-center">
+                            <li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
+                        </ul>
+                    </div>*@
+                <div class="col-md-6" style="margin-left: 50px">
+                    <div class="table-responsive">
+                        <table class="table table-user-information">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <strong>
+                                            ID Service
+                                        </strong>
+                                    </td>
+                                    <td class="text-primary">
+                                        @vendor.id
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>
+                                            Name
+                                        </strong>
+                                    </td>
+                                    <td class="text-primary">
+                                        @vendor.name
+                                    </td>
+                                </tr>
+                                @*<tr>
+                                        <td>
+                                            <strong>
+                                                Lastname
+                                            </strong>
+                                        </td>
+                                        <td class="text-primary">
+                                            Bootstrap
+                                        </td>
+                                    </tr>*@
+
+                                <tr>
+                                    <td>
+                                        <strong>
+                                            Username
+                                        </strong>
+                                    </td>
+                                    <td class="text-primary">
+                                        @vendor.username
+                                    </td>
+                                </tr>
+
+
+                                <tr>
+                                    <td>
+                                        <strong>
+                                            Role
+                                        </strong>
+                                    </td>
+                                    <td class="text-primary">
+                                        Vendor Owner
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>
+                                            Email
+                                        </strong>
+                                    </td>
+                                    <td class="text-primary">
+                                        @vendor.email
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>
+                                            Year of birth
+                                        </strong>
+                                    </td>
+                                    <td class="text-primary">
+                                        @vendor.birthYear
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="~/M_Scripts/dataTable/scripts.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+<script src="~/M_Scripts/dataTable/datatables-demo.js"></script>                                  
