@@ -113,26 +113,26 @@
             }
             else {
                 var confirmed = '@((TempData["confirmed"] == null))'
-                if (confirmed == 'False') alert('Are you sure about the order?')
+                // if (confirmed == 'False') alert('Are you sure about the order?')
 
                 $.ajax({
                     type: 'post',
                     url: "@Url.Action("RequestPayment")",
                     data: {
-                        'nameWallet': nameWallet,
+                            'nameWallet': nameWallet,
                     },
                     success: function (result) {
-                        JSON.stringify(result)
+                            JSON.stringify(result)
                         var img = document.getElementsByName("qrcode-img")[0]
                         img.src = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + result["qrCode"];
-                        img.setAttribute("width", "200")
+                            img.setAttribute("width", "200")
                         var btnOpenGateway = document.getElementsByName("btn-payment-gateway")[0]
                         btnOpenGateway.setAttribute("href", result['responseUrl'])
                         var des = document.getElementById("step3")
                         des.click()
 
                     }
-                })
+                    })
             }
         }
 

@@ -39,7 +39,7 @@
                 <br />
                 <div class="glyphicon"> <span> <img src="https://image.flaticon.com/icons/svg/901/901171.svg" width="20px" /> 0123456789</span></div>
                 <br />
-                <div class="glyphicon"> <span> <img src="https://image.flaticon.com/icons/svg/860/860887.svg" width="20px" /> June 02, 1988 </span></div>
+                <div class="glyphicon"> <span> <img src="https://image.flaticon.com/icons/svg/860/860887.svg" width="20px" /> June 02, 2000 </span></div>
                 <div class="glyphicon"> <span> <img src="https://image.flaticon.com/icons/svg/2928/2928883.svg" width="20px" /> @Model.getPoint() POINTS </span></div>
             </p>
 
@@ -51,10 +51,13 @@
 
         <div class="table-responsive">
             <table class="table">
-                
-                <thead style="background-color:#17a2b8; color:white;"> <tr> <th>
-    BILL HISTORY
-</th></tr>
+
+                <thead style="background-color:#17a2b8; color:white;">
+                    <tr>
+                        <th>
+                            BILL HISTORY
+                        </th>
+                    </tr>
                 </thead>
                 <thead>
                     <tr>
@@ -73,6 +76,7 @@
 
                     </tr>
                     <tr class="hide-table-padding">
+                        <td></td>
                         <td colspan="3">
                             <div id="collapseOne" class="collapse in p-3">
                                 <div class="row" style="font-weight:bold">
@@ -91,16 +95,18 @@
                     @{
                         if (Model.getOrderId() != -1)
                         {
-                            <tr class="accordion-toggle collapsed" id="accordion1" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne">
+                            <tr class="accordion-toggle collapsed" id="accordion2" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
                                 <td class="expand-button"></td>
                                 <td>@Model.getOrderId()</td>
                                 <td>08/08/2020</td>
                                 <td>240000</td>
 
                             </tr>
+                        
                             <tr class="hide-table-padding">
-                                <td colspan="3">
-                                    <div id="collapseOne" class="collapse in p-3">
+                                <td></td>
+                                <td colspan="4">
+                                    <div id="collapseTwo" class="collapse in p-3">
                                         <div class="row" style="font-weight:bold">
                                             <div class="col-4">Dish</div>
                                             <div class="col-2">Price</div>
@@ -129,12 +135,12 @@
                                     </div>
                                 </td>
                             </tr>
-                        }
+                    }
                     }
 
 
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
         </div>
 
     </div>
