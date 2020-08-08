@@ -209,10 +209,15 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ChefController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ManagerController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
+    <Compile Include="Controllers\ZaloPayHelper\Crypto\HmacHelper.cs" />
+    <Compile Include="Controllers\ZaloPayHelper\Crypto\RSAHelper.cs" />
+    <Compile Include="Controllers\ZaloPayHelper\HttpHelper.cs" />
+    <Compile Include="Controllers\ZaloPayHelper\Utils.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -468,6 +473,12 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Login\Signup.cshtml" />
+    <Content Include="Views\Chef\Complete.cshtml" />
+    <Content Include="Views\Chef\Edit.cshtml" />
+    <Content Include="Views\Chef\Index.cshtml" />
+    <Content Include="Views\Chef\Login.cshtml" />
+    <Content Include="Views\Chef\sendNotification.cshtml" />
+    <Content Include="Views\Login\Account.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -518,7 +529,7 @@
     <Content Include="Views\Login\Chef.cshtml" />
     <Content Include="Views\Home\Cart.cshtml" />
     <Content Include="Views\Payment\Index.cshtml" />
-    <Content Include="Views\Payment\HandleResultPayment.cshtml" />
+    <Content Include="Views\Payment\MomoReturn.cshtml" />
     <Content Include="Views\Payment\Layout.cshtml" />
     <Content Include="Views\Manager\AddOrUpdate.cshtml" />
     <Content Include="Views\Manager\DataTable.cshtml" />
@@ -553,9 +564,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>63981</DevelopmentServerPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:63981/</IISUrl>
+          <IISUrl>http://localhost:61530/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -1,0 +1,146 @@
+﻿@model SFC.Models.CustomerAccount
+
+@{
+    ViewBag.Title = "Me";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="~/assets/login/css/loginstyle.css">
+<section class="engine"><a href="https://mobirise.info/o">portfolio site templates</a></section>
+<section class="mbr-section content5 cid-s2gPyz5iF6" id="content5-x">
+
+    <div class="container">
+        <div class="media-container-row">
+            <div class="title col-12 col-md-8">
+                <h2 class="align-center mbr-bold mbr-white pb-3 mbr-fonts-style display-1">About Me</h2>
+                <h3 class="mbr-section-subtitle align-center mbr-light mbr-white pb-3 mbr-fonts-style display-5">My Profile</h3>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="row pb-3">  </div>
+<div class="container">
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <img src="https://4.bp.blogspot.com/-XB9_qmoPKVo/WTllHpVvmHI/AAAAAAAAFa4/OQs4DHYhd60CSyghQwVSN30dE3ccHWpkgCLcB/s1600/maxresdefault.jpg" alt="" width="100%" />
+        </div>
+        <div class="col-sm-6 col-md-6">
+            <h4>
+                @Model.name
+            </h4>
+            <small>
+                <cite title="San Francisco, USA">
+                    268 Ly Thuong Kiet, District 10, HCMC <i class="glyphicon glyphicon-map-marker">
+                    </i>
+                </cite>
+            </small>
+            <p>
+                <div class="glyphicon"> <span> <img src="https://image.flaticon.com/icons/svg/546/546394.svg" width="20px" /> @Model.email</span></div>
+                <br />
+                <div class="glyphicon"> <span> <img src="https://image.flaticon.com/icons/svg/901/901171.svg" width="20px" /> 0123456789</span></div>
+                <br />
+                <div class="glyphicon"> <span> <img src="https://image.flaticon.com/icons/svg/860/860887.svg" width="20px" /> June 02, 1988 </span></div>
+                <div class="glyphicon"> <span> <img src="https://image.flaticon.com/icons/svg/2928/2928883.svg" width="20px" /> @Model.getPoint() POINTS </span></div>
+            </p>
+
+        </div>
+    </div>
+
+
+    <div class="container my-4">
+
+        <div class="table-responsive">
+            <table class="table">
+                
+                <thead style="background-color:#17a2b8; color:white;"> <tr> <th>
+    BILL HISTORY
+</th></tr>
+                </thead>
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Order Id</th>
+                        <th scope="col">Time</th>
+                        <th scope="col">Total Cost</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="accordion-toggle collapsed" id="accordion1" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne">
+                        <td class="expand-button"></td>
+                        <td>17122424</td>
+                        <td>06/08/2020</td>
+                        <td>15000</td>
+
+                    </tr>
+                    <tr class="hide-table-padding">
+                        <td colspan="3">
+                            <div id="collapseOne" class="collapse in p-3">
+                                <div class="row" style="font-weight:bold">
+                                    <div class="col-4">Dish</div>
+                                    <div class="col-2">Price</div>
+                                    <div class="col-2">Quantity</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">Soup Pumpkin</div>
+                                    <div class="col-2">15000</div>
+                                    <div class="col-2">1</div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    @{
+                        if (Model.getOrderId() != -1)
+                        {
+                            <tr class="accordion-toggle collapsed" id="accordion1" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne">
+                                <td class="expand-button"></td>
+                                <td>@Model.getOrderId()</td>
+                                <td>08/08/2020</td>
+                                <td>240000</td>
+
+                            </tr>
+                            <tr class="hide-table-padding">
+                                <td colspan="3">
+                                    <div id="collapseOne" class="collapse in p-3">
+                                        <div class="row" style="font-weight:bold">
+                                            <div class="col-4">Dish</div>
+                                            <div class="col-2">Price</div>
+                                            <div class="col-2">Quantity</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4">Lemonade</div>
+                                            <div class="col-2">12000</div>
+                                            <div class="col-2">5</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4">Soup Pumpkin</div>
+                                            <div class="col-2">15000</div>
+                                            <div class="col-2">6</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4">Soup Crab</div>
+                                            <div class="col-2">15000</div>
+                                            <div class="col-2">2</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4">Tiramisu</div>
+                                            <div class="col-2">20000</div>
+                                            <div class="col-2">3</div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+
+
+</div>
+
+<div class="row pb-3">  </div>

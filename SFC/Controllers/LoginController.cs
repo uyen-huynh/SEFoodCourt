@@ -12,7 +12,14 @@ namespace SFC.Controllers
         // GET: Login
         public ActionResult Index()
         {
-            return View();
+            if (AccountService.current.username == "Login")
+                return View();
+            return RedirectToAction("Account");
+        }
+
+        public ActionResult Account()
+        {
+            return View(AccountService.current);
         }
 
         public ActionResult Signup()

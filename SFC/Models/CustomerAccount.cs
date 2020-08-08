@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Dynamic;
+using System.Linq;
 
 namespace SFC.Models
 {
@@ -31,5 +32,16 @@ namespace SFC.Models
             email = src.email;
         }
 
+        public int getPoint()
+        {
+            if (OrderList.orders.Count() == 0) return 1;
+            return 1 + (int) OrderList.orders.Values.Last().totalCost / 10000;
+        }
+
+        public int getOrderId()
+        {
+            if (OrderList.orders.Count() == 0) return -1;
+            return OrderList.orders.Keys.Last();
+        }
     }
 }
