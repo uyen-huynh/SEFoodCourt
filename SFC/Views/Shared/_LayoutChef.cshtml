@@ -1,5 +1,5 @@
 @{
-    var name = SFC.Models.AccountService.current.name;
+    var name = SFC.Models.ManagerAccountService.current.name;
     if (name == null) { name = "Login"; }
 }
 
@@ -26,21 +26,9 @@
     <link rel="preload" as="style" href="~/assets/mobirise/css/mbr-additional.css">
     <link rel="stylesheet" href="~/assets/mobirise/css/mbr-additional.css" type="text/css">
     <style>
-        @@media screen and (min-width: 768px) {
-            .modal-dialog {
-              width: 500px; /* New width for default modal */
-              height: 200px;
-            }
-            .modal-sm {
-              width: 350px; /* New width for small modal */
-              height: 200px;
-            }
-        }
-        @@media screen and (min-width: 992px) {
-            .modal-lg {
-              width: 950px; /* New width for large modal */
-              height: 200px;
-            }
+        #exampleModal .modal-dialog {
+            height: auto;
+            max-height: 300px;
         }
     </style>
 
@@ -78,16 +66,16 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav nav-dropdown" data-app-modern-menu="true">
                     <li class="nav-item">
-                        <a class="nav-link link text-black display-4" href="/home#services1-3">
-                            <span class="mbri-home mbr-iconfont mbr-iconfont-btn"></span>Order
-                        </a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link link text-black display-4" href="/home/AboutUs">
                             <span class="mbri-hearth mbr-iconfont mbr-iconfont-btn"></span>About us
                         </a>
                     </li>
                 </ul>
+                <div class="navbar-buttons mbr-section-btn">
+                    <a class="btn btn-sm btn-primary display-7" href="/login">
+                        <span class="mbri-smile-face mbr-iconfont mbr-iconfont-btn"></span>@name
+                    </a>
+                </div>
             </div>
         </nav>
     </section><section class="engine"><a href="https://mobirise.info/s">free bootstrap themes</a></section>
