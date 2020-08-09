@@ -35,15 +35,16 @@ namespace SFC.Controllers
         {
             Order order = await DatabaseService.DBGetRecord<Order>("Order/" + id.ToString());
             List<Food> listFood = DatabaseService.DBGetList<Food>("Menu");
-            for (int i = 0; i < order.foods.Count(); i++)
+            List<string> key = new List<string>(order.items.Keys);
+            for (int i = 0; i < key.Count(); i++)
             {
                 for (int j = 0; j < listFood.Count(); j++)
                 {
                     if (listFood[j] != null)
                     {
-                        if ((order.foods[i].id == listFood[j].id))
+                        if (listFood[j].id == int.Parse(key[i].Replace("\"", "")))
                         {
-                            order.foods[i].name = listFood[j].name;
+                            order.foods.Add(new Food() { id = listFood[j].id, name = listFood[j].name, quantity = order.items[key[i]] });
                         }
                     }
                     else { continue; }
@@ -58,15 +59,16 @@ namespace SFC.Controllers
             List<Order> orders = new List<Order>();
             for (int i = 0; i < list.Count(); i++)
             {
-                for (int j = 0; j < list[i].foods.Count(); j++)
+                List<string> key = new List<string>(list[i].items.Keys);
+                for (int j = 0; j < key.Count(); j++)
                 {
                     for (int k = 0; k < listFood.Count(); k++)
                     {
                         if (listFood[k] != null)
                         {
-                            if (list[i].foods[j].id == listFood[k].id)
+                            if (listFood[k].id == int.Parse(key[j].Replace("\"", "")))
                             {
-                                list[i].foods[j].name = listFood[k].name;
+                                list[i].foods.Add(new Food() { id = listFood[k].id, name = listFood[k].name, quantity = list[i].items[key[j]] });
                             }
                         }
                         else { continue; }
@@ -77,7 +79,7 @@ namespace SFC.Controllers
             {
                 if (list[i].numberOfCompleted == 0)
                 {
-                    orders.Add(new Order() { id = list[i].id, numberOfCompleted = list[i].numberOfCompleted, username = list[i].username, foods = list[i].foods });
+                    orders.Add(new Order() { id = list[i].id, numberOfCompleted = list[i].numberOfCompleted, username = list[i].username, foods = list[i].foods, items = list[i].items });
                 }
             }
 
@@ -93,8 +95,9 @@ namespace SFC.Controllers
         [HttpPost]
         public async Task<ActionResult> Edit(Order order)
         {
-            order.numberOfCompleted = order.foods.Count();
-            await DatabaseService.DBUpdate<Order>(order, "Order/" + order.id.ToString());
+            Order order1 = await DatabaseService.DBGetRecord<Order>("Order/" + order.id.ToString());
+            order1.numberOfCompleted = order1.items.Count();
+            await DatabaseService.DBUpdate<Order>(order1, "Order/" + order.id.ToString());
             return RedirectToAction("Index");
         }
 
@@ -102,31 +105,33 @@ namespace SFC.Controllers
         {
             List<Order> list = getListOrder();
             List<Food> listFood = getListFoods();
+            List<Order> orders = new List<Order>();
             for (int i = 0; i < list.Count(); i++)
             {
-                for (int j = 0; j < list[i].foods.Count(); j++)
+                List<string> key = new List<string>(list[i].items.Keys);
+                for (int j = 0; j < key.Count(); j++)
                 {
                     for (int k = 0; k < listFood.Count(); k++)
                     {
                         if (listFood[k] != null)
                         {
-                            if ((list[i].foods[j].id == listFood[k].id))
+                            if (listFood[k].id == int.Parse(key[j].Replace("\"", "")))
                             {
-                                list[i].foods[j].name = listFood[k].name;
+                                list[i].foods.Add(new Food() { id = listFood[k].id, name = listFood[k].name, quantity = list[i].items[key[j]] });
                             }
                         }
                         else { continue; }
                     }
                 }
             }
-            List<Order> orders = new List<Order>();
             for (int i = 0; i < list.Count(); i++)
             {
                 if (list[i].numberOfCompleted != 0)
                 {
-                    orders.Add(new Order() { id = list[i].id, numberOfCompleted = list[i].numberOfCompleted, username = list[i].username, foods = list[i].foods });
+                    orders.Add(new Order() { id = list[i].id, numberOfCompleted = list[i].numberOfCompleted, username = list[i].username, foods = list[i].foods, items = list[i].items });
                 }
             }
+
             return View(orders);
         }
 
@@ -134,7 +139,7 @@ namespace SFC.Controllers
         {
             CustomerAccount acc = await DatabaseService.DBGetRecord<CustomerAccount>("Account/Customer/" + name);
             Order order = await getOrderWithNameFood(id);
-            var senderEmail = new MailAddress("vendor1bkfoodcourt@gmail.com", "Vendor 1");
+            var senderEmail = new MailAddress(ManagerAccountService.current.email, ManagerAccountService.current.name);
             var receiverEmail = new MailAddress(acc.email);
             var password = "vendor123";
             var sub = "Notice of completed order";
@@ -145,8 +150,8 @@ namespace SFC.Controllers
             {
                 body = body + order.foods[i].name + "  x" + order.foods[i].quantity.ToString() + "\n";
             }
-            body = body + "completed, please go to Vendor 1 to receive food\n" +
-                          "Thank you and see you again !";
+            body = body + "\ncompleted, please go to " + ManagerAccountService.current.name + " to receive food\n" +
+                          "\nThank you and see you again !";
             var smtp = new SmtpClient
             {
                 Host = "smtp.gmail.com",
